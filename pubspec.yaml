@@ -1,8 +1,7 @@
 name: google_my_business
 description:
   Flutter package to work with Google My Business API.
-  Simplifies connection with GMB API, contains wrappers around requests & responses for multiple endpoints including location, review and others.
-  More info can be found at https://developers.google.com/my-business
+  Simplifies communication & interaction with locations, reviews and other endpoints.
 version: 0.1.2
 homepage: https://github.com/Newgarden-Solutions/google_my_business
 repository: https://github.com/Newgarden-Solutions/google_my_business
