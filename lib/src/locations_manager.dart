@@ -1,6 +1,7 @@
 import 'dart:convert' show json;
 
 import 'package:http/http.dart' as http;
+import 'package:http/http.dart';
 
 import 'gmb_api.dart';
 import 'models/location/location.dart';
@@ -18,6 +19,8 @@ class LocationsManager {
   Future<void> fetchLocations(Function(List<Location> locations) onSuccess,
       Function(http.Response response) onError,
       [http.Client httpClient]) async {
+    if (httpClient == null) httpClient = Client();
+
     final http.Response response = await httpClient.get(
       'https://mybusiness.googleapis.com/v4/accounts/$accountId/locations',
       headers: await GMBAPI.instance.currentUser().authHeaders,

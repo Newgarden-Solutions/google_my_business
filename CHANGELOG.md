@@ -1,3 +1,7 @@
+# 0.1.1
+
+* Fixed bug with http client
+
 # 0.1.0
 
 * Initial development release
