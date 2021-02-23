@@ -35,7 +35,7 @@ class LocationState {
   /// Output only. Indicates whether the location is disconnected from a place on Google Maps.
   final bool isDisconnected;
 
-  /// Output only. Indicates whether [https://developers.google.com/my-business/reference/rest/v4/accounts.locations.localPosts](accounts.locations.localPosts) is disabled for this location.
+  /// Output only. Indicates whether https://developers.google.com/my-business/reference/rest/v4/accounts.locations.localPosts is disabled for this location.
   final bool isLocalPostApiDisabled;
 
   /// Output only. Indicates if the listing can modify a ServiceList.

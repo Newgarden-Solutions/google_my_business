@@ -4,7 +4,7 @@ class ReviewReply {
 
   ReviewReply(this.comment, this.updateTime);
 
-  ReviewReply.fromJson(Map<String, dynamic> json) :
-      comment = json['comment'],
-      updateTime = json['updateTime'];
+  ReviewReply.fromJson(Map<String, dynamic> json)
+      : comment = json['comment'],
+        updateTime = json['updateTime'];
 }

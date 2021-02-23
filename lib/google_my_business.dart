@@ -1,4 +1,4 @@
-library flutter_gmb_api;
+library google_my_business;
 
 /// Review
 export "src/models/review/review.dart";

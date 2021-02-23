@@ -21,5 +21,7 @@ class OpenInfo {
       : status = OpenForBusiness.values.firstWhere(
             (type) => type.toString() == "OpenForBusiness.${json["status"]}"),
         canReopen = json["canReopen"],
-        openingDate = json["openingDate"] == null ? null : Date.fromJson(json["openingDate"]);
+        openingDate = json["openingDate"] == null
+            ? null
+            : Date.fromJson(json["openingDate"]);
 }

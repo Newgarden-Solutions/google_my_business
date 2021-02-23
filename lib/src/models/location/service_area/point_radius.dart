@@ -8,6 +8,7 @@ class PointRadius {
   PointRadius(this.latLng, this.radiusKm);
 
   PointRadius.fromJson(Map<String, dynamic> json)
-      : latLng = json["latlng"] == null ? null : LatLng.fromJson(json["latlng"]),
+      : latLng =
+            json["latlng"] == null ? null : LatLng.fromJson(json["latlng"]),
         radiusKm = json["radiusKm"];
 }

@@ -5,8 +5,8 @@ class Reviewer {
 
   Reviewer(this.profilePhotoUrl, this.displayName, this.isAnonymous);
 
-  Reviewer.fromJson(Map<String, dynamic> json) :
-      profilePhotoUrl = json['profilePhotoUrl'],
-      displayName = json['displayName'],
-      isAnonymous = json['isAnonymous'];
+  Reviewer.fromJson(Map<String, dynamic> json)
+      : profilePhotoUrl = json['profilePhotoUrl'],
+        displayName = json['displayName'],
+        isAnonymous = json['isAnonymous'];
 }

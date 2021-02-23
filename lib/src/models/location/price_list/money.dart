@@ -18,8 +18,7 @@ class Money {
   Money(this.currencyCode, this.units, this.nanos);
 
   Money.fromJson(Map<String, dynamic> json)
-      :
-        currencyCode = json["currencyCode"],
+      : currencyCode = json["currencyCode"],
         units = json["units"],
         nanos = json["nanos"];
 }

@@ -26,8 +26,10 @@ class Section {
             : (json["labels"] as List)
                 .map((labelJson) => Label.fromJson(labelJson))
                 .toList(),
-        sectionType = json["sectionType"] == null ? null : SectionType.values.firstWhere(
-            (type) => type.toString() == "SectionType.${json["sectionType"]}"),
+        sectionType = json["sectionType"] == null
+            ? null
+            : SectionType.values.firstWhere((type) =>
+                type.toString() == "SectionType.${json["sectionType"]}"),
         items = json["items"] == null
             ? null
             : (json["items"] as List)
