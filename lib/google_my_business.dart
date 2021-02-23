@@ -1,3 +1,6 @@
+/// Flutter package to work with Google My Business API.
+/// Simplifies connection with GMB API, contains wrappers around requests & responses for multiple endpoints including location, review and others.
+///  More info can be found at https://developers.google.com/my-business
 library google_my_business;
 
 /// Review
