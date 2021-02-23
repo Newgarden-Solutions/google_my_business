@@ -1,4 +1,5 @@
 import 'dart:convert' show json;
+
 import 'package:http/http.dart' as http;
 
 import 'gmb_api.dart';
@@ -14,9 +15,10 @@ class LocationsManager {
   ///
   /// @funParameter onError([http.Response] response) - error callback - called when error occurs during communication with GMB API
   /// @funParameter onSuccess([List]<[Location]> locations) - success callback - contains list of locations for the given account
-  Future<void> fetchLocations(Function(http.Response response) onError,
-      Function(List<Location> locations) onSuccess) async {
-    final http.Response response = await http.get(
+  Future<void> fetchLocations(Function(List<Location> locations) onSuccess,
+      Function(http.Response response) onError,
+      [http.Client httpClient]) async {
+    final http.Response response = await httpClient.get(
       'https://mybusiness.googleapis.com/v4/accounts/$accountId/locations',
       headers: await GMBAPI.instance.currentUser().authHeaders,
     );
