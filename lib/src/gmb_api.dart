@@ -7,7 +7,7 @@ class GMBAPI {
 
   static final GMBAPI instance = GMBAPI._privateConstructor();
 
-  static final GoogleSignIn googleSignIn = GoogleSignIn.standard(
+  GoogleSignIn googleSignIn = GoogleSignIn.standard(
     scopes: [
       'https://www.googleapis.com/auth/business.manage',
     ],
@@ -20,7 +20,9 @@ class GMBAPI {
   void init(Function(GoogleSignInAccount account) onCurrentUserChangedCallback,
       {bool signInSilently = true}) {
     googleSignIn.onCurrentUserChanged.listen((GoogleSignInAccount account) {
-      onCurrentUserChangedCallback(account);
+      if (onCurrentUserChangedCallback != null) {
+        onCurrentUserChangedCallback(account);
+      }
     });
 
     if (signInSilently) {

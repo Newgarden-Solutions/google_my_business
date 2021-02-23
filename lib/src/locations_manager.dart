@@ -1,7 +1,7 @@
 import 'dart:convert' show json;
 import 'package:http/http.dart' as http;
 
-import 'main.dart';
+import 'gmb_api.dart';
 import 'models/location/location.dart';
 
 /// Responsible for retrieving and managing locations for the given account (id).

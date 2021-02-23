@@ -20,6 +20,9 @@ dependencies:
   # Util
   http: ^0.12.2
 
+  # Tests
+  mockito: ^4.1.4
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
