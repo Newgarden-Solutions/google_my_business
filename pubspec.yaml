@@ -1,8 +1,8 @@
-name: flutter_gmb_api
+name: google_my_business
 description: Flutter package to work with Google My Business API.
 version: 0.0.1
 author: Oleg Novosad
-homepage:
+homepage: https://github.com/Newgarden-Solutions/google_my_business
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
@@ -11,6 +11,12 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+
+  # Google
+  google_sign_in: ^4.5.9
+
+  # Util
+  http: ^0.12.2
 
 dev_dependencies:
   flutter_test:
