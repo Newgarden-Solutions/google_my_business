@@ -3,6 +3,8 @@ description: Flutter package to work with Google My Business API.
 version: 0.1.0
 author: Oleg Novosad
 homepage: https://github.com/Newgarden-Solutions/google_my_business
+repository: https://github.com/Newgarden-Solutions/google_my_business
+issue_tracker: https://github.com/Newgarden-Solutions/google_my_business/issues
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
