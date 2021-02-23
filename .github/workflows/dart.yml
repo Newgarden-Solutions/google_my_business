@@ -20,11 +20,11 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Print Dart SDK version
-        run: dart --version
+      - name: Print Flutter & Dart SDK version
+        run: flutter --version
 
       - name: Install dependencies
-        run: dart pub get
+        run: flutter pub get
 
       # Uncomment this step to verify the use of 'dart format' on each commit.
       # - name: Verify formatting
