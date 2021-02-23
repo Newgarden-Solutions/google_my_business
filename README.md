@@ -1,6 +1,6 @@
 # Google My Business for Flutter
 
-https://github.com/Newgarden-Solutions/google_my_business/actions/workflows/dart.yml/badge.svg
+[![Dart CI](https://github.com/Newgarden-Solutions/google_my_business/actions/workflows/Dart/badge.svg)](https://github.com/Newgarden-Solutions/google_my_business/actions/workflows/dart.yml)
 
 Flutter package to work with Google My Business API. 
 More info on GMB API at [Google My Business](https://developers.google.com/my-business)
