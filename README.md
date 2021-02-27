@@ -3,6 +3,8 @@
 [![Build](https://github.com/Newgarden-Solutions/google_my_business/workflows/build/badge.svg)](https://github.com/Newgarden-Solutions/google_my_business/actions/workflows/build.yml)
 
 Flutter package to work with Google My Business API. 
+Simplifies communication & interaction with GMB API endpoints.
+
 More info on GMB API at [Google My Business](https://developers.google.com/my-business)
 
 ## Getting Started
@@ -16,4 +18,5 @@ Uses a Flutter plugin [Google Sign In](https://pub.dev/packages/google_sign_in) 
 Supported endpoints:
 
 * [Locations](https://developers.google.com/my-business/reference/rest/v4/accounts.locations)
+* [Reviews](https://developers.google.com/my-business/reference/rest/v4/accounts.locations.reviews)
 

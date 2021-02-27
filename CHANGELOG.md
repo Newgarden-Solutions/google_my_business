@@ -1,3 +1,9 @@
+# 0.2.0
+
+* Added reviews manager to retrieve reviews for a given location
+* Added `moreHours` and `moreHoursTypes` to location response
+* Updated docs
+
 # 0.1.2
 
 * Updated docs & other for more pub points.
