@@ -105,21 +105,17 @@ void main() {
     test(
         '[fetchReviews] should return a list of reviews on success with next page token',
         () async {
-          int count = 0;
-      when(httpClientMock.get(any, headers: anyNamed('headers'))).thenAnswer(
-          (_) async {
-            if (count++ == 1) {
-              return http.Response(testReviewsJson, 200,
-                  headers: await GMBAPI.instance
-                      .currentUser()
-                      .authHeaders);
-            } else {
-              return http.Response(testReviewsNextPageJson, 200,
-                  headers: await GMBAPI.instance
-                      .currentUser()
-                      .authHeaders);
-            }
-          });
+      int count = 0;
+      when(httpClientMock.get(any, headers: anyNamed('headers')))
+          .thenAnswer((_) async {
+        if (count++ == 1) {
+          return http.Response(testReviewsJson, 200,
+              headers: await GMBAPI.instance.currentUser().authHeaders);
+        } else {
+          return http.Response(testReviewsNextPageJson, 200,
+              headers: await GMBAPI.instance.currentUser().authHeaders);
+        }
+      });
 
       await _validateFetchReviews();
     });
@@ -139,14 +135,15 @@ void main() {
       await _validateFetchReviews();
     });
 
-    test('[fetchReviews] should set page size to MAX_PAGE_SIZE if bigger', () async {
+    test('[fetchReviews] should set page size to MAX_PAGE_SIZE if bigger',
+        () async {
       pageSize = ReviewsManager.MAX_PAGE_SIZE * 2;
 
       when(httpClientMock.get(
-          'https://mybusiness.googleapis.com/v4/$name/reviews?pageSize=${ReviewsManager.MAX_PAGE_SIZE}',
-          headers: anyNamed('headers')))
+              'https://mybusiness.googleapis.com/v4/$name/reviews?pageSize=${ReviewsManager.MAX_PAGE_SIZE}',
+              headers: anyNamed('headers')))
           .thenAnswer((_) async => http.Response(testReviewsJson, 200,
-          headers: await GMBAPI.instance.currentUser().authHeaders));
+              headers: await GMBAPI.instance.currentUser().authHeaders));
 
       await _validateFetchReviews();
     });

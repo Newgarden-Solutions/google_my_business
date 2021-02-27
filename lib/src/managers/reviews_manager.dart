@@ -47,7 +47,8 @@ class ReviewsManager {
 
     if (response.statusCode != 200) {
       final Map<String, dynamic> data = json.decode(response.body);
-      final Error error = data['error'] == null ? null : Error.fromJson(data["error"]);
+      final Error error =
+          data['error'] == null ? null : Error.fromJson(data["error"]);
       onError(error);
       return;
     }
@@ -56,7 +57,10 @@ class ReviewsManager {
     final reviews = data.isNullOrEmpty() ? null : Reviews.fromJson(data);
 
     if (reviews == null) {
-      onError(Error(401, 'Failed to fetch reviews. Possibly not enough rights for a given location', 'UNAUTHORIZED'));
+      onError(Error(
+          401,
+          'Failed to fetch reviews. Possibly not enough rights for a given location',
+          'UNAUTHORIZED'));
       return;
     }
 

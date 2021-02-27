@@ -116,7 +116,8 @@ void main() {
         // No success should be triggered
       }, (error) {
         expect(error.code, 401);
-        expect(error.message, "Request had invalid authentication credentials. Expected OAuth 2 access token, login cookie or other valid authentication credential. See https://developers.google.com/identity/sign-in/web/devconsole-project.");
+        expect(error.message,
+            "Request had invalid authentication credentials. Expected OAuth 2 access token, login cookie or other valid authentication credential. See https://developers.google.com/identity/sign-in/web/devconsole-project.");
         expect(error.status, "UNAUTHENTICATED");
       });
     });

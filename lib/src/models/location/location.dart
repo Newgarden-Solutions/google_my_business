@@ -195,8 +195,8 @@ class Location {
             ? null
             : RelationshipData.fromJson(json["relationshipData"]),
         moreHours = json["moreHours"] == null
-        ? null
+            ? null
             : (json["moreHours"] as List)
-            .map((moreHoursJson) => MoreHours.fromJson(moreHoursJson))
-            .toList();
+                .map((moreHoursJson) => MoreHours.fromJson(moreHoursJson))
+                .toList();
 }
