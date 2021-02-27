@@ -24,19 +24,32 @@ void main() {
         final location = locations[0];
 
         expect(location.locationName, 'Хінкальня у Правді');
+
         expect(location.primaryPhone, '097 706 3399');
+
         expect(location.primaryCategory, isNotNull);
         expect(
             location.primaryCategory.displayName, 'Ресторан грузинської кухні');
         expect(location.primaryCategory.categoryId, 'gcid:georgian_restaurant');
+        expect(location.primaryCategory.moreHoursTypes.length, 9);
+
+        final moreHoursType = location.primaryCategory.moreHoursTypes[0];
+
+        expect(moreHoursType.hoursTypeId, 'ACCESS');
+        expect(moreHoursType.displayName, 'Access');
+        expect(moreHoursType.localizedDisplayName, 'Години роботи');
+
         expect(location.websiteUrl, 'http://hinkalnya.com.ua/');
+
         expect(location.locationKey, isNotNull);
         expect(location.locationKey.placeId, 'ChIJDchgK3pY2UARmdiS6By9U0U');
         expect(location.locationKey.requestId,
             '47d5953c-1ad5-48dd-860f-35e6392d0404');
+
         expect(location.openInfo, isNotNull);
         expect(location.openInfo.status, 'OPEN');
         expect(location.openInfo.canReopen, true);
+
         expect(location.locationState, isNotNull);
         expect(location.locationState.isGoogleUpdated, true);
         expect(location.locationState.canUpdate, true);
@@ -44,12 +57,15 @@ void main() {
         expect(location.locationState.isVerified, true);
         expect(location.locationState.isPublished, true);
         expect(location.locationState.canHaveFoodMenus, true);
+
         expect(location.metadata, isNotNull);
         expect(location.metadata.mapsUrl,
             'https://maps.google.com/maps?cid=4995544343542683801');
         expect(location.metadata.newReviewUrl,
             'https://search.google.com/local/writereview?placeid=ChIJDchgK3pY2UARmdiS6By9U0U');
+
         expect(location.languageCode, 'uk');
+
         expect(location.address, isNotNull);
         expect(location.address.regionCode, 'UA');
         expect(location.address.languageCode, 'uk-Latn');
@@ -61,6 +77,8 @@ void main() {
         expect(location.address.addressLines.length, 2);
         expect(location.address.addressLines[0], '31Д');
         expect(location.address.addressLines[1], 'проспект Слобожанський, 31Д');
+
+        expect(location.moreHours, null);
       }, (response) {
         // No error should be triggered
       }, httpClientMock);
