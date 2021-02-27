@@ -1,7 +1,7 @@
 import 'dart:convert' show json;
 
-import 'package:flutter/foundation.dart';
 import 'package:google_my_business/google_my_business.dart';
+import 'package:google_my_business/src/models/error.dart';
 import 'package:http/http.dart' as http;
 
 import '../common/util.dart';
@@ -29,35 +29,35 @@ class ReviewsManager {
   Future<void> fetchReviews(
       Function(List<Review> reviews) onSuccess,
       Function(num progress, List<Review> reviews) onProgress,
-      Function(http.Response response) onError,
+      Function(Error error) onError,
       [http.Client httpClient,
       String nextPageToken,
       int pageSize = MAX_PAGE_SIZE]) async {
-    final pageToken = nextPageToken == null ? "" : "pageToken=$nextPageToken";
+    if (httpClient == null) httpClient = http.Client();
+    final pageToken = nextPageToken == null ? "" : "&pageToken=$nextPageToken";
 
     if (pageSize > MAX_PAGE_SIZE) {
       pageSize = MAX_PAGE_SIZE;
     }
 
-    final http.Response response = await http.get(
-      'https://mybusiness.googleapis.com/v4/$name/reviews?pageSize=$pageSize&$pageToken',
+    final http.Response response = await httpClient.get(
+      'https://mybusiness.googleapis.com/v4/$name/reviews?pageSize=$pageSize$pageToken',
       headers: await GMBAPI.instance.currentUser().authHeaders,
     );
 
     if (response.statusCode != 200) {
-      onError(response);
-
+      final Map<String, dynamic> data = json.decode(response.body);
+      final Error error = data['error'] == null ? null : Error.fromJson(data["error"]);
+      onError(error);
       return;
     }
 
-    debugPrint(response.body);
     final Map<String, dynamic> data = json.decode(response.body);
     final reviews = data.isNullOrEmpty() ? null : Reviews.fromJson(data);
 
     // Failed to fetch reviews. Possibly not enough rights for a given location
     if (reviews == null) {
-      onError(response);
-
+      onError(Error(401, 'Failed to fetch reviews. Possibly not enough rights for a given location', 'UNAUTHORIZED'));
       return;
     }
 
@@ -78,6 +78,7 @@ class ReviewsManager {
           reviews.nextPageToken, pageSize);
     }
 
+    averageRating = reviews.averageRating;
     totalReviewCount = reviews.totalReviewCount;
 
     // Convert from list of [Reviews] object to a list of [Review] objects

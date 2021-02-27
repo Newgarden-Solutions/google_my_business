@@ -1,5 +1,6 @@
 import 'dart:convert' show json;
 
+import 'package:google_my_business/src/models/error.dart';
 import 'package:http/http.dart' as http;
 
 import '../gmb_api.dart';
@@ -16,7 +17,7 @@ class LocationsManager {
   /// @funParameter onError([http.Response] response) - error callback - called when error occurs during communication with GMB API
   /// @funParameter onSuccess([List]<[Location]> locations) - success callback - contains list of locations for the given account
   Future<void> fetchLocations(Function(List<Location> locations) onSuccess,
-      Function(http.Response response) onError,
+      Function(Error error) onError,
       [http.Client httpClient]) async {
     if (httpClient == null) httpClient = http.Client();
 
@@ -26,7 +27,9 @@ class LocationsManager {
     );
 
     if (response.statusCode != 200) {
-      onError(response);
+      final Map<String, dynamic> data = json.decode(response.body);
+      final Error error = data['error'] == null ? null : Error.fromJson(data["error"]);
+      onError(error);
       return;
     }
 

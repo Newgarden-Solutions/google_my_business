@@ -1,4 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:google_my_business/google_my_business.dart';
 import 'package:google_my_business/src/managers/reviews_manager.dart';
 import 'package:http/http.dart' as http;
 import 'package:mockito/mockito.dart';
@@ -6,91 +7,205 @@ import 'package:mockito/mockito.dart';
 import '../mocks.dart';
 
 void main() {
+  ReviewsManager reviewsManager;
+  var name;
+  var pageSize;
+  var nextPageToken;
+  var httpClientMock;
+
+  setUp(() {
+    // Default values
+    GMBAPI.instance.googleSignIn = GoogleSignInMock();
+
+    name = "accounts/106941250772149994434/locations/4547712559962801423";
+    reviewsManager = ReviewsManager(name: name);
+    pageSize = ReviewsManager.MAX_PAGE_SIZE;
+    nextPageToken = null;
+    httpClientMock = HttpClientMock();
+  });
+
+  Future<void> _validateFetchReviews() async {
+    await reviewsManager.fetchReviews(
+        (reviews) {
+          expect(reviews.length, 2);
+
+          // Review with 1 star without comments / replies
+          final review1 = reviews[0];
+
+          expect(review1.reviewId,
+              'AbFvOqmfI-JoFLOEqmBN-JqT0BFKxGR5b5t9ZuutWki9hbnFnp6h_tWsI-8SajSWhxmvwAFBAAgH');
+
+          expect(review1.reviewer, isNotNull);
+          expect(review1.reviewer.profilePhotoUrl,
+              'https://lh3.googleusercontent.com/a-/AOh14GiSwzu2nbngpCmB3luP6Izd_KTv_wm2Zq0Op690SQ=c0x00000000-cc-rp-ba3');
+          expect(review1.reviewer.displayName, 'Данил Бырзул');
+          expect(review1.reviewer.isAnonymous, false);
+
+          expect(review1.starRating, StarRating.ONE);
+
+          expect(review1.createTime, '2019-12-19T16:55:27.082Z');
+
+          expect(review1.updateTime, '2019-12-19T16:55:27.082Z');
+
+          expect(review1.name,
+              'accounts/106941250772149994434/locations/4547712559962801423/reviews/AbFvOqmfI-JoFLOEqmBN-JqT0BFKxGR5b5t9ZuutWki9hbnFnp6h_tWsI-8SajSWhxmvwAFBAAgH');
+
+          // Review with 5 stars with comments / replies
+          final review2 = reviews[1];
+
+          expect(review2.reviewId,
+              'AbFvOqkNhKOO17hiA6Dg1-HNrS6Vtjv71nAMxEdVXdIlVOC4xshndwUfGS9uSLgisU6T7hDMHMjsKg');
+
+          expect(review2.reviewer, isNotNull);
+          expect(review2.reviewer.profilePhotoUrl,
+              'https://lh3.googleusercontent.com/a-/AOh14GgxnobyiCdv9hi_-L69VIJ9DxCoNxdWEcASBrnQ=c0x00000000-cc-rp');
+          expect(review2.reviewer.displayName, 'Вячеслав Крот');
+          expect(review2.reviewer.isAnonymous, false);
+
+          expect(review2.starRating, StarRating.FIVE);
+
+          expect(review2.comment,
+              '(Translated by Google) Tasty, satisfying and inexpensive\n\n(Original)\nВкусно, сытно и недорого');
+
+          expect(review2.createTime, '2020-09-07T19:27:46.840Z');
+
+          expect(review2.updateTime, '2020-09-07T19:27:46.840Z');
+
+          expect(review2.reviewReply, isNotNull);
+          expect(review2.reviewReply.comment,
+              'Спасибо за отзыв, приходите ещё 🙂');
+          expect(review2.reviewReply.updateTime, '2020-10-17T06:49:49.916Z');
+
+          expect(review2.name,
+              'accounts/106941250772149994434/locations/4547712559962801423/reviews/AbFvOqkNhKOO17hiA6Dg1-HNrS6Vtjv71nAMxEdVXdIlVOC4xshndwUfGS9uSLgisU6T7hDMHMjsKg');
+        },
+        (progress, reviews) {},
+        (response) {
+          // No error should be triggered
+        },
+        httpClientMock,
+        nextPageToken,
+        pageSize);
+
+    expect(reviewsManager.averageRating, 3);
+    expect(reviewsManager.totalReviewCount, 2);
+  }
+
   group('Reviews', () {
     test('[fetchReviews] should return a list of reviews on success', () async {
-      final reviewsManagerMock = ReviewsManagerMock();
-      final name = "accounts/106941250772149994434/locations/4547712559962801423";
-      final pageSize = 50;
-      final pageToken = "foo";
-      final httpClientMock = HttpClientMock();
-
-      when(reviewsManagerMock.name).thenReturn(name);
       when(httpClientMock.get(
-        'https://mybusiness.googleapis.com/v4/$name/reviews?pageSize=$pageSize&$pageToken',
-      )).thenAnswer((_) async => http.Response(testReviewsJson, 200));
+              'https://mybusiness.googleapis.com/v4/$name/reviews?pageSize=$pageSize',
+              headers: anyNamed('headers')))
+          .thenAnswer((_) async => http.Response(testReviewsJson, 200,
+              headers: await GMBAPI.instance.currentUser().authHeaders));
 
-      reviewsManagerMock.fetchReviews((reviews) {
-        expect(reviews.length, 5);
-      }, (progress, reviews) {
-        
-      }, (response) {
-        // No error should be triggered
-      }, httpClientMock);
+      await _validateFetchReviews();
+    });
+
+    test(
+        '[fetchReviews] should return a list of reviews on success with next page token',
+        () async {
+          int count = 0;
+      when(httpClientMock.get(any, headers: anyNamed('headers'))).thenAnswer(
+          (_) async {
+            if (count++ == 1) {
+              return http.Response(testReviewsJson, 200,
+                  headers: await GMBAPI.instance
+                      .currentUser()
+                      .authHeaders);
+            } else {
+              return http.Response(testReviewsNextPageJson, 200,
+                  headers: await GMBAPI.instance
+                      .currentUser()
+                      .authHeaders);
+            }
+          });
+
+      await _validateFetchReviews();
+    });
+
+    test(
+        '[fetchReviews] should return a list of reviews on success with page token',
+        () async {
+      // Custom page token
+      nextPageToken = "foo";
+
+      when(httpClientMock.get(
+              'https://mybusiness.googleapis.com/v4/$name/reviews?pageSize=$pageSize&pageToken=$nextPageToken',
+              headers: anyNamed('headers')))
+          .thenAnswer((_) async => http.Response(testReviewsJson, 200,
+              headers: await GMBAPI.instance.currentUser().authHeaders));
+
+      await _validateFetchReviews();
+    });
+
+    test('[fetchReviews] should set page size to MAX_PAGE_SIZE if bigger', () async {
+      pageSize = ReviewsManager.MAX_PAGE_SIZE * 2;
+
+      when(httpClientMock.get(
+          'https://mybusiness.googleapis.com/v4/$name/reviews?pageSize=${ReviewsManager.MAX_PAGE_SIZE}',
+          headers: anyNamed('headers')))
+          .thenAnswer((_) async => http.Response(testReviewsJson, 200,
+          headers: await GMBAPI.instance.currentUser().authHeaders));
+
+      await _validateFetchReviews();
     });
 
     test('[fetchReviews] should call on error when request fails', () async {
-      final reviewsManagerMock = ReviewsManagerMock();
-      final name = "accounts/106941250772149994434/locations/4547712559962801423";
-      final pageSize = 50;
-      final pageToken = "foo";
-      final httpClientMock = HttpClientMock();
-
-      when(reviewsManagerMock.name).thenReturn(name);
       when(httpClientMock.get(
-        'https://mybusiness.googleapis.com/v4/$name/reviews?pageSize=$pageSize&$pageToken',
-      )).thenAnswer((_) async => http.Response('Not found', 404));
+              'https://mybusiness.googleapis.com/v4/$name/reviews?pageSize=$pageSize',
+              headers: anyNamed('headers')))
+          .thenAnswer((_) async => http.Response('{}', 404));
 
-      reviewsManagerMock.fetchReviews((reviews) {
+      await reviewsManager.fetchReviews((reviews) {
         // No success should be triggered
       }, (progress, reviews) {
         // No progress should be triggered
-      }, (response) {
-        expect(response.statusCode, 404);
-        expect(response.body, 'Not found');
-      }, httpClientMock);
+      }, (error) {
+        expect(error, isNull);
+      }, httpClientMock, nextPageToken, pageSize);
+    });
+
+    test('[fetchReviews] should call on error when body is empty', () async {
+      when(httpClientMock.get(
+              'https://mybusiness.googleapis.com/v4/$name/reviews?pageSize=$pageSize',
+              headers: anyNamed('headers')))
+          .thenAnswer((_) async => http.Response('{}', 200));
+
+      await reviewsManager.fetchReviews((reviews) {
+        // No success should be triggered
+      }, (progress, reviews) {
+        // No progress should be triggered
+      }, (error) {
+        expect(error.code, 401);
+        expect(error.message,
+            'Failed to fetch reviews. Possibly not enough rights for a given location');
+        expect(error.status, 'UNAUTHORIZED');
+      }, httpClientMock, nextPageToken, pageSize);
+    });
+
+    test(
+        '[fetchReviews] default client should be used if http client is null and the status code should be 401 with error response',
+        () async {
+      await reviewsManager.fetchReviews((reviews) {
+        // No success should be triggered
+      }, (progress, reviews) {
+        // No progress should be triggered
+      }, (error) {
+        expect(error.code, 401);
+        expect(error.message,
+            "Request had invalid authentication credentials. Expected OAuth 2 access token, login cookie or other valid authentication credential. See https://developers.google.com/identity/sign-in/web/devconsole-project.");
+        expect(error.status, "UNAUTHENTICATED");
+      });
     });
   });
 }
 
 //region Mocks
 
-class ReviewsManagerMock extends Mock implements ReviewsManager {}
-
 final testReviewsJson = """
 {
     "reviews": [
-        {
-            "reviewId": "AbFvOqkNhKOO17hiA6Dg1-HNrS6Vtjv71nAMxEdVXdIlVOC4xshndwUfGS9uSLgisU6T7hDMHMjsKg",
-            "reviewer": {
-                "profilePhotoUrl": "https://lh3.googleusercontent.com/a-/AOh14GgxnobyiCdv9hi_-L69VIJ9DxCoNxdWEcASBrnQ=c0x00000000-cc-rp",
-                "displayName": "Вячеслав Крот"
-            },
-            "starRating": "FIVE",
-            "comment": "(Translated by Google) Tasty, satisfying and inexpensive\n\n(Original)\nВкусно, сытно и недорого",
-            "createTime": "2020-09-07T19:27:46.840Z",
-            "updateTime": "2020-09-07T19:27:46.840Z",
-            "reviewReply": {
-                "comment": "Спасибо за отзыв, приходите ещё 🙂",
-                "updateTime": "2020-10-17T06:49:49.916Z"
-            },
-            "name": "accounts/106941250772149994434/locations/4547712559962801423/reviews/AbFvOqkNhKOO17hiA6Dg1-HNrS6Vtjv71nAMxEdVXdIlVOC4xshndwUfGS9uSLgisU6T7hDMHMjsKg"
-        },
-        {
-            "reviewId": "AbFvOqnGJMVHC9ldjkQyv4ku857KmmbRFshTINqBbQBWq7B4rCHE9oTccWFj1dYMoYkQB2Zd1mwSMA",
-            "reviewer": {
-                "profilePhotoUrl": "https://lh6.googleusercontent.com/-aOoz4v2ZCUw/AAAAAAAAAAI/AAAAAAAAAAA/AMZuucnVyugFQjmk3cvqfKtX213THc5qLw/c0x00000000-cc-rp-ba3/photo.jpg",
-                "displayName": "Dmitriy Marchenko"
-            },
-            "starRating": "FOUR",
-            "comment": "(Translated by Google) Delicious and inexpensive\n\n(Original)\nВкусно и недорого",
-            "createTime": "2019-03-18T06:29:11.441Z",
-            "updateTime": "2019-03-18T06:29:11.441Z",
-            "reviewReply": {
-                "comment": "Спасибо за ваш отзыв!\nПриходите к нам ещё 😀",
-                "updateTime": "2019-04-08T07:58:25.007Z"
-            },
-            "name": "accounts/106941250772149994434/locations/4547712559962801423/reviews/AbFvOqnGJMVHC9ldjkQyv4ku857KmmbRFshTINqBbQBWq7B4rCHE9oTccWFj1dYMoYkQB2Zd1mwSMA"
-        },
         {
             "reviewId": "AbFvOqmfI-JoFLOEqmBN-JqT0BFKxGR5b5t9ZuutWki9hbnFnp6h_tWsI-8SajSWhxmvwAFBAAgH",
             "reviewer": {
@@ -103,33 +218,33 @@ final testReviewsJson = """
             "name": "accounts/106941250772149994434/locations/4547712559962801423/reviews/AbFvOqmfI-JoFLOEqmBN-JqT0BFKxGR5b5t9ZuutWki9hbnFnp6h_tWsI-8SajSWhxmvwAFBAAgH"
         },
         {
-            "reviewId": "AbFvOqkdJQHR0C8pW20-bVnoMX047-5CbGNfu647SOt9646ySdU8fLKnEi8BhnlHpSUwkvjKAy4W",
+            "reviewId": "AbFvOqkNhKOO17hiA6Dg1-HNrS6Vtjv71nAMxEdVXdIlVOC4xshndwUfGS9uSLgisU6T7hDMHMjsKg",
             "reviewer": {
-                "profilePhotoUrl": "https://lh3.googleusercontent.com/a-/AOh14GhYx0GY7R4d-d1TC3aQzinI6islco3leKtVneNgPog=c0x00000000-cc-rp-ba4",
-                "displayName": "Надежда Никитина"
+                "profilePhotoUrl": "https://lh3.googleusercontent.com/a-/AOh14GgxnobyiCdv9hi_-L69VIJ9DxCoNxdWEcASBrnQ=c0x00000000-cc-rp",
+                "displayName": "Вячеслав Крот"
             },
-            "starRating": "TWO",
-            "createTime": "2019-10-22T05:19:48.238Z",
-            "updateTime": "2019-10-22T05:19:48.238Z",
-            "name": "accounts/106941250772149994434/locations/4547712559962801423/reviews/AbFvOqkdJQHR0C8pW20-bVnoMX047-5CbGNfu647SOt9646ySdU8fLKnEi8BhnlHpSUwkvjKAy4W"
-        },
-        {
-            "reviewId": "AbFvOqnn1yfNoIUWlYY5mbnkKzFktXfFhNvkwFCYHpnATffA_Lk-RJwl9pevX-U3gvRnf2NZrPcRgw",
-            "reviewer": {
-                "profilePhotoUrl": "https://lh3.googleusercontent.com/a-/AOh14GjTC_Fx99MKzz7mv6MhdEDqn8pFauR9g_cewu1Eog=c0x00000000-cc-rp-ba4",
-                "displayName": "Алексей Пожидаев"
-            },
-            "starRating": "THREE",
-            "comment": "(Translated by Google) Inexpensive henkalnaya, with a very mixed quality of food, although there are quite a lot of visitors. From the pros I can highlight quick service. The toilet, to put it mildly, is not very pleasant.\n\n(Original)\nНедорогая хенкальная, с весьма неоднозначным качеством блюд, хотя посетителей довольно много.  Из плюсов могу выделить быстрое обслуживание. В туалете, мягко говоря, не особо приятно.",
-            "createTime": "2019-10-18T18:55:52.468Z",
-            "updateTime": "2019-10-18T18:55:52.468Z",
+            "starRating": "FIVE",
+            "comment": "(Translated by Google) Tasty, satisfying and inexpensive\\n\\n(Original)\\nВкусно, сытно и недорого",
+            "createTime": "2020-09-07T19:27:46.840Z",
+            "updateTime": "2020-09-07T19:27:46.840Z",
             "reviewReply": {
-                "comment": "Добрый день Алексей.\nСпасибо вам за отзыв и выраженное мнение.Очень жаль,что не смогли получить от вас самый высокий балл...\nНо мы будем стараться и ждать вновь нашей с вами встречи.Касательно уборной хочется отметить:что своей\"комнаты отдыха\"у нас нет,и принадлежит она ТРЦ Наша Правда.",
-                "updateTime": "2019-11-18T04:14:29.563Z"
+                "comment": "Спасибо за отзыв, приходите ещё 🙂",
+                "updateTime": "2020-10-17T06:49:49.916Z"
             },
-            "name": "accounts/106941250772149994434/locations/4547712559962801423/reviews/AbFvOqnn1yfNoIUWlYY5mbnkKzFktXfFhNvkwFCYHpnATffA_Lk-RJwl9pevX-U3gvRnf2NZrPcRgw"
+            "name": "accounts/106941250772149994434/locations/4547712559962801423/reviews/AbFvOqkNhKOO17hiA6Dg1-HNrS6Vtjv71nAMxEdVXdIlVOC4xshndwUfGS9uSLgisU6T7hDMHMjsKg"
         }
-    ]
+    ],
+    "averageRating": 3,
+    "totalReviewCount": 2
+}
+""";
+
+final testReviewsNextPageJson = """
+{
+    "reviews": [],
+    "averageRating": 0,
+    "totalReviewCount": 0,
+    "nextPageToken": "foo"
 }
 """;
 
