@@ -1,5 +1,4 @@
-import 'package:google_my_business/src/models/location/hours/more_hours_type.dart';
-
+import 'more_hours_type.dart';
 import 'service_type.dart';
 
 /// Represents the locations category describing what this business is (not what it does).

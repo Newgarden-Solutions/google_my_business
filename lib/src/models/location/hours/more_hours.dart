@@ -1,4 +1,4 @@
-import 'package:google_my_business/google_my_business.dart';
+import 'time_period.dart';
 
 /// The time periods during which a location is open for certain types of business.
 class MoreHours {
