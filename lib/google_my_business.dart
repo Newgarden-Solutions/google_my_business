@@ -41,3 +41,4 @@ export "src/models/review/review_reply.dart";
 export "src/models/review/reviewer.dart";
 export "src/models/review/reviews.dart";
 export "src/models/review/star_rating.dart";
+export "src/models/error.dart";

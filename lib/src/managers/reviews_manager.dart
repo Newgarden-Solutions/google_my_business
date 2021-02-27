@@ -55,7 +55,6 @@ class ReviewsManager {
     final Map<String, dynamic> data = json.decode(response.body);
     final reviews = data.isNullOrEmpty() ? null : Reviews.fromJson(data);
 
-    // Failed to fetch reviews. Possibly not enough rights for a given location
     if (reviews == null) {
       onError(Error(401, 'Failed to fetch reviews. Possibly not enough rights for a given location', 'UNAUTHORIZED'));
       return;

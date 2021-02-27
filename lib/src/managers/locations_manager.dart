@@ -1,9 +1,9 @@
 import 'dart:convert' show json;
 
-import 'package:google_my_business/src/models/error.dart';
 import 'package:http/http.dart' as http;
 
 import '../gmb_api.dart';
+import '../models/error.dart';
 import '../models/location/location.dart';
 
 /// Responsible for retrieving and managing locations for the given account (id).
@@ -28,7 +28,8 @@ class LocationsManager {
 
     if (response.statusCode != 200) {
       final Map<String, dynamic> data = json.decode(response.body);
-      final Error error = data['error'] == null ? null : Error.fromJson(data["error"]);
+      final Error error =
+          data['error'] == null ? null : Error.fromJson(data["error"]);
       onError(error);
       return;
     }
