@@ -41,4 +41,5 @@ export "src/models/location/service_area/point_radius.dart";
 export "src/models/location/service_area/service_area_business.dart";
 
 export "src/gmb_api.dart" show GMBAPI;
-export "src/locations_manager.dart" show LocationsManager;
+export 'src/managers/locations_manager.dart' show LocationsManager;
+export 'src/managers/reviews_manager.dart' show ReviewsManager;
