@@ -3,7 +3,8 @@
 library google_my_business;
 
 export "src/gmb_api.dart" show GMBAPI;
-export "src/locations_manager.dart" show LocationsManager;
+export 'src/managers/locations_manager.dart' show LocationsManager;
+export 'src/managers/reviews_manager.dart' show ReviewsManager;
 export "src/models/location/category/category.dart";
 export "src/models/location/category/more_hours_type.dart";
 export "src/models/location/category/service_type.dart";
@@ -40,3 +41,4 @@ export "src/models/review/review_reply.dart";
 export "src/models/review/reviewer.dart";
 export "src/models/review/reviews.dart";
 export "src/models/review/star_rating.dart";
+export "src/models/error.dart";

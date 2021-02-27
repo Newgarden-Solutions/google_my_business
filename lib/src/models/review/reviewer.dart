@@ -8,5 +8,5 @@ class Reviewer {
   Reviewer.fromJson(Map<String, dynamic> json)
       : profilePhotoUrl = json['profilePhotoUrl'],
         displayName = json['displayName'],
-        isAnonymous = json['isAnonymous'];
+        isAnonymous = json['isAnonymous'] == null ? false : json['isAnonymous'];
 }
