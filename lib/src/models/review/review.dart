@@ -1,11 +1,13 @@
-import 'reviewer.dart';
+import 'package:google_my_business/src/models/review/star_rating.dart';
+
 import 'review_reply.dart';
+import 'reviewer.dart';
 
 class Review {
   final String name;
   final String reviewId;
   final Reviewer reviewer;
-  final String starRating;
+  final StarRating starRating;
   final String comment;
   final String createTime;
   final String updateTime;
@@ -20,7 +22,10 @@ class Review {
         reviewer = json['reviewer'] == null
             ? null
             : Reviewer.fromJson(json['reviewer']),
-        starRating = json['starRating'],
+        starRating = json["starRating"] == null
+            ? null
+            : StarRating.values.firstWhere((type) =>
+                type.toString() == "StarRating.${json["starRating"]}"),
         comment = json['comment'],
         createTime = json['createTime'],
         updateTime = json['updateTime'],
