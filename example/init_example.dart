@@ -3,12 +3,12 @@ import 'package:flutter/widgets.dart';
 import 'package:google_my_business/main.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
-class Example extends StatefulWidget {
+class Login extends StatefulWidget {
   @override
-  _ExampleState createState() => _ExampleState();
+  _LoginState createState() => _LoginState();
 }
 
-class _ExampleState extends State<Example> {
+class _LoginState extends State<Login> {
   GoogleSignInAccount _currentUser;
 
   @override
@@ -37,6 +37,9 @@ class _ExampleState extends State<Example> {
                 GoogleMyBusiness.instance.signIn().then((user) {
                   setState(() {
                     _currentUser = user;
+
+                    // Use other API, open a new page or whatever
+                    // to access user, use GoogleMyBusiness.instance.currentUser()
                   });
                 });
               } else {
