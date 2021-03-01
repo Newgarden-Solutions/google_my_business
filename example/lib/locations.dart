@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:google_my_business/main.dart';
+import 'package:google_my_business/google_my_business.dart';
 
 import 'login.dart';
 

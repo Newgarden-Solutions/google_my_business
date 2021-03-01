@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:google_my_business/main.dart';
+import 'package:google_my_business/google_my_business.dart';
 import 'locations.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
