@@ -34,7 +34,7 @@ jobs:
 
       - name: Run tests and generate coverage
         run: |
-          apt-get update -qq -y
-          apt-get install lcov -y
+          sudo apt-get update -qq -y
+          sudo apt-get install lcov -y
           flutter test --coverage
           genhtml coverage/lcov.info -o coverage/html
