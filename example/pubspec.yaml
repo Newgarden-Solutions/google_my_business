@@ -1,0 +1,17 @@
+name: example
+description: Example of usage of google_my_business package
+publish_to: 'none'
+version: 1.0.0
+
+environment:
+  sdk: ">=2.7.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  google_my_business:
+    path: ../../google_my_business
+
+flutter:
+  uses-material-design: true

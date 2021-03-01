@@ -1,10 +1,10 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:google_my_business/google_my_business.dart';
+import 'package:google_my_business/main.dart';
 import 'package:google_my_business/src/managers/reviews_manager.dart';
 import 'package:http/http.dart' as http;
 import 'package:mockito/mockito.dart';
 
-import '../mocks.dart';
+import '../../mocks.dart';
 
 void main() {
   ReviewsManager reviewsManager;
@@ -15,7 +15,7 @@ void main() {
 
   setUp(() {
     // Default values
-    GMBAPI.instance.googleSignIn = GoogleSignInMock();
+    GoogleMyBusiness.instance.googleSignIn = GoogleSignInMock();
 
     name = "accounts/106941250772149994434/locations/4547712559962801423";
     reviewsManager = ReviewsManager(name: name);
@@ -97,7 +97,8 @@ void main() {
               'https://mybusiness.googleapis.com/v4/$name/reviews?pageSize=$pageSize',
               headers: anyNamed('headers')))
           .thenAnswer((_) async => http.Response(testReviewsJson, 200,
-              headers: await GMBAPI.instance.currentUser().authHeaders));
+              headers:
+                  await GoogleMyBusiness.instance.currentUser().authHeaders));
 
       await _validateFetchReviews();
     });
@@ -110,10 +111,12 @@ void main() {
           .thenAnswer((_) async {
         if (count++ == 1) {
           return http.Response(testReviewsJson, 200,
-              headers: await GMBAPI.instance.currentUser().authHeaders);
+              headers:
+                  await GoogleMyBusiness.instance.currentUser().authHeaders);
         } else {
           return http.Response(testReviewsNextPageJson, 200,
-              headers: await GMBAPI.instance.currentUser().authHeaders);
+              headers:
+                  await GoogleMyBusiness.instance.currentUser().authHeaders);
         }
       });
 
@@ -130,7 +133,8 @@ void main() {
               'https://mybusiness.googleapis.com/v4/$name/reviews?pageSize=$pageSize&pageToken=$nextPageToken',
               headers: anyNamed('headers')))
           .thenAnswer((_) async => http.Response(testReviewsJson, 200,
-              headers: await GMBAPI.instance.currentUser().authHeaders));
+              headers:
+                  await GoogleMyBusiness.instance.currentUser().authHeaders));
 
       await _validateFetchReviews();
     });
@@ -143,7 +147,8 @@ void main() {
               'https://mybusiness.googleapis.com/v4/$name/reviews?pageSize=${ReviewsManager.MAX_PAGE_SIZE}',
               headers: anyNamed('headers')))
           .thenAnswer((_) async => http.Response(testReviewsJson, 200,
-              headers: await GMBAPI.instance.currentUser().authHeaders));
+              headers:
+                  await GoogleMyBusiness.instance.currentUser().authHeaders));
 
       await _validateFetchReviews();
     });

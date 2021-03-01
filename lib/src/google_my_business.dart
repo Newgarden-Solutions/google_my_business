@@ -2,10 +2,11 @@ import 'package:google_sign_in/google_sign_in.dart';
 
 /// Main entry point.
 /// Use this class to get current user or sign in / out with Google Sign In.
-class GMBAPI {
-  GMBAPI._privateConstructor();
+class GoogleMyBusiness {
+  GoogleMyBusiness._privateConstructor();
 
-  static final GMBAPI instance = GMBAPI._privateConstructor();
+  static final GoogleMyBusiness instance =
+      GoogleMyBusiness._privateConstructor();
 
   GoogleSignIn googleSignIn = GoogleSignIn.standard(
     scopes: [
@@ -31,16 +32,17 @@ class GMBAPI {
   }
 
   /// Authenticates using Google Sign In
-  Future<void> signIn() async {
+  Future<GoogleSignInAccount> signIn() async {
     try {
-      await googleSignIn.signIn();
+      return await googleSignIn.signIn();
     } catch (error) {
       print(error);
+      return null;
     }
   }
 
   /// Logs out current user
-  Future<void> signOut() => googleSignIn.disconnect();
+  Future<GoogleSignInAccount> signOut() => googleSignIn.signOut();
 
   /// Returns current user as [GoogleSignInAccount]
   GoogleSignInAccount currentUser() {

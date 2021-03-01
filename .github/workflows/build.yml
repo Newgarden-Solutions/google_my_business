@@ -2,9 +2,9 @@ name: build
 
 on:
   push:
-    branches: [ master ]
+    branches: [ master, release/* ]
   pull_request:
-    branches: [ master ]
+    branches: [ master, release/* ]
 
 jobs:
   build:
@@ -32,5 +32,10 @@ jobs:
       - name: Analyze project source
         run: dart analyze
 
-      - name: Run tests
-        run: flutter test
+      - name: Run tests and generate coverage
+        run: |
+          sudo apt-get update -qq -y
+          sudo apt-get install lcov -y
+          flutter test --coverage
+          genhtml coverage/lcov.info -o coverage/html
+          bash <(curl -s https://codecov.io/bash)
