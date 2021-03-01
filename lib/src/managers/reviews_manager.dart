@@ -1,6 +1,6 @@
 import 'dart:convert' show json;
 
-import 'package:google_my_business/google_my_business.dart';
+import 'package:google_my_business/main.dart';
 import 'package:google_my_business/src/models/error.dart';
 import 'package:http/http.dart' as http;
 
@@ -42,7 +42,7 @@ class ReviewsManager {
 
     final http.Response response = await httpClient.get(
       'https://mybusiness.googleapis.com/v4/$name/reviews?pageSize=$pageSize$pageToken',
-      headers: await GMBAPI.instance.currentUser().authHeaders,
+      headers: await GoogleMyBusiness.instance.currentUser().authHeaders,
     );
 
     if (response.statusCode != 200) {

@@ -2,7 +2,7 @@
 /// Simplifies communication & interaction with GMB API endpoints.
 library google_my_business;
 
-export "src/gmb_api.dart" show GMBAPI;
+export "src/google_my_business.dart" show GoogleMyBusiness;
 export 'src/managers/locations_manager.dart' show LocationsManager;
 export 'src/managers/reviews_manager.dart' show ReviewsManager;
 export "src/models/location/category/category.dart";

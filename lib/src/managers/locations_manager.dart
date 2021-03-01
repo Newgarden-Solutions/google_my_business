@@ -2,7 +2,7 @@ import 'dart:convert' show json;
 
 import 'package:http/http.dart' as http;
 
-import '../gmb_api.dart';
+import '../google_my_business.dart';
 import '../models/error.dart';
 import '../models/location/location.dart';
 
@@ -23,7 +23,7 @@ class LocationsManager {
 
     final http.Response response = await httpClient.get(
       'https://mybusiness.googleapis.com/v4/accounts/$accountId/locations',
-      headers: await GMBAPI.instance.currentUser().authHeaders,
+      headers: await GoogleMyBusiness.instance.currentUser().authHeaders,
     );
 
     if (response.statusCode != 200) {
