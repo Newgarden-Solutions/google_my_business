@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.google_my_business_example">
+    package="com.olegnovosad.example.google_my_business">
    <application
         android:label="google_my_business_example"
         android:icon="@mipmap/ic_launcher">

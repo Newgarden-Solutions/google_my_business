@@ -1,4 +1,4 @@
-package com.example.google_my_business_example
+package com.olegnovosad.example.google_my_business
 
 import io.flutter.embedding.android.FlutterActivity
 
