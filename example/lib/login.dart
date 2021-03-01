@@ -37,8 +37,9 @@ class _LoginState extends State<Login> {
                   ? "Please log in"
                   : _currentUser.displayName),
               RaisedButton(
-                  child: Text(
-                      _currentUser == null ? 'Sign in with Google' : 'Sign Out'),
+                  child: Text(_currentUser == null
+                      ? 'Sign in with Google'
+                      : 'Sign Out'),
                   onPressed: () {
                     if (_currentUser == null) {
                       // In case you would like to sign in manually

@@ -10,11 +10,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Google My Business Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: Login()
-    );
+        title: 'Google My Business Demo',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        home: Login());
   }
 }
