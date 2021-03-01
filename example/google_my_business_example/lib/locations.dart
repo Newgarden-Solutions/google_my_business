@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:google_my_business/main.dart';
 
-class LocationList extends StatefulWidget {
+import 'login.dart';
+
+class Locations extends StatefulWidget {
   @override
-  _LocationListState createState() => _LocationListState();
+  _LocationsState createState() => _LocationsState();
 }
 
-class _LocationListState extends State<LocationList> {
+class _LocationsState extends State<Locations> {
   List<Location> locations = <Location>[];
   bool _isLoading = true;
   LocationsManager _locationsManager;
@@ -26,6 +28,15 @@ class _LocationListState extends State<LocationList> {
     return Scaffold(
       appBar: AppBar(
         title: Text('My Locations'),
+        actions: <Widget>[
+          IconButton(
+              icon: Icon(Icons.exit_to_app),
+              onPressed: () {
+                GoogleMyBusiness.instance.signOut().then((value) =>
+                    Navigator.pushReplacement(context,
+                        MaterialPageRoute(builder: (context) => Login())));
+              })
+        ],
       ),
       body: _buildLocationListWidget(),
     );
