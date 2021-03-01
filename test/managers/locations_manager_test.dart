@@ -43,15 +43,50 @@ void main() {
         expect(
             location.primaryCategory.displayName, 'Ресторан грузинської кухні');
         expect(location.primaryCategory.categoryId, 'gcid:georgian_restaurant');
-        expect(location.primaryCategory.moreHoursTypes.length, 9);
-
-        final moreHoursType = location.primaryCategory.moreHoursTypes[0];
-
-        expect(moreHoursType.hoursTypeId, 'ACCESS');
-        expect(moreHoursType.displayName, 'Access');
-        expect(moreHoursType.localizedDisplayName, 'Години роботи');
+        expect(location.primaryCategory.moreHoursTypes.length, 1);
+        expect(
+            location.primaryCategory.moreHoursTypes[0].hoursTypeId, 'ACCESS');
+        expect(
+            location.primaryCategory.moreHoursTypes[0].displayName, 'Access');
+        expect(location.primaryCategory.moreHoursTypes[0].localizedDisplayName,
+            'Години роботи');
 
         expect(location.websiteUrl, 'http://hinkalnya.com.ua/');
+
+        expect(location.regularHours, isNotNull);
+        expect(location.regularHours.periods, isNotNull);
+        expect(location.regularHours.periods.length, 7);
+        expect(location.regularHours.periods[0].openDay, DayOfWeek.SUNDAY);
+        expect(location.regularHours.periods[0].openTime, '11:00');
+        expect(location.regularHours.periods[0].closeDay, DayOfWeek.SUNDAY);
+        expect(location.regularHours.periods[0].closeTime, '22:00');
+
+        expect(location.specialHours, isNotNull);
+        expect(location.specialHours.specialHourPeriods, isNotNull);
+        expect(location.specialHours.specialHourPeriods.length, 3);
+        expect(
+            location.specialHours.specialHourPeriods[0].startDate, isNotNull);
+        expect(
+            location.specialHours.specialHourPeriods[0].startDate.year, 2019);
+        expect(location.specialHours.specialHourPeriods[0].startDate.month, 4);
+        expect(location.specialHours.specialHourPeriods[0].startDate.day, 28);
+        expect(location.specialHours.specialHourPeriods[0].openTime, "12:00");
+        expect(location.specialHours.specialHourPeriods[0].endDate, isNotNull);
+        expect(location.specialHours.specialHourPeriods[0].endDate.year, 2019);
+        expect(location.specialHours.specialHourPeriods[0].endDate.month, 4);
+        expect(location.specialHours.specialHourPeriods[0].endDate.day, 28);
+        expect(location.specialHours.specialHourPeriods[0].closeTime, "22:00");
+
+        expect(location.serviceArea, isNotNull);
+        expect(location.serviceArea.businessType,
+            BusinessType.CUSTOMER_AND_BUSINESS_LOCATION);
+        expect(location.serviceArea.places, isNotNull);
+        expect(location.serviceArea.places.placeInfos, isNotNull);
+        expect(location.serviceArea.places.placeInfos.length, 1);
+        expect(location.serviceArea.places.placeInfos[0].name,
+            'Львов, Львовская область, Украина, 79000');
+        expect(location.serviceArea.places.placeInfos[0].placeId,
+            'ChIJDchgK3pY2UARmdiS6By9U0U');
 
         expect(location.locationKey, isNotNull);
         expect(location.locationKey.placeId, 'ChIJDchgK3pY2UARmdiS6By9U0U');
@@ -78,6 +113,49 @@ void main() {
 
         expect(location.languageCode, 'uk');
 
+        expect(location.priceLists, isNotNull);
+        expect(location.priceLists.length, 1);
+        expect(location.priceLists[0].priceListId,
+            'a1a0704c-f90e-4cf9-8892-b4b5832a4d5b');
+        expect(location.priceLists[0].labels, isNotNull);
+        expect(location.priceLists[0].labels.length, 1);
+        expect(location.priceLists[0].labels[0].displayName, 'Меню');
+        expect(location.priceLists[0].labels[0].description, isNull);
+        expect(location.priceLists[0].labels[0].languageCode, isNull);
+        expect(location.priceLists[0].sections, isNotNull);
+        expect(location.priceLists[0].sections.length, 1);
+        expect(location.priceLists[0].sections[0].sectionId,
+            '74d7968e-2b92-48c4-82f7-9bd0d31503fa');
+        expect(
+            location.priceLists[0].sections[0].sectionType, SectionType.FOOD);
+        expect(location.priceLists[0].sections[0].labels, isNotNull);
+        expect(location.priceLists[0].sections[0].labels.length, 1);
+        expect(location.priceLists[0].sections[0].labels[0].displayName,
+            'Хінкалі');
+        expect(
+            location.priceLists[0].sections[0].labels[0].description, isNull);
+        expect(
+            location.priceLists[0].sections[0].labels[0].languageCode, isNull);
+        expect(location.priceLists[0].sections[0].items, isNotNull);
+        expect(location.priceLists[0].sections[0].items.length, 1);
+        expect(location.priceLists[0].sections[0].items[0].itemId,
+            'c8133bf8-948a-4c74-aa1e-e9fdd7115264');
+        expect(location.priceLists[0].sections[0].items[0].labels, isNotNull);
+        expect(location.priceLists[0].sections[0].items[0].labels.length, 1);
+        expect(
+            location.priceLists[0].sections[0].items[0].labels[0].displayName,
+            "Хінкалі з м'ясом (1 шт)");
+        expect(
+            location.priceLists[0].sections[0].items[0].labels[0].description,
+            isNull);
+        expect(
+            location.priceLists[0].sections[0].items[0].labels[0].languageCode,
+            isNull);
+        expect(location.priceLists[0].sections[0].items[0].price, isNotNull);
+        expect(location.priceLists[0].sections[0].items[0].price.currencyCode,
+            'UAH');
+        expect(location.priceLists[0].sections[0].items[0].price.units, '19');
+
         expect(location.address, isNotNull);
         expect(location.address.regionCode, 'UA');
         expect(location.address.languageCode, 'uk-Latn');
@@ -89,6 +167,9 @@ void main() {
         expect(location.address.addressLines.length, 2);
         expect(location.address.addressLines[0], '31Д');
         expect(location.address.addressLines[1], 'проспект Слобожанський, 31Д');
+
+        expect(location.profile, isNotNull);
+        expect(location.profile.description, 'Ресторан грузинської кухні');
 
         expect(location.moreHours, null);
       }, (error) {
@@ -128,6 +209,8 @@ void main() {
 
 class LocationsManagerMock extends Mock implements LocationsManager {}
 
+// Dummy json made from different parts.
+// Semantically some values might not be accurate (e.g. placeId different or so) so ignore it.
 final testLocationsJson = """
 {
     "locations": [
@@ -143,46 +226,6 @@ final testLocationsJson = """
                         "hoursTypeId": "ACCESS",
                         "displayName": "Access",
                         "localizedDisplayName": "Години роботи"
-                    },
-                    {
-                        "hoursTypeId": "BRUNCH",
-                        "displayName": "Brunch",
-                        "localizedDisplayName": "Пізній сніданок"
-                    },
-                    {
-                        "hoursTypeId": "DELIVERY",
-                        "displayName": "Delivery",
-                        "localizedDisplayName": "Доставка"
-                    },
-                    {
-                        "hoursTypeId": "DRIVE_THROUGH",
-                        "displayName": "Drive through",
-                        "localizedDisplayName": "Обслуговування без виходу з автомобіля"
-                    },
-                    {
-                        "hoursTypeId": "HAPPY_HOUR",
-                        "displayName": "Happy hours",
-                        "localizedDisplayName": "Години знижок"
-                    },
-                    {
-                        "hoursTypeId": "KITCHEN",
-                        "displayName": "Kitchen",
-                        "localizedDisplayName": "Години роботи кухні"
-                    },
-                    {
-                        "hoursTypeId": "ONLINE_SERVICE_HOURS",
-                        "displayName": "Online service hours",
-                        "localizedDisplayName": "Графік роботи онлайн"
-                    },
-                    {
-                        "hoursTypeId": "TAKEOUT",
-                        "displayName": "Takeout",
-                        "localizedDisplayName": "Їжа із собою"
-                    },
-                    {
-                        "hoursTypeId": "SENIOR_HOURS",
-                        "displayName": "Senior hours",
-                        "localizedDisplayName": "Час для літніх"
                     }
                 ]
             },
@@ -190,6 +233,109 @@ final testLocationsJson = """
             "locationKey": {
                 "placeId": "ChIJDchgK3pY2UARmdiS6By9U0U",
                 "requestId": "47d5953c-1ad5-48dd-860f-35e6392d0404"
+            },
+            "regularHours": {
+                "periods": [
+                    {
+                        "openDay": "SUNDAY",
+                        "openTime": "11:00",
+                        "closeDay": "SUNDAY",
+                        "closeTime": "22:00"
+                    },
+                    {
+                        "openDay": "MONDAY",
+                        "openTime": "11:00",
+                        "closeDay": "MONDAY",
+                        "closeTime": "22:00"
+                    },
+                    {
+                        "openDay": "TUESDAY",
+                        "openTime": "11:00",
+                        "closeDay": "TUESDAY",
+                        "closeTime": "22:00"
+                    },
+                    {
+                        "openDay": "WEDNESDAY",
+                        "openTime": "11:00",
+                        "closeDay": "WEDNESDAY",
+                        "closeTime": "22:00"
+                    },
+                    {
+                        "openDay": "THURSDAY",
+                        "openTime": "11:00",
+                        "closeDay": "THURSDAY",
+                        "closeTime": "22:00"
+                    },
+                    {
+                        "openDay": "FRIDAY",
+                        "openTime": "11:00",
+                        "closeDay": "FRIDAY",
+                        "closeTime": "22:00"
+                    },
+                    {
+                        "openDay": "SATURDAY",
+                        "openTime": "11:00",
+                        "closeDay": "SATURDAY",
+                        "closeTime": "22:00"
+                    }
+                ]
+            },
+            "specialHours": {
+                "specialHourPeriods": [
+                    {
+                        "startDate": {
+                            "year": 2019,
+                            "month": 4,
+                            "day": 28
+                        },
+                        "openTime": "12:00",
+                        "endDate": {
+                            "year": 2019,
+                            "month": 4,
+                            "day": 28
+                        },
+                        "closeTime": "22:00"
+                    },
+                    {
+                        "startDate": {
+                            "year": 2019,
+                            "month": 4,
+                            "day": 29
+                        },
+                        "openTime": "11:00",
+                        "endDate": {
+                            "year": 2019,
+                            "month": 4,
+                            "day": 29
+                        },
+                        "closeTime": "22:00"
+                    },
+                    {
+                        "startDate": {
+                            "year": 2019,
+                            "month": 5,
+                            "day": 1
+                        },
+                        "openTime": "10:00",
+                        "endDate": {
+                            "year": 2019,
+                            "month": 5,
+                            "day": 1
+                        },
+                        "closeTime": "22:00"
+                    }
+                ]
+            },
+            "serviceArea": {
+                "businessType": "CUSTOMER_AND_BUSINESS_LOCATION",
+                "places": {
+                    "placeInfos": [
+                        {
+                            "name": "Львов, Львовская область, Украина, 79000",
+                            "placeId": "ChIJDchgK3pY2UARmdiS6By9U0U"
+                        }
+                    ]
+                }
             },
             "openInfo": {
                 "status": "OPEN",
@@ -208,6 +354,41 @@ final testLocationsJson = """
                 "newReviewUrl": "https://search.google.com/local/writereview?placeid=ChIJDchgK3pY2UARmdiS6By9U0U"
             },
             "languageCode": "uk",
+            "priceLists": [
+                {
+                    "priceListId": "a1a0704c-f90e-4cf9-8892-b4b5832a4d5b",
+                    "labels": [
+                        {
+                            "displayName": "Меню"
+                        }
+                    ],
+                    "sections": [
+                        {
+                            "sectionId": "74d7968e-2b92-48c4-82f7-9bd0d31503fa",
+                            "labels": [
+                                {
+                                    "displayName": "Хінкалі"
+                                }
+                            ],
+                            "items": [
+                                {
+                                    "itemId": "c8133bf8-948a-4c74-aa1e-e9fdd7115264",
+                                    "labels": [
+                                        {
+                                            "displayName": "Хінкалі з м'ясом (1 шт)"
+                                        }
+                                    ],
+                                    "price": {
+                                        "currencyCode": "UAH",
+                                        "units": "19"
+                                    }
+                                }
+                            ],
+                            "sectionType": "FOOD"
+                        }
+                    ]
+                }
+            ],
             "address": {
                 "regionCode": "UA",
                 "languageCode": "uk-Latn",
@@ -218,6 +399,9 @@ final testLocationsJson = """
                     "31Д",
                     "проспект Слобожанський, 31Д"
                 ]
+            },
+            "profile": {
+                "description": "Ресторан грузинської кухні"
             }
         }
     ]

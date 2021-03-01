@@ -32,5 +32,26 @@ void main() {
     test('[init] should not crash when callback is null', () {
       GMBAPI.instance.init(null);
     });
+
+    test('[signIn] should sign in and user should be returned', () async {
+      when(GMBAPI.instance.googleSignIn.signIn())
+          .thenAnswer((_) => Future.value(GoogleSignInAccountMock()));
+      final user = await GMBAPI.instance.signIn();
+      expect(user.displayName, GoogleSignInAccountMock.TEST_DISPLAY_NAME);
+    });
+
+    test('[signIn] should not sign in when error and user should be null',
+        () async {
+      when(GMBAPI.instance.googleSignIn.signIn()).thenThrow(Exception());
+      final user = await GMBAPI.instance.signIn();
+      expect(user, isNull);
+    });
+
+    test('[signOut] should sign out and return current user', () async {
+      when(GMBAPI.instance.googleSignIn.signOut())
+          .thenAnswer((_) => Future.value(GoogleSignInAccountMock()));
+      final user = await GMBAPI.instance.signOut();
+      expect(user.displayName, GoogleSignInAccountMock.TEST_DISPLAY_NAME);
+    });
   });
 }

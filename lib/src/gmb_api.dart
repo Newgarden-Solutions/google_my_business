@@ -31,16 +31,17 @@ class GMBAPI {
   }
 
   /// Authenticates using Google Sign In
-  Future<void> signIn() async {
+  Future<GoogleSignInAccount> signIn() async {
     try {
-      await googleSignIn.signIn();
+      return await googleSignIn.signIn();
     } catch (error) {
       print(error);
+      return null;
     }
   }
 
   /// Logs out current user
-  Future<void> signOut() => googleSignIn.disconnect();
+  Future<GoogleSignInAccount> signOut() => googleSignIn.signOut();
 
   /// Returns current user as [GoogleSignInAccount]
   GoogleSignInAccount currentUser() {

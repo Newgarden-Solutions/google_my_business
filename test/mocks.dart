@@ -14,6 +14,8 @@ class GoogleSignInMock extends Mock implements GoogleSignIn {
 }
 
 class GoogleSignInAccountMock extends Mock implements GoogleSignInAccount {
+  static const TEST_DISPLAY_NAME = "GMB API";
+
   Future<Map<String, String>> get authHeaders {
     return Future.value(<String, String>{
       "Authorization": "Bearer Token",
@@ -21,6 +23,9 @@ class GoogleSignInAccountMock extends Mock implements GoogleSignInAccount {
       HttpHeaders.contentTypeHeader: "application/json; charset=utf-8"
     });
   }
+
+  @override
+  String get displayName => TEST_DISPLAY_NAME;
 }
 
 class HttpClientMock extends Mock implements http.Client {}
