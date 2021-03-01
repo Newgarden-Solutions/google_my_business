@@ -72,6 +72,14 @@ void main() {
         expect(location.specialHours.specialHourPeriods[0].endDate.day, 28);
         expect(location.specialHours.specialHourPeriods[0].closeTime, "22:00");
 
+        expect(location.serviceArea, isNotNull);
+        expect(location.serviceArea.businessType, BusinessType.CUSTOMER_AND_BUSINESS_LOCATION);
+        expect(location.serviceArea.places, isNotNull);
+        expect(location.serviceArea.places.placeInfos, isNotNull);
+        expect(location.serviceArea.places.placeInfos.length, 1);
+        expect(location.serviceArea.places.placeInfos[0].name, 'Львов, Львовская область, Украина, 79000');
+        expect(location.serviceArea.places.placeInfos[0].placeId, 'ChIJDchgK3pY2UARmdiS6By9U0U');
+
         expect(location.locationKey, isNotNull);
         expect(location.locationKey.placeId, 'ChIJDchgK3pY2UARmdiS6By9U0U');
         expect(location.locationKey.requestId,
@@ -179,6 +187,8 @@ void main() {
 
 class LocationsManagerMock extends Mock implements LocationsManager {}
 
+// Dummy json made from different parts.
+// Semantically some values might not be accurate (e.g. placeId different or so) so ignore it.
 final testLocationsJson = """
 {
     "locations": [
@@ -293,6 +303,17 @@ final testLocationsJson = """
                         "closeTime": "22:00"
                     }
                 ]
+            },
+            "serviceArea": {
+                "businessType": "CUSTOMER_AND_BUSINESS_LOCATION",
+                "places": {
+                    "placeInfos": [
+                        {
+                            "name": "Львов, Львовская область, Украина, 79000",
+                            "placeId": "ChIJDchgK3pY2UARmdiS6By9U0U"
+                        }
+                    ]
+                }
             },
             "openInfo": {
                 "status": "OPEN",
