@@ -1,7 +1,7 @@
 # 0.2.1
 
 * Added examples of usage of the package
-* Renamed `GMBAPI` to `GoogleMyBusiness` and also updated main file of the package (`main.dart` now)
+* Renamed `GMBAPI` to `GoogleMyBusiness`
 * Increased coverage, updated README.md with coverage report
 
 # 0.2.0
