@@ -38,3 +38,4 @@ jobs:
           sudo apt-get install lcov -y
           flutter test --coverage
           genhtml coverage/lcov.info -o coverage/html
+          bash <(curl -s https://codecov.io/bash)
