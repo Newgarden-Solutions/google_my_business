@@ -1,11 +1,11 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:google_my_business/google_my_business.dart';
-import 'package:google_my_business/src/gmb_api.dart';
+import 'package:google_my_business/main.dart';
+import 'package:google_my_business/src/google_my_business.dart';
 import 'package:google_my_business/src/managers/locations_manager.dart';
 import 'package:http/http.dart' as http;
 import 'package:mockito/mockito.dart';
 
-import '../mocks.dart';
+import '../../mocks.dart';
 
 void main() {
   LocationsManager locationsManager;
@@ -14,7 +14,7 @@ void main() {
 
   setUp(() {
     // Default values
-    GMBAPI.instance.googleSignIn = GoogleSignInMock();
+    GoogleMyBusiness.instance.googleSignIn = GoogleSignInMock();
 
     accountId = "106941250772149994434";
     locationsManager = LocationsManager(accountId: accountId);
@@ -28,7 +28,8 @@ void main() {
               'https://mybusiness.googleapis.com/v4/accounts/$accountId/locations',
               headers: anyNamed('headers')))
           .thenAnswer((_) async => http.Response(testLocationsJson, 200,
-              headers: await GMBAPI.instance.currentUser().authHeaders));
+              headers:
+                  await GoogleMyBusiness.instance.currentUser().authHeaders));
 
       await locationsManager.fetchLocations((locations) {
         expect(locations.length, 1);
