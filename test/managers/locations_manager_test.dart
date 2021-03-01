@@ -44,9 +44,12 @@ void main() {
             location.primaryCategory.displayName, 'Ресторан грузинської кухні');
         expect(location.primaryCategory.categoryId, 'gcid:georgian_restaurant');
         expect(location.primaryCategory.moreHoursTypes.length, 1);
-        expect(location.primaryCategory.moreHoursTypes[0].hoursTypeId, 'ACCESS');
-        expect(location.primaryCategory.moreHoursTypes[0].displayName, 'Access');
-        expect(location.primaryCategory.moreHoursTypes[0].localizedDisplayName, 'Години роботи');
+        expect(
+            location.primaryCategory.moreHoursTypes[0].hoursTypeId, 'ACCESS');
+        expect(
+            location.primaryCategory.moreHoursTypes[0].displayName, 'Access');
+        expect(location.primaryCategory.moreHoursTypes[0].localizedDisplayName,
+            'Години роботи');
 
         expect(location.websiteUrl, 'http://hinkalnya.com.ua/');
 
@@ -61,8 +64,10 @@ void main() {
         expect(location.specialHours, isNotNull);
         expect(location.specialHours.specialHourPeriods, isNotNull);
         expect(location.specialHours.specialHourPeriods.length, 3);
-        expect(location.specialHours.specialHourPeriods[0].startDate, isNotNull);
-        expect(location.specialHours.specialHourPeriods[0].startDate.year, 2019);
+        expect(
+            location.specialHours.specialHourPeriods[0].startDate, isNotNull);
+        expect(
+            location.specialHours.specialHourPeriods[0].startDate.year, 2019);
         expect(location.specialHours.specialHourPeriods[0].startDate.month, 4);
         expect(location.specialHours.specialHourPeriods[0].startDate.day, 28);
         expect(location.specialHours.specialHourPeriods[0].openTime, "12:00");
@@ -73,12 +78,15 @@ void main() {
         expect(location.specialHours.specialHourPeriods[0].closeTime, "22:00");
 
         expect(location.serviceArea, isNotNull);
-        expect(location.serviceArea.businessType, BusinessType.CUSTOMER_AND_BUSINESS_LOCATION);
+        expect(location.serviceArea.businessType,
+            BusinessType.CUSTOMER_AND_BUSINESS_LOCATION);
         expect(location.serviceArea.places, isNotNull);
         expect(location.serviceArea.places.placeInfos, isNotNull);
         expect(location.serviceArea.places.placeInfos.length, 1);
-        expect(location.serviceArea.places.placeInfos[0].name, 'Львов, Львовская область, Украина, 79000');
-        expect(location.serviceArea.places.placeInfos[0].placeId, 'ChIJDchgK3pY2UARmdiS6By9U0U');
+        expect(location.serviceArea.places.placeInfos[0].name,
+            'Львов, Львовская область, Украина, 79000');
+        expect(location.serviceArea.places.placeInfos[0].placeId,
+            'ChIJDchgK3pY2UARmdiS6By9U0U');
 
         expect(location.locationKey, isNotNull);
         expect(location.locationKey.placeId, 'ChIJDchgK3pY2UARmdiS6By9U0U');
@@ -107,7 +115,8 @@ void main() {
 
         expect(location.priceLists, isNotNull);
         expect(location.priceLists.length, 1);
-        expect(location.priceLists[0].priceListId, 'a1a0704c-f90e-4cf9-8892-b4b5832a4d5b');
+        expect(location.priceLists[0].priceListId,
+            'a1a0704c-f90e-4cf9-8892-b4b5832a4d5b');
         expect(location.priceLists[0].labels, isNotNull);
         expect(location.priceLists[0].labels.length, 1);
         expect(location.priceLists[0].labels[0].displayName, 'Меню');
@@ -115,23 +124,36 @@ void main() {
         expect(location.priceLists[0].labels[0].languageCode, isNull);
         expect(location.priceLists[0].sections, isNotNull);
         expect(location.priceLists[0].sections.length, 1);
-        expect(location.priceLists[0].sections[0].sectionId, '74d7968e-2b92-48c4-82f7-9bd0d31503fa');
-        expect(location.priceLists[0].sections[0].sectionType, SectionType.FOOD);
+        expect(location.priceLists[0].sections[0].sectionId,
+            '74d7968e-2b92-48c4-82f7-9bd0d31503fa');
+        expect(
+            location.priceLists[0].sections[0].sectionType, SectionType.FOOD);
         expect(location.priceLists[0].sections[0].labels, isNotNull);
         expect(location.priceLists[0].sections[0].labels.length, 1);
-        expect(location.priceLists[0].sections[0].labels[0].displayName, 'Хінкалі');
-        expect(location.priceLists[0].sections[0].labels[0].description, isNull);
-        expect(location.priceLists[0].sections[0].labels[0].languageCode, isNull);
+        expect(location.priceLists[0].sections[0].labels[0].displayName,
+            'Хінкалі');
+        expect(
+            location.priceLists[0].sections[0].labels[0].description, isNull);
+        expect(
+            location.priceLists[0].sections[0].labels[0].languageCode, isNull);
         expect(location.priceLists[0].sections[0].items, isNotNull);
         expect(location.priceLists[0].sections[0].items.length, 1);
-        expect(location.priceLists[0].sections[0].items[0].itemId, 'c8133bf8-948a-4c74-aa1e-e9fdd7115264');
+        expect(location.priceLists[0].sections[0].items[0].itemId,
+            'c8133bf8-948a-4c74-aa1e-e9fdd7115264');
         expect(location.priceLists[0].sections[0].items[0].labels, isNotNull);
         expect(location.priceLists[0].sections[0].items[0].labels.length, 1);
-        expect(location.priceLists[0].sections[0].items[0].labels[0].displayName, "Хінкалі з м'ясом (1 шт)");
-        expect(location.priceLists[0].sections[0].items[0].labels[0].description, isNull);
-        expect(location.priceLists[0].sections[0].items[0].labels[0].languageCode, isNull);
+        expect(
+            location.priceLists[0].sections[0].items[0].labels[0].displayName,
+            "Хінкалі з м'ясом (1 шт)");
+        expect(
+            location.priceLists[0].sections[0].items[0].labels[0].description,
+            isNull);
+        expect(
+            location.priceLists[0].sections[0].items[0].labels[0].languageCode,
+            isNull);
         expect(location.priceLists[0].sections[0].items[0].price, isNotNull);
-        expect(location.priceLists[0].sections[0].items[0].price.currencyCode, 'UAH');
+        expect(location.priceLists[0].sections[0].items[0].price.currencyCode,
+            'UAH');
         expect(location.priceLists[0].sections[0].items[0].price.units, '19');
 
         expect(location.address, isNotNull);
