@@ -1,3 +1,9 @@
+# 0.2.1
+
+* Added examples of usage of the package
+* Renamed `GMBAPI` to `GoogleMyBusiness` and also updated main file of the package (`main.dart` now)
+* Increased coverage, updated README.md with coverage report
+
 # 0.2.0
 
 * Added reviews manager to retrieve reviews for a given location

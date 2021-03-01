@@ -11,7 +11,7 @@ dependencies:
     sdk: flutter
 
   google_my_business:
-    path: ../../google_my_business
+    path: ../
 
 flutter:
   uses-material-design: true
