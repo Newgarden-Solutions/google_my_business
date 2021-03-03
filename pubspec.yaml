@@ -16,16 +16,14 @@ dependencies:
     sdk: flutter
 
   # Google
-  google_sign_in: ^4.5.9
+  google_sign_in: ^5.0.0
 
   # Util
-  http: ^0.12.2
+  http: ^0.13.0
 
   # Tests
-  mockito: ^4.1.4
+  mockito: ^5.0.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
-flutter:

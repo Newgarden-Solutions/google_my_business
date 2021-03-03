@@ -22,7 +22,7 @@ class LocationsManager {
     if (httpClient == null) httpClient = http.Client();
 
     final http.Response response = await httpClient.get(
-      'https://mybusiness.googleapis.com/v4/accounts/$accountId/locations',
+      Uri.parse('https://mybusiness.googleapis.com/v4/accounts/$accountId/locations'),
       headers: await GoogleMyBusiness.instance.currentUser().authHeaders,
     );
 

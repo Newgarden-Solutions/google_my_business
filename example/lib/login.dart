@@ -36,7 +36,7 @@ class _LoginState extends State<Login> {
               Text(_currentUser == null
                   ? "Please log in"
                   : _currentUser.displayName),
-              RaisedButton(
+              ElevatedButton(
                   child: Text(_currentUser == null
                       ? 'Sign in with Google'
                       : 'Sign Out'),
