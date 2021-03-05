@@ -1,4 +1,9 @@
+import 'package:json_annotation/json_annotation.dart';
+
+part 'location_key.g.dart';
+
 /// Alternate/surrogate key references for a location.
+@JsonSerializable()
 class LocationKey {
   /// Output only. If this location has a Google+ page associated with it, this is populated with the Google+ page ID for this location.
   final String? plusPageId;
@@ -22,9 +27,7 @@ class LocationKey {
   LocationKey(
       this.plusPageId, this.placeId, this.explicitNoPlaceId, this.requestId);
 
-  LocationKey.fromJson(Map<String, dynamic> json)
-      : plusPageId = json["plusPageId"],
-        placeId = json["placeId"],
-        explicitNoPlaceId = json["explicitNoPlaceId"],
-        requestId = json["requestId"];
+  factory LocationKey.fromJson(Map<String, dynamic> json) =>
+      _$LocationKeyFromJson(json);
+  Map<String, dynamic> toJson() => _$LocationKeyToJson(this);
 }

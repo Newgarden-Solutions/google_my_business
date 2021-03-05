@@ -19,7 +19,6 @@ import 'package:mockito/mockito.dart' as _i1;
 
 class _FakeGoogleSignInAccount extends _i1.Fake
     implements _i2.GoogleSignInAccount {
-
   @override
   bool operator ==(dynamic other) =>
       identical(this, other) ||

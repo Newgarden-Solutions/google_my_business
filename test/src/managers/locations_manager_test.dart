@@ -2,11 +2,12 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:google_my_business/google_my_business.dart';
 import 'package:google_my_business/src/google_my_business.dart';
 import 'package:google_my_business/src/managers/locations_manager.dart';
+import 'package:google_my_business/src/models/location/price_list/section_type.dart';
 import 'package:http/http.dart' as http;
 import 'package:mockito/mockito.dart';
 
-import '../../stubs.mocks.dart';
 import '../../stubs.dart';
+import '../../stubs.mocks.dart';
 
 void main() {
   late LocationsManager locationsManager;
@@ -28,8 +29,10 @@ void main() {
     locationsManager = LocationsManager(accountId: accountId);
     httpClientMock = MockClient();
 
-    when(GoogleMyBusiness.instance.currentUser()).thenReturn(mockGoogleSignInAccount);
-    when(mockGoogleSignInAccount.authHeaders).thenAnswer((_) => mockAuthHeaders);
+    when(GoogleMyBusiness.instance.currentUser())
+        .thenReturn(mockGoogleSignInAccount);
+    when(mockGoogleSignInAccount.authHeaders)
+        .thenAnswer((_) => mockAuthHeaders);
   });
 
   group('Locations', () {
@@ -206,7 +209,8 @@ void main() {
 
     test('[fetchLocations] should call on error when request fails', () async {
       when(httpClientMock.get(
-              Uri.parse('https://mybusiness.googleapis.com/v4/accounts/$accountId/locations'),
+              Uri.parse(
+                  'https://mybusiness.googleapis.com/v4/accounts/$accountId/locations'),
               headers: anyNamed('headers')))
           .thenAnswer((_) async => http.Response("{}", 404));
 

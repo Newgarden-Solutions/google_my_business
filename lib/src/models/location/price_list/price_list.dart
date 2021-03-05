@@ -1,9 +1,14 @@
+import 'package:json_annotation/json_annotation.dart';
+
 import 'label.dart';
 import 'section.dart';
+
+part 'price_list.g.dart';
 
 /// A list of item price information.
 /// Price lists are structured as one or more price lists, each containing one or more sections with one or more items.
 /// For example, food price lists may represent breakfast/lunch/dinner menus, with sections for burgers/steak/seafood.
+@JsonSerializable()
 class PriceList {
   final String? priceListId;
   final List<Label>? labels;
@@ -12,17 +17,7 @@ class PriceList {
 
   PriceList(this.priceListId, this.labels, this.sourceUrl, this.sections);
 
-  PriceList.fromJson(Map<String, dynamic> json)
-      : priceListId = json["priceListId"],
-        labels = json["labels"] == null
-            ? null
-            : (json["labels"] as List)
-                .map((labelJson) => Label.fromJson(labelJson))
-                .toList(),
-        sourceUrl = json["sourceUrl"],
-        sections = json["sections"] == null
-            ? null
-            : (json["sections"] as List)
-                .map((sectionJson) => Section.fromJson(sectionJson))
-                .toList();
+  factory PriceList.fromJson(Map<String, dynamic> json) =>
+      _$PriceListFromJson(json);
+  Map<String, dynamic> toJson() => _$PriceListToJson(this);
 }

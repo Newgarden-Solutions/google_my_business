@@ -1,4 +1,9 @@
+import 'package:json_annotation/json_annotation.dart';
+
+part 'money.g.dart';
+
 /// Represents an amount of money with its currency type.
+@JsonSerializable()
 class Money {
   /// The three-letter currency code defined in ISO 4217.
   final String? currencyCode;
@@ -17,8 +22,6 @@ class Money {
 
   Money(this.currencyCode, this.units, this.nanos);
 
-  Money.fromJson(Map<String, dynamic> json)
-      : currencyCode = json["currencyCode"],
-        units = json["units"],
-        nanos = json["nanos"];
+  factory Money.fromJson(Map<String, dynamic> json) => _$MoneyFromJson(json);
+  Map<String, dynamic> toJson() => _$MoneyToJson(this);
 }

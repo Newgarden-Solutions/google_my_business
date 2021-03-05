@@ -5,7 +5,6 @@ import 'package:http/http.dart' as http;
 import 'package:mockito/annotations.dart';
 
 @GenerateMocks([GoogleSignIn, GoogleSignInAccount, http.Client])
-
 const TEST_DISPLAY_NAME = "GMB API";
 
 final mockAuthHeaders = Future.value(<String, String>{

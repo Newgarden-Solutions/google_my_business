@@ -31,8 +31,10 @@ void main() {
     nextPageToken = null;
     httpClientMock = MockClient();
 
-    when(GoogleMyBusiness.instance.currentUser()).thenReturn(mockGoogleSignInAccount);
-    when(mockGoogleSignInAccount.authHeaders).thenAnswer((_) => mockAuthHeaders);
+    when(GoogleMyBusiness.instance.currentUser())
+        .thenReturn(mockGoogleSignInAccount);
+    when(mockGoogleSignInAccount.authHeaders)
+        .thenAnswer((_) => mockAuthHeaders);
   });
 
   Future<void> _validateFetchReviews() async {
@@ -50,7 +52,7 @@ void main() {
           expect(review1.reviewer!.profilePhotoUrl,
               'https://lh3.googleusercontent.com/a-/AOh14GiSwzu2nbngpCmB3luP6Izd_KTv_wm2Zq0Op690SQ=c0x00000000-cc-rp-ba3');
           expect(review1.reviewer!.displayName, 'Данил Бырзул');
-          expect(review1.reviewer!.isAnonymous, false);
+          expect(review1.reviewer!.isAnonymous, null);
 
           expect(review1.starRating, StarRating.ONE);
 
@@ -71,7 +73,7 @@ void main() {
           expect(review2.reviewer!.profilePhotoUrl,
               'https://lh3.googleusercontent.com/a-/AOh14GgxnobyiCdv9hi_-L69VIJ9DxCoNxdWEcASBrnQ=c0x00000000-cc-rp');
           expect(review2.reviewer!.displayName, 'Вячеслав Крот');
-          expect(review2.reviewer!.isAnonymous, false);
+          expect(review2.reviewer!.isAnonymous, null);
 
           expect(review2.starRating, StarRating.FIVE);
 
@@ -105,7 +107,8 @@ void main() {
   group('Reviews', () {
     test('[fetchReviews] should return a list of reviews on success', () async {
       when(httpClientMock.get(
-              Uri.parse('https://mybusiness.googleapis.com/v4/$name/reviews?pageSize=$pageSize'),
+              Uri.parse(
+                  'https://mybusiness.googleapis.com/v4/$name/reviews?pageSize=$pageSize'),
               headers: anyNamed('headers')))
           .thenAnswer((_) async => http.Response(testReviewsJson, 200,
               headers:
@@ -141,7 +144,8 @@ void main() {
       nextPageToken = "foo";
 
       when(httpClientMock.get(
-              Uri.parse('https://mybusiness.googleapis.com/v4/$name/reviews?pageSize=$pageSize&pageToken=$nextPageToken'),
+              Uri.parse(
+                  'https://mybusiness.googleapis.com/v4/$name/reviews?pageSize=$pageSize&pageToken=$nextPageToken'),
               headers: anyNamed('headers')))
           .thenAnswer((_) async => http.Response(testReviewsJson, 200,
               headers:
@@ -155,7 +159,8 @@ void main() {
       pageSize = ReviewsManager.MAX_PAGE_SIZE * 2;
 
       when(httpClientMock.get(
-              Uri.parse('https://mybusiness.googleapis.com/v4/$name/reviews?pageSize=${ReviewsManager.MAX_PAGE_SIZE}'),
+              Uri.parse(
+                  'https://mybusiness.googleapis.com/v4/$name/reviews?pageSize=${ReviewsManager.MAX_PAGE_SIZE}'),
               headers: anyNamed('headers')))
           .thenAnswer((_) async => http.Response(testReviewsJson, 200,
               headers:
@@ -166,7 +171,8 @@ void main() {
 
     test('[fetchReviews] should call on error when request fails', () async {
       when(httpClientMock.get(
-              Uri.parse('https://mybusiness.googleapis.com/v4/$name/reviews?pageSize=$pageSize'),
+              Uri.parse(
+                  'https://mybusiness.googleapis.com/v4/$name/reviews?pageSize=$pageSize'),
               headers: anyNamed('headers')))
           .thenAnswer((_) async => http.Response('{}', 404));
 
@@ -181,7 +187,8 @@ void main() {
 
     test('[fetchReviews] should call on error when body is empty', () async {
       when(httpClientMock.get(
-              Uri.parse('https://mybusiness.googleapis.com/v4/$name/reviews?pageSize=$pageSize'),
+              Uri.parse(
+                  'https://mybusiness.googleapis.com/v4/$name/reviews?pageSize=$pageSize'),
               headers: anyNamed('headers')))
           .thenAnswer((_) async => http.Response('{}', 200));
 
