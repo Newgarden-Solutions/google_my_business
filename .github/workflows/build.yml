@@ -34,6 +34,7 @@ jobs:
 
       - name: Run tests and generate coverage
         run: |
+          export PATH="$PATH":"/opt/hostedtoolcache/flutter/2.0.0-stable/x64/.pub-cache/bin"
           sudo apt-get update -qq -y
           sudo apt-get install lcov -y
           flutter test --coverage
