@@ -23,7 +23,9 @@ jobs:
         run: flutter --version
 
       - name: Install dependencies
-        run: flutter pub get
+        run: |
+          flutter pub get
+          flutter pub global activate remove_from_coverage
 
       - name: Verify formatting
         run: dart format --output=none --set-exit-if-changed .
@@ -37,5 +39,6 @@ jobs:
           sudo apt-get update -qq -y
           sudo apt-get install lcov -y
           flutter test --coverage
-          genhtml coverage/lcov.info -o coverage/html
+          remove_from_coverage -f coverage/lcov.info -r '.g.dart$'
+          genhtml coverage/lcov.info --output=coverage
           bash <(curl -s https://codecov.io/bash)
