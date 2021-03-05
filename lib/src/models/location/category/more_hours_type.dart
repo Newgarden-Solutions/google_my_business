@@ -1,4 +1,9 @@
+import 'package:json_annotation/json_annotation.dart';
+
+part 'more_hours_type.g.dart';
+
 /// More hours types that a business can offers, in addition to its regular hours.
+@JsonSerializable()
 class MoreHoursType {
   /// Output only. A stable ID provided by Google for this hours type.
   final String? hoursTypeId;
@@ -11,8 +16,7 @@ class MoreHoursType {
 
   MoreHoursType(this.hoursTypeId, this.displayName, this.localizedDisplayName);
 
-  MoreHoursType.fromJson(Map<String, dynamic> json)
-      : hoursTypeId = json["hoursTypeId"],
-        displayName = json["displayName"],
-        localizedDisplayName = json["localizedDisplayName"];
+  factory MoreHoursType.fromJson(Map<String, dynamic> json) =>
+      _$MoreHoursTypeFromJson(json);
+  Map<String, dynamic> toJson() => _$MoreHoursTypeToJson(this);
 }

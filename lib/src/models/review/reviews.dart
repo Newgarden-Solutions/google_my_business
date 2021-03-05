@@ -1,5 +1,10 @@
+import 'package:json_annotation/json_annotation.dart';
+
 import 'review.dart';
 
+part 'reviews.g.dart';
+
+@JsonSerializable()
 class Reviews {
   final List<Review>? reviews;
   final num? averageRating;
@@ -9,13 +14,7 @@ class Reviews {
   Reviews(this.reviews, this.averageRating, this.totalReviewCount,
       this.nextPageToken);
 
-  Reviews.fromJson(Map<String, dynamic> json)
-      : reviews = json['reviews'] == null
-            ? null
-            : (json['reviews'] as List)
-                .map((reviewJson) => Review.fromJson(reviewJson))
-                .toList(),
-        averageRating = json['averageRating'],
-        totalReviewCount = json['totalReviewCount'],
-        nextPageToken = json['nextPageToken'];
+  factory Reviews.fromJson(Map<String, dynamic> json) =>
+      _$ReviewsFromJson(json);
+  Map<String, dynamic> toJson() => _$ReviewsToJson(this);
 }

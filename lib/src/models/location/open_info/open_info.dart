@@ -1,7 +1,12 @@
+import 'package:json_annotation/json_annotation.dart';
+
 import '../common/date.dart';
 import 'open_for_business.dart';
 
+part 'open_info.g.dart';
+
 /// Information related to the opening state of the business.
+@JsonSerializable()
 class OpenInfo {
   /// Indicates whether or not the Location is currently open for business.
   /// All locations are open by default, unless updated to be closed.
@@ -17,11 +22,7 @@ class OpenInfo {
 
   OpenInfo(this.status, this.canReopen, this.openingDate);
 
-  OpenInfo.fromJson(Map<String, dynamic> json)
-      : status = OpenForBusiness.values.firstWhere(
-            (type) => type.toString() == "OpenForBusiness.${json["status"]}"),
-        canReopen = json["canReopen"],
-        openingDate = json["openingDate"] == null
-            ? null
-            : Date.fromJson(json["openingDate"]);
+  factory OpenInfo.fromJson(Map<String, dynamic> json) =>
+      _$OpenInfoFromJson(json);
+  Map<String, dynamic> toJson() => _$OpenInfoToJson(this);
 }

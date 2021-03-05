@@ -19,8 +19,10 @@ void main() {
     GoogleMyBusiness.instance.googleSignIn = mockGoogleSignIn;
 
     // Default behavior
-    when(mockGoogleSignIn.onCurrentUserChanged).thenAnswer((_) => Stream.value(mockGoogleSignInAccount));
-    when(mockGoogleSignIn.signInSilently()).thenAnswer((_) => Future.value(mockGoogleSignInAccount));
+    when(mockGoogleSignIn.onCurrentUserChanged)
+        .thenAnswer((_) => Stream.value(mockGoogleSignInAccount));
+    when(mockGoogleSignIn.signInSilently())
+        .thenAnswer((_) => Future.value(mockGoogleSignInAccount));
     when(mockGoogleSignIn.currentUser).thenReturn(mockGoogleSignInAccount);
     when(mockGoogleSignInAccount.displayName).thenReturn(TEST_DISPLAY_NAME);
   });

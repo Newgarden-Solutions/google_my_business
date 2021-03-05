@@ -13,8 +13,12 @@ import 'open_info/open_info.dart';
 import 'postal_address.dart';
 import 'price_list/price_list.dart';
 import 'service_area/service_area_business.dart';
+import 'package:json_annotation/json_annotation.dart';
+
+part 'location.g.dart';
 
 /// Represents the location of the business
+@JsonSerializable()
 class Location {
   /// Google identifier for this location in the form: accounts/{accountId}/locations/{locationId}
   /// In the context of matches, this field will not be populated.
@@ -134,69 +138,7 @@ class Location {
       this.relationshipData,
       this.moreHours);
 
-  Location.fromJson(Map<String, dynamic> json)
-      : name = json["name"],
-        languageCode = json["languageCode"],
-        storeCode = json["storeCode"],
-        locationName = json["locationName"],
-        primaryPhone = json["primaryPhone"],
-        additionalPhones = json["additionalPhones"] == null
-            ? null
-            : List<String>.from(json["additionalPhones"]),
-        address = json["address"] == null
-            ? null
-            : PostalAddress.fromJson(json["address"]),
-        primaryCategory = json["primaryCategory"] == null
-            ? null
-            : Category.fromJson(json["primaryCategory"]),
-        additionalCategories = json["additionalCategories"] == null
-            ? null
-            : (json["additionalCategories"] as List)
-                .map((categoryJson) => Category.fromJson(categoryJson))
-                .toList(),
-        websiteUrl = json["websiteUrl"],
-        regularHours = json["regularHours"] == null
-            ? null
-            : BusinessHours.fromJson(json["regularHours"]),
-        specialHours = json["specialHours"] == null
-            ? null
-            : SpecialHours.fromJson(json["specialHours"]),
-        serviceArea = json["serviceArea"] == null
-            ? null
-            : ServiceAreaBusiness.fromJson(json["serviceArea"]),
-        locationKey = json["locationKey"] == null
-            ? null
-            : LocationKey.fromJson(json["locationKey"]),
-        labels =
-            json["labels"] == null ? null : List<String>.from(json["labels"]),
-        adWordsLocationExtensions = json["adWordsLocationExtensions"] == null
-            ? null
-            : AdWordsLocationExtensions.fromJson(
-                json["adWordsLocationExtensions"]),
-        latLng =
-            json["latlng"] == null ? null : LatLng.fromJson(json["latlng"]),
-        openInfo = json["openInfo"] == null
-            ? null
-            : OpenInfo.fromJson(json["openInfo"]),
-        locationState = json["locationState"] == null
-            ? null
-            : LocationState.fromJson(json["locationState"]),
-        metadata = json["metadata"] == null
-            ? null
-            : Metadata.fromJson(json["metadata"]),
-        profile =
-            json["profile"] == null ? null : Profile.fromJson(json["profile"]),
-        priceLists = json["priceLists"] == null
-            ? null
-            : (json["priceLists"] as List)
-                .map((priceListJson) => PriceList.fromJson(priceListJson))
-                .toList(),
-        relationshipData = json["relationshipData"] == null
-            ? null
-            : RelationshipData.fromJson(json["relationshipData"]),
-        moreHours = json["moreHours"] == null
-            ? null
-            : (json["moreHours"] as List)
-                .map((moreHoursJson) => MoreHours.fromJson(moreHoursJson))
-                .toList();
+  factory Location.fromJson(Map<String, dynamic> json) =>
+      _$LocationFromJson(json);
+  Map<String, dynamic> toJson() => _$LocationToJson(this);
 }

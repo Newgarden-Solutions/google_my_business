@@ -1,4 +1,9 @@
+import 'package:json_annotation/json_annotation.dart';
+
+part 'location_state.g.dart';
+
 /// Contains a set of booleans that reflect the [https://support.google.com/business/answer/3480862](state of a Location).
+@JsonSerializable()
 class LocationState {
   /// Output only. Indicates whether the place ID associated with this location has updates.
   final bool? isGoogleUpdated;
@@ -76,23 +81,7 @@ class LocationState {
       this.canOperateHealthData,
       this.canOperateLodgingData);
 
-  LocationState.fromJson(Map<String, dynamic> json)
-      : isGoogleUpdated = json["isGoogleUpdated"],
-        isDuplicate = json["isDuplicate"],
-        isSuspended = json["isSuspended"],
-        canUpdate = json["canUpdate"],
-        canDelete = json["canDelete"],
-        isVerified = json["isVerified"],
-        needsReverification = json["needsReverification"],
-        isPendingReview = json["isPendingReview"],
-        isDisabled = json["isDisabled"],
-        isPublished = json["isPublished"],
-        isDisconnected = json["isDisconnected"],
-        isLocalPostApiDisabled = json["isLocalPostApiDisabled"],
-        canModifyServiceList = json["canModifyServiceList"],
-        canHaveFoodMenus = json["canHaveFoodMenus"],
-        hasPendingEdits = json["hasPendingEdits"],
-        hasPendingVerification = json["hasPendingVerification"],
-        canOperateHealthData = json["canOperateHealthData"],
-        canOperateLodgingData = json["canOperateLodgingData"];
+  factory LocationState.fromJson(Map<String, dynamic> json) =>
+      _$LocationStateFromJson(json);
+  Map<String, dynamic> toJson() => _$LocationStateToJson(this);
 }

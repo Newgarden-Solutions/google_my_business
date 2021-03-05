@@ -1,3 +1,8 @@
+import 'package:json_annotation/json_annotation.dart';
+
+part 'reviewer.g.dart';
+
+@JsonSerializable()
 class Reviewer {
   final String? profilePhotoUrl;
   final String? displayName;
@@ -5,8 +10,7 @@ class Reviewer {
 
   Reviewer(this.profilePhotoUrl, this.displayName, this.isAnonymous);
 
-  Reviewer.fromJson(Map<String, dynamic> json)
-      : profilePhotoUrl = json['profilePhotoUrl'],
-        displayName = json['displayName'],
-        isAnonymous = json['isAnonymous'] == null ? false : json['isAnonymous'];
+  factory Reviewer.fromJson(Map<String, dynamic> json) =>
+      _$ReviewerFromJson(json);
+  Map<String, dynamic> toJson() => _$ReviewerToJson(this);
 }

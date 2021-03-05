@@ -1,4 +1,9 @@
+import 'package:json_annotation/json_annotation.dart';
+
+part 'place_info.g.dart';
+
 /// Defines an area that's represented by a place ID.
+@JsonSerializable()
 class PlaceInfo {
   /// The localized name of the place. For example, Scottsdale, AZ.
   final String? name;
@@ -8,7 +13,7 @@ class PlaceInfo {
 
   PlaceInfo(this.name, this.placeId);
 
-  PlaceInfo.fromJson(Map<String, dynamic> json)
-      : name = json["name"],
-        placeId = json["placeId"];
+  factory PlaceInfo.fromJson(Map<String, dynamic> json) =>
+      _$PlaceInfoFromJson(json);
+  Map<String, dynamic> toJson() => _$PlaceInfoToJson(this);
 }

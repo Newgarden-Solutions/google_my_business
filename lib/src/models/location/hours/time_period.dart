@@ -1,7 +1,12 @@
+import 'package:json_annotation/json_annotation.dart';
+
 import 'day_of_week.dart';
+
+part 'time_period.g.dart';
 
 /// Represents a span of time that the business is open, starting on the specified open day/time and closing on the specified close day/time.
 /// The closing time must occur after the opening time, for example later in the same day, or on a subsequent day.
+@JsonSerializable()
 class TimePeriod {
   final DayOfWeek? openDay;
   final String? openTime;
@@ -10,15 +15,7 @@ class TimePeriod {
 
   TimePeriod(this.openDay, this.openTime, this.closeDay, this.closeTime);
 
-  TimePeriod.fromJson(Map<String, dynamic> json)
-      : openDay = json["openDay"] == null
-            ? null
-            : DayOfWeek.values.firstWhere(
-                (type) => type.toString() == "DayOfWeek.${json["openDay"]}"),
-        openTime = json["openTime"],
-        closeDay = json["closeDay"] == null
-            ? null
-            : DayOfWeek.values.firstWhere(
-                (type) => type.toString() == "DayOfWeek.${json["closeDay"]}"),
-        closeTime = json["closeTime"];
+  factory TimePeriod.fromJson(Map<String, dynamic> json) =>
+      _$TimePeriodFromJson(json);
+  Map<String, dynamic> toJson() => _$TimePeriodToJson(this);
 }

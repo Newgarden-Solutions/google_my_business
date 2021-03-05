@@ -1,4 +1,9 @@
+import 'package:json_annotation/json_annotation.dart';
+
+part 'postal_address.g.dart';
+
 /// Represents the address of the location
+@JsonSerializable()
 class PostalAddress {
   final String? languageCode;
   final String? locality;
@@ -17,12 +22,7 @@ class PostalAddress {
       this.sublocality,
       this.addressLines);
 
-  PostalAddress.fromJson(Map<String, dynamic> json)
-      : languageCode = json["languageCode"],
-        locality = json["locality"],
-        regionCode = json["regionCode"],
-        postalCode = json["postalCode"],
-        administrativeArea = json["administrativeArea"],
-        sublocality = json["sublocality"],
-        addressLines = List<String>.from(json["addressLines"]);
+  factory PostalAddress.fromJson(Map<String, dynamic> json) =>
+      _$PostalAddressFromJson(json);
+  Map<String, dynamic> toJson() => _$PostalAddressToJson(this);
 }

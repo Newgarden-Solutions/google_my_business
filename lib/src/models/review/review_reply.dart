@@ -1,10 +1,15 @@
+import 'package:json_annotation/json_annotation.dart';
+
+part 'review_reply.g.dart';
+
+@JsonSerializable()
 class ReviewReply {
   final String? comment;
   final String? updateTime;
 
   ReviewReply(this.comment, this.updateTime);
 
-  ReviewReply.fromJson(Map<String, dynamic> json)
-      : comment = json['comment'],
-        updateTime = json['updateTime'];
+  factory ReviewReply.fromJson(Map<String, dynamic> json) =>
+      _$ReviewReplyFromJson(json);
+  Map<String, dynamic> toJson() => _$ReviewReplyToJson(this);
 }
