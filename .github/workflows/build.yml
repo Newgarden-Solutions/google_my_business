@@ -37,6 +37,7 @@ jobs:
           sudo apt-get update -qq -y
           sudo apt-get install lcov -y
           flutter test --coverage
-          flutter pub run remove_from_coverage:remove_from_coverage -f coverage/lcov.info -r '.g.dart$'
+          flutter pub global activate remove_from_coverage
+          remove_from_coverage -f coverage/lcov.info -r '.g.dart$'
           genhtml coverage/lcov.info --output=coverage
           bash <(curl -s https://codecov.io/bash)
