@@ -18,7 +18,16 @@ import 'package:mockito/mockito.dart' as _i1;
 // ignore_for_file: unnecessary_parenthesis
 
 class _FakeGoogleSignInAccount extends _i1.Fake
-    implements _i2.GoogleSignInAccount {}
+    implements _i2.GoogleSignInAccount {
+
+  @override
+  bool operator ==(dynamic other) =>
+      identical(this, other) ||
+      other is _FakeGoogleSignInAccount && runtimeType == other.runtimeType;
+
+  @override
+  int get hashCode => 0;
+}
 
 class _FakeGoogleSignInAuthentication extends _i1.Fake
     implements _i2.GoogleSignInAuthentication {}
