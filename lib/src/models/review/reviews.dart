@@ -1,10 +1,10 @@
 import 'review.dart';
 
 class Reviews {
-  final List<Review> reviews;
-  final num averageRating;
-  final num totalReviewCount;
-  final String nextPageToken;
+  final List<Review>? reviews;
+  final num? averageRating;
+  final num? totalReviewCount;
+  final String? nextPageToken;
 
   Reviews(this.reviews, this.averageRating, this.totalReviewCount,
       this.nextPageToken);

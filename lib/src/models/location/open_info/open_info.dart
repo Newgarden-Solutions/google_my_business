@@ -8,12 +8,12 @@ class OpenInfo {
   final OpenForBusiness status;
 
   /// Output only. Indicates whether this business is eligible for re-open.
-  final bool canReopen;
+  final bool? canReopen;
 
   /// The date on which the location first opened.
   /// If the exact day is not known, month and year only can be provided.
   /// The date must be in the past or be no more than one year in the future.
-  final Date openingDate;
+  final Date? openingDate;
 
   OpenInfo(this.status, this.canReopen, this.openingDate);
 

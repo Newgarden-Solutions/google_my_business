@@ -3,8 +3,8 @@
 /// Unless specified otherwise, this must conform to the [http://www.unoosa.org/pdf/icg/2012/template/WGS_84.pdf](WGS84 standard).
 /// Values must be within normalized ranges.
 class LatLng {
-  final num latitude;
-  final num longitude;
+  final num? latitude;
+  final num? longitude;
 
   LatLng(this.latitude, this.longitude);
 

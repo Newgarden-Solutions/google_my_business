@@ -1,6 +1,6 @@
 class ReviewReply {
-  final String comment;
-  final String updateTime;
+  final String? comment;
+  final String? updateTime;
 
   ReviewReply(this.comment, this.updateTime);
 

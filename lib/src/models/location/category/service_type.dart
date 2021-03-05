@@ -1,7 +1,7 @@
 /// A message describing a service type that the business offers
 class ServiceType {
-  final String serviceTypeId;
-  final String displayName;
+  final String? serviceTypeId;
+  final String? displayName;
 
   ServiceType(this.serviceTypeId, this.displayName);
 

@@ -5,10 +5,10 @@ import 'service_type.dart';
 /// For a list of valid category IDs, and the mappings to their human-readable names,
 /// see https://developers.google.com/my-business/reference/rest/v4/categories/list
 class Category {
-  final String displayName;
-  final String categoryId;
-  final List<ServiceType> serviceTypes;
-  final List<MoreHoursType> moreHoursTypes;
+  final String? displayName;
+  final String? categoryId;
+  final List<ServiceType>? serviceTypes;
+  final List<MoreHoursType>? moreHoursTypes;
 
   Category(this.displayName, this.categoryId, this.serviceTypes,
       this.moreHoursTypes);

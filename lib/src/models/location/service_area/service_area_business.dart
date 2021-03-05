@@ -5,13 +5,13 @@ import 'business_type.dart';
 /// Service area businesses provide their service at the customer's location (for example, a locksmith or plumber).
 class ServiceAreaBusiness {
   /// Indicates the [BusinessType] of the service area business.
-  final BusinessType businessType;
+  final BusinessType? businessType;
 
   /// Output only. The area that this business serves centered around a point.
-  final PointRadius radius;
+  final PointRadius? radius;
 
   /// The area that this business serves defined through a set of places.
-  final Places places;
+  final Places? places;
 
   ServiceAreaBusiness(this.businessType, this.radius, this.places);
 
