@@ -2,7 +2,7 @@ import 'special_hour_period.dart';
 
 /// Represents a set of time periods when a location's operational hours differ from its normal business hours.
 class SpecialHours {
-  final List<SpecialHourPeriod> specialHourPeriods;
+  final List<SpecialHourPeriod>? specialHourPeriods;
 
   SpecialHours(this.specialHourPeriods);
 

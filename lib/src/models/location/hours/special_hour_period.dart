@@ -27,7 +27,7 @@ class SpecialHourPeriod {
   /// The wall time on `startDate` when a location opens, expressed in 24hr ISO 8601 extended format.
   /// (hh:mm) Valid values are 00:00-24:00, where 24:00 represents midnight at the end of the specified day field.
   /// Must be specified if `isClosed` is false.
-  final String openTime;
+  final String? openTime;
 
   /// The calendar date this special hour period ends on.
   /// If `endDate` field is not set, default to the date specified in `startDate`.
@@ -37,10 +37,10 @@ class SpecialHourPeriod {
   /// The wall time on `endDate` when a location closes, expressed in 24hr ISO 8601 extended format.
   /// (hh:mm) Valid values are 00:00-24:00, where 24:00 represents midnight at the end of the specified day field.
   /// Must be specified if `isClosed` is false.
-  final String closeTime;
+  final String? closeTime;
 
   /// If true, `endDate`, `openTime`, and `closeTime` are ignored, and the date specified in `startDate` is treated as the location being closed for the entire day.
-  final bool isClosed;
+  final bool? isClosed;
 
   SpecialHourPeriod(this.startDate, this.openTime, this.endDate, this.closeTime,
       this.isClosed);

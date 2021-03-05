@@ -4,14 +4,14 @@ import 'review_reply.dart';
 import 'reviewer.dart';
 
 class Review {
-  final String name;
-  final String reviewId;
-  final Reviewer reviewer;
-  final StarRating starRating;
-  final String comment;
-  final String createTime;
-  final String updateTime;
-  final ReviewReply reviewReply;
+  final String? name;
+  final String? reviewId;
+  final Reviewer? reviewer;
+  final StarRating? starRating;
+  final String? comment;
+  final String? createTime;
+  final String? updateTime;
+  final ReviewReply? reviewReply;
 
   Review(this.name, this.reviewId, this.reviewer, this.starRating, this.comment,
       this.createTime, this.updateTime, this.reviewReply);

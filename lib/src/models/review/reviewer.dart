@@ -1,7 +1,7 @@
 class Reviewer {
-  final String profilePhotoUrl;
-  final String displayName;
-  final bool isAnonymous;
+  final String? profilePhotoUrl;
+  final String? displayName;
+  final bool? isAnonymous;
 
   Reviewer(this.profilePhotoUrl, this.displayName, this.isAnonymous);
 

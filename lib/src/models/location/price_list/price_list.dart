@@ -5,10 +5,10 @@ import 'section.dart';
 /// Price lists are structured as one or more price lists, each containing one or more sections with one or more items.
 /// For example, food price lists may represent breakfast/lunch/dinner menus, with sections for burgers/steak/seafood.
 class PriceList {
-  final String priceListId;
-  final List<Label> labels;
-  final String sourceUrl;
-  final List<Section> sections;
+  final String? priceListId;
+  final List<Label>? labels;
+  final String? sourceUrl;
+  final List<Section>? sections;
 
   PriceList(this.priceListId, this.labels, this.sourceUrl, this.sections);
 

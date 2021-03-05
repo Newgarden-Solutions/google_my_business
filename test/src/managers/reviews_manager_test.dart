@@ -4,24 +4,35 @@ import 'package:google_my_business/src/managers/reviews_manager.dart';
 import 'package:http/http.dart' as http;
 import 'package:mockito/mockito.dart';
 
-import '../../mocks.dart';
+import '../../stubs.mocks.dart';
+import '../../stubs.dart';
 
 void main() {
-  ReviewsManager reviewsManager;
+  late ReviewsManager reviewsManager;
+  late var pageSize;
+
   var name;
-  var pageSize;
   var nextPageToken;
   var httpClientMock;
 
+  // Mocks
+  late MockGoogleSignIn mockGoogleSignIn;
+  late MockGoogleSignInAccount mockGoogleSignInAccount;
+
   setUp(() {
     // Default values
-    GoogleMyBusiness.instance.googleSignIn = GoogleSignInMock();
+    mockGoogleSignIn = MockGoogleSignIn();
+    mockGoogleSignInAccount = MockGoogleSignInAccount();
+    GoogleMyBusiness.instance.googleSignIn = mockGoogleSignIn;
 
     name = "accounts/106941250772149994434/locations/4547712559962801423";
     reviewsManager = ReviewsManager(name: name);
     pageSize = ReviewsManager.MAX_PAGE_SIZE;
     nextPageToken = null;
-    httpClientMock = HttpClientMock();
+    httpClientMock = MockClient();
+
+    when(GoogleMyBusiness.instance.currentUser()).thenReturn(mockGoogleSignInAccount);
+    when(mockGoogleSignInAccount.authHeaders).thenAnswer((_) => mockAuthHeaders);
   });
 
   Future<void> _validateFetchReviews() async {
@@ -36,10 +47,10 @@ void main() {
               'AbFvOqmfI-JoFLOEqmBN-JqT0BFKxGR5b5t9ZuutWki9hbnFnp6h_tWsI-8SajSWhxmvwAFBAAgH');
 
           expect(review1.reviewer, isNotNull);
-          expect(review1.reviewer.profilePhotoUrl,
+          expect(review1.reviewer!.profilePhotoUrl,
               'https://lh3.googleusercontent.com/a-/AOh14GiSwzu2nbngpCmB3luP6Izd_KTv_wm2Zq0Op690SQ=c0x00000000-cc-rp-ba3');
-          expect(review1.reviewer.displayName, 'Данил Бырзул');
-          expect(review1.reviewer.isAnonymous, false);
+          expect(review1.reviewer!.displayName, 'Данил Бырзул');
+          expect(review1.reviewer!.isAnonymous, false);
 
           expect(review1.starRating, StarRating.ONE);
 
@@ -57,10 +68,10 @@ void main() {
               'AbFvOqkNhKOO17hiA6Dg1-HNrS6Vtjv71nAMxEdVXdIlVOC4xshndwUfGS9uSLgisU6T7hDMHMjsKg');
 
           expect(review2.reviewer, isNotNull);
-          expect(review2.reviewer.profilePhotoUrl,
+          expect(review2.reviewer!.profilePhotoUrl,
               'https://lh3.googleusercontent.com/a-/AOh14GgxnobyiCdv9hi_-L69VIJ9DxCoNxdWEcASBrnQ=c0x00000000-cc-rp');
-          expect(review2.reviewer.displayName, 'Вячеслав Крот');
-          expect(review2.reviewer.isAnonymous, false);
+          expect(review2.reviewer!.displayName, 'Вячеслав Крот');
+          expect(review2.reviewer!.isAnonymous, false);
 
           expect(review2.starRating, StarRating.FIVE);
 
@@ -72,9 +83,9 @@ void main() {
           expect(review2.updateTime, '2020-09-07T19:27:46.840Z');
 
           expect(review2.reviewReply, isNotNull);
-          expect(review2.reviewReply.comment,
+          expect(review2.reviewReply!.comment,
               'Спасибо за отзыв, приходите ещё 🙂');
-          expect(review2.reviewReply.updateTime, '2020-10-17T06:49:49.916Z');
+          expect(review2.reviewReply!.updateTime, '2020-10-17T06:49:49.916Z');
 
           expect(review2.name,
               'accounts/106941250772149994434/locations/4547712559962801423/reviews/AbFvOqkNhKOO17hiA6Dg1-HNrS6Vtjv71nAMxEdVXdIlVOC4xshndwUfGS9uSLgisU6T7hDMHMjsKg');
@@ -94,11 +105,11 @@ void main() {
   group('Reviews', () {
     test('[fetchReviews] should return a list of reviews on success', () async {
       when(httpClientMock.get(
-              'https://mybusiness.googleapis.com/v4/$name/reviews?pageSize=$pageSize',
+              Uri.parse('https://mybusiness.googleapis.com/v4/$name/reviews?pageSize=$pageSize'),
               headers: anyNamed('headers')))
           .thenAnswer((_) async => http.Response(testReviewsJson, 200,
               headers:
-                  await GoogleMyBusiness.instance.currentUser().authHeaders));
+                  await GoogleMyBusiness.instance.currentUser()!.authHeaders));
 
       await _validateFetchReviews();
     });
@@ -112,11 +123,11 @@ void main() {
         if (count++ == 1) {
           return http.Response(testReviewsJson, 200,
               headers:
-                  await GoogleMyBusiness.instance.currentUser().authHeaders);
+                  await GoogleMyBusiness.instance.currentUser()!.authHeaders);
         } else {
           return http.Response(testReviewsNextPageJson, 200,
               headers:
-                  await GoogleMyBusiness.instance.currentUser().authHeaders);
+                  await GoogleMyBusiness.instance.currentUser()!.authHeaders);
         }
       });
 
@@ -130,11 +141,11 @@ void main() {
       nextPageToken = "foo";
 
       when(httpClientMock.get(
-              'https://mybusiness.googleapis.com/v4/$name/reviews?pageSize=$pageSize&pageToken=$nextPageToken',
+              Uri.parse('https://mybusiness.googleapis.com/v4/$name/reviews?pageSize=$pageSize&pageToken=$nextPageToken'),
               headers: anyNamed('headers')))
           .thenAnswer((_) async => http.Response(testReviewsJson, 200,
               headers:
-                  await GoogleMyBusiness.instance.currentUser().authHeaders));
+                  await GoogleMyBusiness.instance.currentUser()!.authHeaders));
 
       await _validateFetchReviews();
     });
@@ -144,18 +155,18 @@ void main() {
       pageSize = ReviewsManager.MAX_PAGE_SIZE * 2;
 
       when(httpClientMock.get(
-              'https://mybusiness.googleapis.com/v4/$name/reviews?pageSize=${ReviewsManager.MAX_PAGE_SIZE}',
+              Uri.parse('https://mybusiness.googleapis.com/v4/$name/reviews?pageSize=${ReviewsManager.MAX_PAGE_SIZE}'),
               headers: anyNamed('headers')))
           .thenAnswer((_) async => http.Response(testReviewsJson, 200,
               headers:
-                  await GoogleMyBusiness.instance.currentUser().authHeaders));
+                  await GoogleMyBusiness.instance.currentUser()!.authHeaders));
 
       await _validateFetchReviews();
     });
 
     test('[fetchReviews] should call on error when request fails', () async {
       when(httpClientMock.get(
-              'https://mybusiness.googleapis.com/v4/$name/reviews?pageSize=$pageSize',
+              Uri.parse('https://mybusiness.googleapis.com/v4/$name/reviews?pageSize=$pageSize'),
               headers: anyNamed('headers')))
           .thenAnswer((_) async => http.Response('{}', 404));
 
@@ -170,7 +181,7 @@ void main() {
 
     test('[fetchReviews] should call on error when body is empty', () async {
       when(httpClientMock.get(
-              'https://mybusiness.googleapis.com/v4/$name/reviews?pageSize=$pageSize',
+              Uri.parse('https://mybusiness.googleapis.com/v4/$name/reviews?pageSize=$pageSize'),
               headers: anyNamed('headers')))
           .thenAnswer((_) async => http.Response('{}', 200));
 
@@ -179,7 +190,7 @@ void main() {
       }, (progress, reviews) {
         // No progress should be triggered
       }, (error) {
-        expect(error.code, 401);
+        expect(error!.code, 401);
         expect(error.message,
             'Failed to fetch reviews. Possibly not enough rights for a given location');
         expect(error.status, 'UNAUTHORIZED');
@@ -194,7 +205,7 @@ void main() {
       }, (progress, reviews) {
         // No progress should be triggered
       }, (error) {
-        expect(error.code, 401);
+        expect(error!.code, 401);
         expect(error.message,
             "Request had invalid authentication credentials. Expected OAuth 2 access token, login cookie or other valid authentication credential. See https://developers.google.com/identity/sign-in/web/devconsole-project.");
         expect(error.status, "UNAUTHENTICATED");
