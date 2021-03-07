@@ -9,11 +9,8 @@ issue_tracker: https://github.com/Newgarden-Solutions/google_my_business/issues
 
 environment:
   sdk: '>=2.12.0 <3.0.0'
-  flutter: ">=1.17.0"
 
 dependencies:
-  flutter:
-    sdk: flutter
 
   # Google
   google_sign_in: ^5.0.0
@@ -26,7 +23,6 @@ dependencies:
   mockito: ^5.0.0
 
 dev_dependencies:
-  flutter_test:
-    sdk: flutter
+  test: ^1.16.5
   build_runner: ^1.11.5
   json_serializable: ^4.0.2

@@ -1,4 +1,4 @@
-import 'package:flutter_test/flutter_test.dart';
+import 'package:test/test.dart';
 import 'package:google_my_business/google_my_business.dart';
 import 'package:google_my_business/src/google_my_business.dart';
 import 'package:google_my_business/src/managers/locations_manager.dart';
