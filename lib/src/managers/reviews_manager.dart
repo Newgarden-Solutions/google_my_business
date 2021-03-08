@@ -6,6 +6,7 @@ import 'package:http/http.dart' as http;
 
 import '../common/util.dart';
 
+/// Responsible for retrieving and managing reviews for the given location (name).
 class ReviewsManager {
   /// It is possible to retrieve up to 50 reviews in a single request
   static const int MAX_PAGE_SIZE = 50;
@@ -13,7 +14,7 @@ class ReviewsManager {
   /// Contains list of [Reviews] for buffering purposes during requests
   final List<Reviews> _reviewsBuffer = [];
 
-  /// Contains the list of fetched [Reviews] for a given location
+  /// Contains the list of fetched [Review] for a given location
   final List<Review> reviews = [];
 
   /// Total review count for a given location
@@ -26,6 +27,14 @@ class ReviewsManager {
 
   ReviewsManager({this.name});
 
+  /// Fetches accounts from GMB API
+  ///
+  /// @funParameter onSuccess([List]<[Review]> locations) - success callback - contains list of reviews for the given location
+  /// @funParameter onProgress([num] progress, [List]<[Review]> reviews) - progress callback - contains progress amount and preliminary reviews for that progress
+  /// @funParameter onError([Error] error) - error callback - called when error occurs during communication with GMB API
+  /// @funParameter httpClient - [http.Client] custom client if needed, otherwise `http.Client()` will be used
+  /// @funParameter nextPageToken - token for the next page of reviews. If null - the first page of the reviews will be retrieved.
+  /// @funParameter pageSize - amount of reviews to retrieve per one page. Maximum is [MAX_PAGE_SIZE].
   Future<void> fetchReviews(
       Function(List<Review> reviews) onSuccess,
       Function(num progress, List<Review> reviews) onProgress,
