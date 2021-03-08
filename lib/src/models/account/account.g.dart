@@ -10,14 +10,17 @@ Account _$AccountFromJson(Map<String, dynamic> json) {
   return Account(
     json['name'] as String,
     json['accountName'] as String,
-    json['primaryOwner'] as String,
+    json['primaryOwner'] as String?,
     _$enumDecode(_$AccountTypeEnumMap, json['type']),
-    _$enumDecode(_$AccountRoleEnumMap, json['role']),
+    _$enumDecodeNullable(_$AccountRoleEnumMap, json['role']),
     _$enumDecode(_$VerificationStateEnumMap, json['verificationState']),
     _$enumDecode(_$VettedStateEnumMap, json['vettedState']),
-    json['accountNumber'] as String,
-    _$enumDecode(_$PermissionLevelEnumMap, json['permissionLevel']),
-    OrganizationInfo.fromJson(json['organizationInfo'] as Map<String, dynamic>),
+    json['accountNumber'] as String?,
+    _$enumDecodeNullable(_$PermissionLevelEnumMap, json['permissionLevel']),
+    json['organizationInfo'] == null
+        ? null
+        : OrganizationInfo.fromJson(
+            json['organizationInfo'] as Map<String, dynamic>),
   );
 }
 
@@ -68,6 +71,17 @@ const _$AccountTypeEnumMap = {
   AccountType.USER_GROUP: 'USER_GROUP',
   AccountType.ORGANIZATION: 'ORGANIZATION',
 };
+
+K? _$enumDecodeNullable<K, V>(
+  Map<K, V> enumValues,
+  dynamic source, {
+  K? unknownValue,
+}) {
+  if (source == null) {
+    return null;
+  }
+  return _$enumDecode<K, V>(enumValues, source, unknownValue: unknownValue);
+}
 
 const _$AccountRoleEnumMap = {
   AccountRole.ACCOUNT_ROLE_UNSPECIFIED: 'ACCOUNT_ROLE_UNSPECIFIED',

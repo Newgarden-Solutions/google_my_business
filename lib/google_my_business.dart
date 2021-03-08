@@ -3,8 +3,9 @@
 library google_my_business;
 
 export "src/google_my_business.dart" show GoogleMyBusiness;
-export 'src/managers/locations_manager.dart' show LocationsManager;
-export 'src/managers/reviews_manager.dart' show ReviewsManager;
+export "src/models/error.dart";
+
+export "src/managers/locations_manager.dart" show LocationsManager;
 export "src/models/location/category/category.dart";
 export "src/models/location/category/more_hours_type.dart";
 export "src/models/location/category/service_type.dart";
@@ -36,9 +37,20 @@ export "src/models/location/service_area/place_info.dart";
 export "src/models/location/service_area/places.dart";
 export "src/models/location/service_area/point_radius.dart";
 export "src/models/location/service_area/service_area_business.dart";
+
+export "src/managers/reviews_manager.dart" show ReviewsManager;
 export "src/models/review/review.dart";
 export "src/models/review/review_reply.dart";
 export "src/models/review/reviewer.dart";
 export "src/models/review/reviews.dart";
 export "src/models/review/star_rating.dart";
-export "src/models/error.dart";
+
+export "src/managers/accounts_manager.dart" show AccountsManager;
+export "src/models/account/accounts.dart";
+export "src/models/account/account.dart";
+export "src/models/account/account_type.dart";
+export "src/models/account/account_role.dart";
+export "src/models/account/organization_info.dart";
+export "src/models/account/permission_level.dart";
+export "src/models/account/verification_state.dart";
+export "src/models/account/vetted_state.dart";

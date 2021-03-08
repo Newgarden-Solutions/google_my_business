@@ -24,14 +24,15 @@ class Account {
   /// Required. Input only.
   /// The resource name of the account which will be the primary owner of the account being created.
   /// It should be of the form `accounts/{account_id}/`.
-  final String primaryOwner;
+  final String? primaryOwner;
 
   /// Required. Contains the type of account.
   /// Accounts of type PERSONAL and ORGANIZATION cannot be created using this API.
   final AccountType type;
 
   /// Output only. Specifies the AccountRole of this account.
-  final AccountRole role;
+  /// Not present for PERSONAL or ACCOUNT_TYPE_UNSPECIFIED [AccountType]
+  final AccountRole? role;
 
   /// Output only. If verified, future locations that are created are automatically connected to Google Maps, and have Google+ pages created, without requiring moderation.
   final VerificationState verificationState;
@@ -41,14 +42,15 @@ class Account {
   final VettedState vettedState;
 
   /// Output only. Account reference number if provisioned.
-  final String accountNumber;
+  final String? accountNumber;
 
   /// Output only. Specifies the permission level the user has for this account.
-  final PermissionLevel permissionLevel;
+  /// Not present for PERSONAL or ACCOUNT_TYPE_UNSPECIFIED [AccountType]
+  final PermissionLevel? permissionLevel;
 
   /// Output only. Additional info for an organization.
   /// This is populated only for an organization account.
-  final OrganizationInfo organizationInfo;
+  final OrganizationInfo? organizationInfo;
 
   Account(
       this.name,

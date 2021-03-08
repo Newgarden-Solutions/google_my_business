@@ -2,6 +2,7 @@
 enum AccountType {
   /// Not specified.
   ACCOUNT_TYPE_UNSPECIFIED,
+
   /// An end-user account.
   PERSONAL,
 
