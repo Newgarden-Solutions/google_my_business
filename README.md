@@ -6,9 +6,13 @@
 Dart / Flutter [package](https://pub.dev/packages/google_my_business) to work with Google My Business API. 
 Simplifies communication & interaction with GMB API endpoints.
 
-More info on GMB API at [Google My Business](https://developers.google.com/my-business)
+More info on Google My Business at [Google My Business](https://developers.google.com/my-business)
+Google My Business API reference can be found [here](https://developers.google.com/my-business/ref_overview)
 
 ## Getting Started
+
+*NOTICE:*
+*Package is in active development, so some APIs might have breaking changes from version to version before 1.0.0*
 
 ### Authentication
 
@@ -20,10 +24,11 @@ Supported endpoints:
 
 * [Locations](https://developers.google.com/my-business/reference/rest/v4/accounts.locations)
 * [Reviews](https://developers.google.com/my-business/reference/rest/v4/accounts.locations.reviews)
+* [Accounts](https://developers.google.com/my-business/reference/accountmanagement/rest)
 
 ### Examples
 
-Example simple app can be found at [/examples](https://github.com/Newgarden-Solutions/google_my_business/tree/master/example)
+Example simple app can be found at [/example](https://github.com/Newgarden-Solutions/google_my_business/tree/master/example)
 
 #### Login
 
@@ -56,7 +61,34 @@ To sign out current user:
 GoogleMyBusiness.instance.signOut();
 ```
 
-#### Locations
+#### Managers
+
+All managers are responsible for managing their entity, e.g. account, location, review etc.
+All of the follow generally the same structure. Some examples of usage can be found below.
+
+##### Accounts
+
+```dart
+_accountsManager = AccountsManager();
+
+// ...
+
+await _accountsManager.fetchAccounts((accounts) {
+  print("Total accounts: ${accounts.length}");
+
+  setState(() {
+    _accounts = accounts;
+    _isLoading = false;
+  });
+}, (error) {
+  print('Google My Business API: ${error.code} - ${error.message}');
+  setState(() {
+    _isLoading = false;
+  });
+});
+```
+
+##### Locations
 
 Retrieve locations:
 
