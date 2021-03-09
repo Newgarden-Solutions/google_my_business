@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:google_my_business/google_my_business.dart';
-import 'locations.dart';
+import 'package:google_my_business/google_my_business.dart'
+    show GoogleMyBusiness;
 import 'package:google_sign_in/google_sign_in.dart';
+
+import 'accounts.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -10,7 +12,7 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-  GoogleSignInAccount _currentUser;
+  GoogleSignInAccount? _currentUser;
 
   @override
   void initState() {
@@ -19,6 +21,9 @@ class _LoginState extends State<Login> {
     GoogleMyBusiness.instance.init((user) {
       setState(() {
         _currentUser = user;
+
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => Accounts()));
       });
     });
   }
@@ -33,9 +38,7 @@ class _LoginState extends State<Login> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Text(_currentUser == null
-                  ? "Please log in"
-                  : _currentUser.displayName),
+              Text(_currentUser?.displayName ?? "Please log in"),
               ElevatedButton(
                   child: Text(_currentUser == null
                       ? 'Sign in with Google'
@@ -50,7 +53,7 @@ class _LoginState extends State<Login> {
                           Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => Locations()));
+                                  builder: (context) => Accounts()));
                           // Use other API, open a new page or whatever
                           // to access user, use GoogleMyBusiness.instance.currentUser()
                         });

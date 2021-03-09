@@ -88,7 +88,7 @@ class Location {
   /// When creating a location, this field is ignored if the provided address geocodes successfully.
   /// This field is only returned on get requests if the user-provided `latlng` value was accepted during create, or the `latlng` value was updated through the Google My Business website.
   /// This field cannot be updated.
-  final LatLng? latLng;
+  final LatLng? latlng;
 
   /// A flag that indicates whether the location is currently open for business.
   final OpenInfo? openInfo;
@@ -129,7 +129,7 @@ class Location {
       this.locationKey,
       this.labels,
       this.adWordsLocationExtensions,
-      this.latLng,
+      this.latlng,
       this.openInfo,
       this.locationState,
       this.metadata,

@@ -7,10 +7,10 @@ part 'point_radius.g.dart';
 /// A radius around a particular point (latitude/longitude).
 @JsonSerializable()
 class PointRadius {
-  final LatLng? latLng;
+  final LatLng? latlng;
   final num? radiusKm;
 
-  PointRadius(this.latLng, this.radiusKm);
+  PointRadius(this.latlng, this.radiusKm);
 
   factory PointRadius.fromJson(Map<String, dynamic> json) =>
       _$PointRadiusFromJson(json);

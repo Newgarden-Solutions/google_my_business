@@ -12,3 +12,13 @@ final mockAuthHeaders = Future.value(<String, String>{
   "X-Goog-AuthUser": "0",
   HttpHeaders.contentTypeHeader: "application/json; charset=utf-8"
 });
+
+final testErrorJson = """
+{
+    "error": {
+        "code": 401,
+        "message": "Request had invalid authentication credentials. Expected OAuth 2 access token, login cookie or other valid authentication credential. See https://developers.google.com/identity/sign-in/web/devconsole-project.",
+        "status": "UNAUTHENTICATED"
+    }
+}
+""";
