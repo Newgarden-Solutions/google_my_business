@@ -68,6 +68,8 @@ All of the follow generally the same structure. Some examples of usage can be fo
 
 ##### Accounts
 
+Retrieve accounts:
+
 ```dart
 _accountsManager = AccountsManager();
 
