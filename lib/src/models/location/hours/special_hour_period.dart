@@ -1,4 +1,8 @@
+import 'package:json_annotation/json_annotation.dart';
+
 import '../common/date.dart';
+
+part 'special_hour_period.g.dart';
 
 /// Represents a single time period when a location's operational hours differ from its normal business hours.
 /// A special hour period must represent a range of less than 24 hours.
@@ -20,6 +24,7 @@ import '../common/date.dart';
 /// closeTime=12:00 startDate=2015-11-23, endDate=2015-11-25,
 /// openTime=08:00, closeTime=18:00
 /// ```
+@JsonSerializable()
 class SpecialHourPeriod {
   /// The calendar date this special hour period starts on.
   final Date startDate;
@@ -27,7 +32,7 @@ class SpecialHourPeriod {
   /// The wall time on `startDate` when a location opens, expressed in 24hr ISO 8601 extended format.
   /// (hh:mm) Valid values are 00:00-24:00, where 24:00 represents midnight at the end of the specified day field.
   /// Must be specified if `isClosed` is false.
-  final String openTime;
+  final String? openTime;
 
   /// The calendar date this special hour period ends on.
   /// If `endDate` field is not set, default to the date specified in `startDate`.
@@ -37,18 +42,15 @@ class SpecialHourPeriod {
   /// The wall time on `endDate` when a location closes, expressed in 24hr ISO 8601 extended format.
   /// (hh:mm) Valid values are 00:00-24:00, where 24:00 represents midnight at the end of the specified day field.
   /// Must be specified if `isClosed` is false.
-  final String closeTime;
+  final String? closeTime;
 
   /// If true, `endDate`, `openTime`, and `closeTime` are ignored, and the date specified in `startDate` is treated as the location being closed for the entire day.
-  final bool isClosed;
+  final bool? isClosed;
 
   SpecialHourPeriod(this.startDate, this.openTime, this.endDate, this.closeTime,
       this.isClosed);
 
-  SpecialHourPeriod.fromJson(Map<String, dynamic> json)
-      : startDate = Date.fromJson(json["startDate"]),
-        openTime = json["openTime"],
-        endDate = Date.fromJson(json["endDate"]),
-        closeTime = json["closeTime"],
-        isClosed = json["isClosed"];
+  factory SpecialHourPeriod.fromJson(Map<String, dynamic> json) =>
+      _$SpecialHourPeriodFromJson(json);
+  Map<String, dynamic> toJson() => _$SpecialHourPeriodToJson(this);
 }

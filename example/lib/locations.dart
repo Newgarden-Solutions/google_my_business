@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_my_business/google_my_business.dart';
 
-import 'login.dart';
-
 class Locations extends StatefulWidget {
+  final Account account;
+
+  Locations(this.account);
+
   @override
   _LocationsState createState() => _LocationsState();
 }
@@ -11,13 +13,14 @@ class Locations extends StatefulWidget {
 class _LocationsState extends State<Locations> {
   List<Location> locations = <Location>[];
   bool _isLoading = true;
-  LocationsManager _locationsManager;
+  late LocationsManager _locationsManager;
 
   @override
   void initState() {
     super.initState();
 
-    _locationsManager = LocationsManager(accountId: "my-account-id");
+    _locationsManager =
+        LocationsManager(accountId: widget.account.name.split("/")[1]);
     if (GoogleMyBusiness.instance.currentUser() != null) {
       _fetchLocations();
     }
@@ -27,16 +30,7 @@ class _LocationsState extends State<Locations> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('My Locations'),
-        actions: <Widget>[
-          IconButton(
-              icon: Icon(Icons.exit_to_app),
-              onPressed: () {
-                GoogleMyBusiness.instance.signOut().then((value) =>
-                    Navigator.pushReplacement(context,
-                        MaterialPageRoute(builder: (context) => Login())));
-              })
-        ],
+        title: Text('Locations'),
       ),
       body: _buildLocationListWidget(),
     );
@@ -64,7 +58,7 @@ class _LocationsState extends State<Locations> {
               leading: Icon(Icons.location_on),
               title: Text('${location.locationName}'),
               subtitle: Text(
-                  "${location.address.locality},\n${location.address.addressLines.join(', ')}"),
+                  "${location.address?.locality},\n${location.address?.addressLines.join(', ')}"),
             );
           },
         ),
@@ -86,7 +80,7 @@ class _LocationsState extends State<Locations> {
       });
     }, (error) {
       setState(() {
-        print('Google My Business API: ${error.code} - ${error.message}');
+        print('Google My Business API: ${error?.code} - ${error?.message}');
       });
     });
   }

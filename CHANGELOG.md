@@ -1,3 +1,11 @@
+# 0.3.0
+
+* Added support of [null-safety](https://dart.dev/null-safety)
+* Added accounts manager to retrieve accounts for a given user
+* Updated locations manager to support paginated retrieval of locations
+* Reworked json serialization using [json_serializable](https://pub.dev/packages/json_serializable)
+* Updated examples and removed dependencies on flutter for the package itself
+
 # 0.2.1
 
 * Added examples of usage of the package

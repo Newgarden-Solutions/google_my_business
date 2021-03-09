@@ -18,12 +18,11 @@ class GoogleMyBusiness {
   ///
   /// @funParameter onCurrentUserChangedCallback([GoogleSignInAccount] account) - callback triggered when user is logged in or logged out
   /// @funParameter signInSilently - if true - signs in user with Google silently on the background, otherwise does nothing
-  void init(Function(GoogleSignInAccount account) onCurrentUserChangedCallback,
+  void init(
+      Function(GoogleSignInAccount? account)? onCurrentUserChangedCallback,
       {bool signInSilently = true}) {
-    googleSignIn.onCurrentUserChanged.listen((GoogleSignInAccount account) {
-      if (onCurrentUserChangedCallback != null) {
-        onCurrentUserChangedCallback(account);
-      }
+    googleSignIn.onCurrentUserChanged.listen((GoogleSignInAccount? account) {
+      onCurrentUserChangedCallback?.call(account);
     });
 
     if (signInSilently) {
@@ -32,7 +31,7 @@ class GoogleMyBusiness {
   }
 
   /// Authenticates using Google Sign In
-  Future<GoogleSignInAccount> signIn() async {
+  Future<GoogleSignInAccount?> signIn() async {
     try {
       return await googleSignIn.signIn();
     } catch (error) {
@@ -42,10 +41,10 @@ class GoogleMyBusiness {
   }
 
   /// Logs out current user
-  Future<GoogleSignInAccount> signOut() => googleSignIn.signOut();
+  Future<GoogleSignInAccount?> signOut() => googleSignIn.signOut();
 
   /// Returns current user as [GoogleSignInAccount]
-  GoogleSignInAccount currentUser() {
+  GoogleSignInAccount? currentUser() {
     return googleSignIn.currentUser;
   }
 }
