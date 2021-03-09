@@ -44,9 +44,9 @@ Location _$LocationFromJson(Map<String, dynamic> json) {
         ? null
         : AdWordsLocationExtensions.fromJson(
             json['adWordsLocationExtensions'] as Map<String, dynamic>),
-    json['latLng'] == null
+    json['latlng'] == null
         ? null
-        : LatLng.fromJson(json['latLng'] as Map<String, dynamic>),
+        : LatLng.fromJson(json['latlng'] as Map<String, dynamic>),
     json['openInfo'] == null
         ? null
         : OpenInfo.fromJson(json['openInfo'] as Map<String, dynamic>),
@@ -89,7 +89,7 @@ Map<String, dynamic> _$LocationToJson(Location instance) => <String, dynamic>{
       'locationKey': instance.locationKey,
       'labels': instance.labels,
       'adWordsLocationExtensions': instance.adWordsLocationExtensions,
-      'latLng': instance.latLng,
+      'latlng': instance.latlng,
       'openInfo': instance.openInfo,
       'locationState': instance.locationState,
       'metadata': instance.metadata,

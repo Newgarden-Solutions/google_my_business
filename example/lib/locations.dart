@@ -3,7 +3,7 @@ import 'package:google_my_business/google_my_business.dart';
 
 class Locations extends StatefulWidget {
   final Account account;
-  
+
   Locations(this.account);
 
   @override
@@ -19,7 +19,8 @@ class _LocationsState extends State<Locations> {
   void initState() {
     super.initState();
 
-    _locationsManager = LocationsManager(accountId: widget.account.name.split("/")[1]);
+    _locationsManager =
+        LocationsManager(accountId: widget.account.name.split("/")[1]);
     if (GoogleMyBusiness.instance.currentUser() != null) {
       _fetchLocations();
     }

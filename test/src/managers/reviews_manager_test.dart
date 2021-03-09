@@ -93,7 +93,7 @@ void main() {
               'accounts/106941250772149994434/locations/4547712559962801423/reviews/AbFvOqkNhKOO17hiA6Dg1-HNrS6Vtjv71nAMxEdVXdIlVOC4xshndwUfGS9uSLgisU6T7hDMHMjsKg');
         },
         (progress, reviews) {},
-        (response) {
+        (error) {
           // No error should be triggered
         },
         httpClientMock,

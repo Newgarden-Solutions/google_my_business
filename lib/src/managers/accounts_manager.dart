@@ -29,7 +29,7 @@ class AccountsManager {
   /// @funParameter httpClient - [http.Client] custom client if needed, otherwise `http.Client()` will be used
   /// @funParameter nextPageToken - token for the next page of accounts. If null - the first page of the accounts will be retrieved.
   /// @funParameter pageSize - amount of accounts to retrieve per one page. Maximum is [MAX_PAGE_SIZE], minimum is [MIN_PAGE_SIZE].
-  Future<void> fetchAccounts(Function(List<Account>? accounts) onSuccess,
+  Future<void> fetchAccounts(Function(List<Account> accounts) onSuccess,
       Function(Error? error) onError,
       [http.Client? httpClient,
       String? nextPageToken,
@@ -46,34 +46,32 @@ class AccountsManager {
     }
 
     final http.Response response = await httpClient.get(
-      Uri.parse('https://mybusinessaccountmanagement.googleapis.com/v1/accounts?pageSize=$pageSize$pageToken'),
+      Uri.parse(
+          'https://mybusinessaccountmanagement.googleapis.com/v1/accounts?pageSize=$pageSize$pageToken'),
       headers: await GoogleMyBusiness.instance.currentUser()!.authHeaders,
     );
 
     if (response.statusCode != 200) {
       final Map<String, dynamic> data = json.decode(response.body);
       final Error? error =
-      data['error'] == null ? null : Error.fromJson(data["error"]);
+          data['error'] == null ? null : Error.fromJson(data["error"]);
       onError(error);
       return;
     }
 
-    final Map<String, dynamic>? data = json.decode(response.body);
-    final accounts = data.isNullOrEmpty() ? null : Accounts.fromJson(data!);
+    final Map<String, dynamic> data = json.decode(response.body);
+    final accounts = data.isNullOrEmpty() ? null : Accounts.fromJson(data);
 
     if (accounts == null) {
-      onError(Error(
-          401,
-          'Failed to fetch accounts.',
-          'UNAUTHORIZED'));
+      onError(Error(401, 'Failed to fetch accounts.', 'UNAUTHORIZED'));
       return;
     }
 
     _accountsBuffer.add(accounts);
 
     if (accounts.nextPageToken != null) {
-      return fetchAccounts(onSuccess, onError, httpClient,
-          accounts.nextPageToken, pageSize);
+      return fetchAccounts(
+          onSuccess, onError, httpClient, accounts.nextPageToken, pageSize);
     }
 
     // Convert from list of [Accounts] object to a list of [Account] objects

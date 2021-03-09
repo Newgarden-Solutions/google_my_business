@@ -64,6 +64,7 @@ class Account {
       this.permissionLevel,
       this.organizationInfo);
 
-  factory Account.fromJson(Map<String, dynamic> json) => _$AccountFromJson(json);
+  factory Account.fromJson(Map<String, dynamic> json) =>
+      _$AccountFromJson(json);
   Map<String, dynamic> toJson() => _$AccountToJson(this);
 }

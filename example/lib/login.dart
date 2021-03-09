@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:google_my_business/google_my_business.dart' show GoogleMyBusiness;
+import 'package:google_my_business/google_my_business.dart'
+    show GoogleMyBusiness;
 import 'package:google_sign_in/google_sign_in.dart';
 
 import 'accounts.dart';
@@ -22,9 +23,7 @@ class _LoginState extends State<Login> {
         _currentUser = user;
 
         Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-                builder: (context) => Accounts()));
+            context, MaterialPageRoute(builder: (context) => Accounts()));
       });
     });
   }

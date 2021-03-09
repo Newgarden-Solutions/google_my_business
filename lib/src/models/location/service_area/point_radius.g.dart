@@ -8,15 +8,15 @@ part of 'point_radius.dart';
 
 PointRadius _$PointRadiusFromJson(Map<String, dynamic> json) {
   return PointRadius(
-    json['latLng'] == null
+    json['latlng'] == null
         ? null
-        : LatLng.fromJson(json['latLng'] as Map<String, dynamic>),
+        : LatLng.fromJson(json['latlng'] as Map<String, dynamic>),
     json['radiusKm'] as num?,
   );
 }
 
 Map<String, dynamic> _$PointRadiusToJson(PointRadius instance) =>
     <String, dynamic>{
-      'latLng': instance.latLng,
+      'latlng': instance.latlng,
       'radiusKm': instance.radiusKm,
     };

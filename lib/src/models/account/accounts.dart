@@ -4,7 +4,7 @@ import 'account.dart';
 
 part 'accounts.g.dart';
 
-/// Paginated list of reviews
+/// Paginated list of accounts
 /// https://mybusinessaccountmanagement.googleapis.com/v1/accounts
 @JsonSerializable()
 class Accounts {
@@ -18,6 +18,7 @@ class Accounts {
 
   Accounts(this.accounts, this.nextPageToken);
 
-  factory Accounts.fromJson(Map<String, dynamic> json) => _$AccountsFromJson(json);
+  factory Accounts.fromJson(Map<String, dynamic> json) =>
+      _$AccountsFromJson(json);
   Map<String, dynamic> toJson() => _$AccountsToJson(this);
 }

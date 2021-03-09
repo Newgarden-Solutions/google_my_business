@@ -18,6 +18,7 @@ class OrganizationInfo {
 
   OrganizationInfo(this.registeredDomain, this.address, this.phoneNumber);
 
-  factory OrganizationInfo.fromJson(Map<String, dynamic> json) => _$OrganizationInfoFromJson(json);
+  factory OrganizationInfo.fromJson(Map<String, dynamic> json) =>
+      _$OrganizationInfoFromJson(json);
   Map<String, dynamic> toJson() => _$OrganizationInfoToJson(this);
 }
