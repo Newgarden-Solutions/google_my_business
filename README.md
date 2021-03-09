@@ -11,8 +11,7 @@ Google My Business API reference can be found [here](https://developers.google.c
 
 ## Getting Started
 
-*NOTICE:*
-*Package is in active development, so some APIs might have breaking changes from version to version before 1.0.0*
+*NOTICE: Package is in active development, so some APIs might have breaking changes from version to version before 1.0.0*
 
 ### Authentication
 
