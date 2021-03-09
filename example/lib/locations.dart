@@ -72,10 +72,10 @@ class _LocationsState extends State<Locations> {
 
   Future<void> _fetchLocations() async {
     await _locationsManager.fetchLocations((locations) async {
-      print("Total locations: ${locations?.length}");
+      print("Total locations: ${locations.length}");
 
       setState(() {
-        this.locations = locations ?? [];
+        this.locations = locations;
         _isLoading = false;
       });
     }, (error) {

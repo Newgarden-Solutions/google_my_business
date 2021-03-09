@@ -85,10 +85,10 @@ class _AccountsState extends State<Accounts> {
 
   Future<void> _fetchAccounts() async {
     await _accountsManager.fetchAccounts((accounts) async {
-      print("Total accounts: ${accounts?.length}");
+      print("Total accounts: ${accounts.length}");
 
       setState(() {
-        this.accounts = accounts ?? [];
+        this.accounts = accounts;
         _isLoading = false;
       });
     }, (error) {

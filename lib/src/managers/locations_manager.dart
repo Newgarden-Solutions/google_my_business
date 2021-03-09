@@ -31,7 +31,7 @@ class LocationsManager {
   /// @funParameter onSuccess([List]<[Location]> locations) - success callback - contains list of locations for the given account
   /// @funParameter onError([Error] error) - error callback - called when error occurs during communication with GMB API
   /// @funParameter httpClient - [http.Client] custom client if needed, otherwise `http.Client()` will be used
-  Future<void> fetchLocations(Function(List<Location>? locations) onSuccess,
+  Future<void> fetchLocations(Function(List<Location> locations) onSuccess,
       Function(Error? error) onError,
       [http.Client? httpClient,
       String? nextPageToken,
