@@ -41,7 +41,7 @@ void main() {
 
   Future<void> _validateFetchLocations() async {
     return await locationsManager.fetchLocations((locations) {
-      expect(locations!.length, 1);
+      expect(locations.length, 1);
 
       final location = locations[0];
 
