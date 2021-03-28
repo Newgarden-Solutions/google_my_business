@@ -75,7 +75,7 @@ void main() {
         () async {
       when(httpClientMock.get(
               Uri.parse(
-                  'https://mybusinessaccountmanagement.googleapis.com/v1/accounts?pageSize=$pageSize'),
+                  '${AccountsManager.BASE_URL}?pageSize=$pageSize'),
               headers: anyNamed('headers')))
           .thenAnswer((_) async => http.Response(testAccountsJson, 200,
               headers:
@@ -112,7 +112,7 @@ void main() {
 
       when(httpClientMock.get(
               Uri.parse(
-                  'https://mybusinessaccountmanagement.googleapis.com/v1/accounts?pageSize=$pageSize&pageToken=$nextPageToken'),
+                  '${AccountsManager.BASE_URL}?pageSize=$pageSize&pageToken=$nextPageToken'),
               headers: anyNamed('headers')))
           .thenAnswer((_) async => http.Response(testAccountsJson, 200,
               headers:
@@ -127,7 +127,7 @@ void main() {
 
       when(httpClientMock.get(
               Uri.parse(
-                  'https://mybusinessaccountmanagement.googleapis.com/v1/accounts?pageSize=${AccountsManager.MAX_PAGE_SIZE}'),
+                  '${AccountsManager.BASE_URL}?pageSize=${AccountsManager.MAX_PAGE_SIZE}'),
               headers: anyNamed('headers')))
           .thenAnswer((_) async => http.Response(testAccountsJson, 200,
               headers:
@@ -139,7 +139,7 @@ void main() {
     test('[fetchAccounts] should call on error when request fails', () async {
       when(httpClientMock.get(
               Uri.parse(
-                  'https://mybusinessaccountmanagement.googleapis.com/v1/accounts?pageSize=$pageSize'),
+                  '${AccountsManager.BASE_URL}?pageSize=$pageSize'),
               headers: anyNamed('headers')))
           .thenAnswer((_) async => http.Response('{}', 404));
 
@@ -153,7 +153,7 @@ void main() {
     test('[fetchAccounts] should call on error when body is empty', () async {
       when(httpClientMock.get(
               Uri.parse(
-                  'https://mybusinessaccountmanagement.googleapis.com/v1/accounts?pageSize=$pageSize'),
+                  '${AccountsManager.BASE_URL}?pageSize=$pageSize'),
               headers: anyNamed('headers')))
           .thenAnswer((_) async => http.Response('{}', 200));
 

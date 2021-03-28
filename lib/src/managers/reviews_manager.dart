@@ -51,7 +51,7 @@ class ReviewsManager {
 
     final http.Response response = await httpClient.get(
       Uri.parse(
-          'https://mybusiness.googleapis.com/v4/$name/reviews?pageSize=$pageSize$pageToken'),
+          '${GoogleMyBusiness.BASE_URL}/$name/reviews?pageSize=$pageSize$pageToken'),
       headers: await GoogleMyBusiness.instance.currentUser()!.authHeaders,
     );
 

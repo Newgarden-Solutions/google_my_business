@@ -1,15 +1,21 @@
 import 'dart:convert' show json;
 
+import 'package:google_my_business/src/models/account/admin/account_admins.dart';
 import 'package:http/http.dart' as http;
 
+import '../common/util.dart';
+import '../google_my_business.dart';
 import '../models/account/account.dart';
 import '../models/account/accounts.dart';
 import '../models/error.dart';
-import '../google_my_business.dart';
-import '../common/util.dart';
 
 /// Responsible for retrieving and managing accounts for the given user.
 class AccountsManager {
+  static const String VERSION = "v1";
+
+  /// Basic URL for accounts endpoint
+  static const String BASE_URL = "https://mybusinessaccountmanagement.googleapis.com/$VERSION/accounts";
+
   /// It is possible to retrieve up to 20 accounts in a single request
   static const int MAX_PAGE_SIZE = 20;
 
@@ -46,8 +52,7 @@ class AccountsManager {
     }
 
     final http.Response response = await httpClient.get(
-      Uri.parse(
-          'https://mybusinessaccountmanagement.googleapis.com/v1/accounts?pageSize=$pageSize$pageToken'),
+      Uri.parse('$BASE_URL?pageSize=$pageSize$pageToken'),
       headers: await GoogleMyBusiness.instance.currentUser()!.authHeaders,
     );
 
@@ -86,5 +91,41 @@ class AccountsManager {
     onSuccess(this.accounts);
 
     _accountsBuffer.clear();
+  }
+
+  /// Fetches admins from GMB API for the specified account
+  ///
+  /// @funParameter accountId - id of the account to get admins for
+  /// @funParameter onSuccess([AccountAdmins] admins) - success callback - contains list of account admins for the given user
+  /// @funParameter onError([Error] error) - error callback - called when error occurs during communication with GMB API
+  /// @funParameter httpClient - [http.Client] custom client if needed, otherwise `http.Client()` will be used
+  Future<void> fetchAdmins(String accountId,
+      Function(AccountAdmins accountAdmins) onSuccess,
+      Function(Error? error) onError,
+      [http.Client? httpClient]) async {
+    if (httpClient == null) httpClient = http.Client();
+
+    final http.Response response = await httpClient.get(
+      Uri.parse('$BASE_URL/$accountId/admins'),
+      headers: await GoogleMyBusiness.instance.currentUser()!.authHeaders,
+    );
+
+    if (response.statusCode != 200) {
+      final Map<String, dynamic> data = json.decode(response.body);
+      final Error? error =
+      data['error'] == null ? null : Error.fromJson(data["error"]);
+      onError(error);
+      return;
+    }
+
+    final Map<String, dynamic> data = json.decode(response.body);
+    final accountAdmins = data.isNullOrEmpty() ? null : AccountAdmins.fromJson(data);
+
+    if (accountAdmins == null) {
+      onError(Error(401, 'Failed to fetch account admins.', 'UNAUTHORIZED'));
+      return;
+    }
+
+    onSuccess(accountAdmins);
   }
 }

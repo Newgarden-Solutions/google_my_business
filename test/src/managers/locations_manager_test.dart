@@ -220,7 +220,7 @@ void main() {
         () async {
       when(httpClientMock.get(
               Uri.parse(
-                  'https://mybusiness.googleapis.com/v4/accounts/$accountId/locations?pageSize=$pageSize'),
+                  '${GoogleMyBusiness.BASE_URL}/accounts/$accountId/locations?pageSize=$pageSize'),
               headers: anyNamed('headers')))
           .thenAnswer((_) async => http.Response(testLocationsJson, 200,
               headers:
@@ -257,7 +257,7 @@ void main() {
 
       when(httpClientMock.get(
               Uri.parse(
-                  'https://mybusiness.googleapis.com/v4/accounts/$accountId/locations?pageSize=$pageSize&pageToken=$nextPageToken'),
+                  '${GoogleMyBusiness.BASE_URL}/accounts/$accountId/locations?pageSize=$pageSize&pageToken=$nextPageToken'),
               headers: anyNamed('headers')))
           .thenAnswer((_) async => http.Response(testLocationsJson, 200,
               headers:
@@ -272,7 +272,7 @@ void main() {
 
       when(httpClientMock.get(
               Uri.parse(
-                  'https://mybusiness.googleapis.com/v4/accounts/$accountId/locations?pageSize=${LocationsManager.MAX_PAGE_SIZE}'),
+                  '${GoogleMyBusiness.BASE_URL}/accounts/$accountId/locations?pageSize=${LocationsManager.MAX_PAGE_SIZE}'),
               headers: anyNamed('headers')))
           .thenAnswer((_) async => http.Response(testLocationsJson, 200,
               headers:
@@ -284,7 +284,7 @@ void main() {
     test('[fetchLocations] should call on error when request fails', () async {
       when(httpClientMock.get(
               Uri.parse(
-                  'https://mybusiness.googleapis.com/v4/accounts/$accountId/locations?pageSize=$pageSize'),
+                  '${GoogleMyBusiness.BASE_URL}/accounts/$accountId/locations?pageSize=$pageSize'),
               headers: anyNamed('headers')))
           .thenAnswer((_) async => http.Response("{}", 404));
 
@@ -298,7 +298,7 @@ void main() {
     test('[fetchLocations] should call on error when body is empty', () async {
       when(httpClientMock.get(
               Uri.parse(
-                  'https://mybusiness.googleapis.com/v4/accounts/$accountId/locations?pageSize=$pageSize'),
+                  '${GoogleMyBusiness.BASE_URL}/accounts/$accountId/locations?pageSize=$pageSize'),
               headers: anyNamed('headers')))
           .thenAnswer((_) async => http.Response('{}', 200));
 
