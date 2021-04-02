@@ -1,7 +1,7 @@
 import 'dart:convert' show json;
 
 import 'package:google_my_business/google_my_business.dart';
-import 'package:google_my_business/src/models/error.dart';
+import 'package:google_my_business/src/models/common/error/error.dart';
 import 'package:http/http.dart' as http;
 
 import '../common/util.dart';

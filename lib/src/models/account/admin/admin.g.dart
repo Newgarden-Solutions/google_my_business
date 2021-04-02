@@ -11,7 +11,7 @@ Admin _$AdminFromJson(Map<String, dynamic> json) {
     json['name'] as String,
     json['admin'] as String,
     _$enumDecode(_$AdminRoleEnumMap, json['role']),
-    json['pendingInvitation'] as bool,
+    json['pendingInvitation'] as bool?,
   );
 }
 

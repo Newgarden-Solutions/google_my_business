@@ -5,14 +5,17 @@ import 'package:http/http.dart' as http;
 
 import '../common/util.dart';
 import '../google_my_business.dart';
-import '../models/error.dart';
+import '../models/common/error/error.dart';
 import '../models/location/location.dart';
 import '../models/location/locations.dart';
-import 'accounts_manager.dart';
 
 /// Responsible for retrieving and managing locations for the given account (id).
 class LocationsManager {
   final String? accountId;
+
+  /// Basic URL for locations endpoint
+  /// CAUTION: Used for location admins for now only
+  static const String BASE_URL = "${Constants.BASE_URL}/locations";
 
   /// It is possible to retrieve up to 100 locations in a single request
   static const int MAX_PAGE_SIZE = 100;
@@ -105,7 +108,7 @@ class LocationsManager {
     if (httpClient == null) httpClient = http.Client();
 
     final http.Response response = await httpClient.get(
-      Uri.parse('${AccountsManager.BASE_URL}/locations/$locationId/admins'),
+      Uri.parse('$BASE_URL/$locationId/admins'),
       headers: await GoogleMyBusiness.instance.currentUser()!.authHeaders,
     );
 

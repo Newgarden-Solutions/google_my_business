@@ -7,14 +7,12 @@ import '../common/util.dart';
 import '../google_my_business.dart';
 import '../models/account/account.dart';
 import '../models/account/accounts.dart';
-import '../models/error.dart';
+import '../models/common/error/error.dart';
 
 /// Responsible for retrieving and managing accounts for the given user.
 class AccountsManager {
-  static const String VERSION = "v1";
-
   /// Basic URL for accounts endpoint
-  static const String BASE_URL = "https://mybusinessaccountmanagement.googleapis.com/$VERSION/accounts";
+  static const String BASE_URL = "${Constants.BASE_URL}/accounts";
 
   /// It is possible to retrieve up to 20 accounts in a single request
   static const int MAX_PAGE_SIZE = 20;
@@ -104,7 +102,7 @@ class AccountsManager {
       Function(Error? error) onError,
       [http.Client? httpClient]) async {
     if (httpClient == null) httpClient = http.Client();
-
+    
     final http.Response response = await httpClient.get(
       Uri.parse('$BASE_URL/$accountId/admins'),
       headers: await GoogleMyBusiness.instance.currentUser()!.authHeaders,
@@ -112,8 +110,7 @@ class AccountsManager {
 
     if (response.statusCode != 200) {
       final Map<String, dynamic> data = json.decode(response.body);
-      final Error? error =
-      data['error'] == null ? null : Error.fromJson(data["error"]);
+      final Error? error = data['error'] == null ? null : Error.fromJson(data["error"]);
       onError(error);
       return;
     }

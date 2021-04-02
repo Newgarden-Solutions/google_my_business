@@ -26,7 +26,7 @@ class Admin {
   final AdminRole role;
 
   /// Output only. Indicates whether this admin has a pending invitation for the specified resource.
-  final bool pendingInvitation;
+  final bool? pendingInvitation;
 
   Admin(this.name, this.admin, this.role, this.pendingInvitation);
 

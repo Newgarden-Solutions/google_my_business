@@ -3,7 +3,7 @@
 library google_my_business;
 
 export "src/google_my_business.dart" show GoogleMyBusiness;
-export "src/models/error.dart";
+export 'src/models/common/error/error.dart';
 
 export "src/managers/locations_manager.dart" show LocationsManager;
 export "src/models/location/category/category.dart";
@@ -54,3 +54,7 @@ export "src/models/account/organization_info.dart";
 export "src/models/account/permission_level.dart";
 export "src/models/account/verification_state.dart";
 export "src/models/account/vetted_state.dart";
+export "src/models/account/admin/account_admins.dart";
+export "src/models/account/admin/admin.dart";
+export "src/models/account/admin/admin_role.dart";
+export "src/models/account/admin/location_admins.dart";

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:google_my_business/google_my_business.dart';
+import 'package:google_my_business/google_my_business.dart' show GoogleMyBusiness, Account, Location, LocationsManager;
+
+import 'admins.dart';
 
 class Locations extends StatefulWidget {
   final Account account;
@@ -59,6 +61,19 @@ class _LocationsState extends State<Locations> {
               title: Text('${location.locationName}'),
               subtitle: Text(
                   "${location.address?.locality},\n${location.address?.addressLines.join(', ')}"),
+              trailing: IconButton(
+                  icon: Icon(Icons.group, color: Colors.blue,),
+                  onPressed: () {
+                    if (location.name == null) {
+                      return;
+                    }
+
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                Admins(account: widget.account, type: Type.LOCATION, id: location.name!.split("/")[3])));
+                  }),
             );
           },
         ),
@@ -72,7 +87,7 @@ class _LocationsState extends State<Locations> {
 
   Future<void> _fetchLocations() async {
     await _locationsManager.fetchLocations((locations) async {
-      print("Total locations: ${locations.length}");
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Total locations: ${locations.length}")));
 
       setState(() {
         this.locations = locations;
@@ -80,7 +95,7 @@ class _LocationsState extends State<Locations> {
       });
     }, (error) {
       setState(() {
-        print('Google My Business API: ${error?.code} - ${error?.message}');
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('$error'), backgroundColor: Colors.red.shade900,));
       });
     });
   }
