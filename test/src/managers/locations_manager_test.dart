@@ -10,6 +10,9 @@ import '../../stubs.dart';
 import '../../stubs.mocks.dart';
 
 void main() {
+  const LOCATION_ID = "106941250772149994434";
+  const DEFAULT_ADMINS_URL = '${LocationsManager.BASE_URL}/$LOCATION_ID/admins';
+
   late LocationsManager locationsManager;
   late var pageSize;
 
@@ -21,6 +24,7 @@ void main() {
   late MockGoogleSignIn mockGoogleSignIn;
   late MockGoogleSignInAccount mockGoogleSignInAccount;
 
+  //region Initialization
   setUp(() {
     // Default values
     mockGoogleSignIn = MockGoogleSignIn();
@@ -38,7 +42,9 @@ void main() {
     when(mockGoogleSignInAccount.authHeaders)
         .thenAnswer((_) => mockAuthHeaders);
   });
+  //endregion
 
+  //region Response Validators
   Future<void> _validateFetchLocations() async {
     return await locationsManager.fetchLocations((locations) {
       expect(locations.length, 1);
@@ -215,6 +221,24 @@ void main() {
     }, httpClientMock, nextPageToken, pageSize);
   }
 
+  Future<void> _validateFetchAdmins() async {
+    await locationsManager.fetchAdmins(LOCATION_ID, (admins) {
+      expect(admins, isNotNull);
+      expect(admins.admins, isNotNull);
+      expect(admins.admins.length, 1);
+
+      final admin = admins.admins[0];
+
+      expect(admin.admin, 'Oleg Novosad');
+      expect(admin.name, 'locations/106941250772149994434/admins/106941250772149994434');
+      expect(admin.role, AdminRole.PRIMARY_OWNER);
+      expect(admin.pendingInvitation, false);
+    }, (error) {
+      // No error should be triggered
+    }, httpClientMock);
+  }
+  //endregion
+
   group('Locations', () {
     test('[fetchLocations] should return a list of locations on success',
         () async {
@@ -324,10 +348,72 @@ void main() {
       });
     });
   });
+
+  group('Admins', () {
+    test('[fetchAdmins] should return admins', () async {
+      when(httpClientMock.get(Uri.parse(DEFAULT_ADMINS_URL), headers: anyNamed('headers'))).thenAnswer((_) async => http.Response(testLocationAdminsJson, 200,
+          headers:
+          await GoogleMyBusiness.instance.currentUser()!.authHeaders));
+
+      await _validateFetchAdmins();
+    });
+
+    test('[fetchAdmins] should call on error when request fails', () async {
+      when(httpClientMock.get(
+          Uri.parse(DEFAULT_ADMINS_URL),
+          headers: anyNamed('headers')))
+          .thenAnswer((_) async => http.Response('{}', 404));
+
+      await locationsManager.fetchAdmins(LOCATION_ID, (accounts) {
+        // No success should be triggered
+      }, (error) {
+        expect(error, isNull);
+      }, httpClientMock);
+    });
+
+    test('[fetchAdmins] should call on error when body is empty', () async {
+      when(httpClientMock.get(
+          Uri.parse(DEFAULT_ADMINS_URL),
+          headers: anyNamed('headers')))
+          .thenAnswer((_) async => http.Response('{}', 200));
+
+      await locationsManager.fetchAdmins(LOCATION_ID, (accounts) {
+        // No success should be triggered
+      }, (error) {
+        expect(error!.code, 401);
+        expect(error.message, 'Failed to fetch account admins.');
+        expect(error.status, 'UNAUTHORIZED');
+      }, httpClientMock);
+    });
+
+    test(
+        '[fetchAdmins] default client should be used if http client is null and the status code should be 401 with error response',
+            () async {
+          await locationsManager.fetchAdmins(LOCATION_ID, (accounts) {
+            // No success should be triggered
+          }, (error) {
+            expect(error!.code, 401);
+            expect(error.message,
+                "Request had invalid authentication credentials. Expected OAuth 2 access token, login cookie or other valid authentication credential. See https://developers.google.com/identity/sign-in/web/devconsole-project.");
+            expect(error.status, "UNAUTHENTICATED");
+          });
+        });
+  });
 }
 
 //region Mocks
-
+final testLocationAdminsJson = """
+{
+    "admins": [
+        {
+            "name": "locations/106941250772149994434/admins/106941250772149994434",
+            "admin": "Oleg Novosad",
+            "role": "PRIMARY_OWNER",
+            "pendingInvitation": false
+        }
+    ]
+}
+""";
 // Dummy json made from different parts.
 // Semantically some values might not be accurate (e.g. placeId different or so) so ignore it.
 final testLocationsJson = """

@@ -64,10 +64,17 @@ class _AdminsState extends State<Admins> {
           itemBuilder: (context, index) {
             final admin = admins[index];
             return ListTile(
-              leading: Icon(Icons.account_circle_outlined),
+              contentPadding: EdgeInsets.all(16.0),
+              leading: Padding(
+                padding: const EdgeInsets.only(top: 8.0),
+                child: Icon(Icons.security),
+              ),
               title: Text('${admin.admin}'),
-              subtitle: Text(
-                  "Type: ${admin.role},\nID: ${admin.name.split("/")[1]}"),
+              subtitle: Padding(
+                padding: const EdgeInsets.only(top: 8.0),
+                child: Text(
+                    "Type: ${admin.role},\nID: ${admin.name.split("/")[1]}"),
+              ),
               onTap: () {
 
               },

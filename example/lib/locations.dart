@@ -57,10 +57,17 @@ class _LocationsState extends State<Locations> {
           itemBuilder: (context, index) {
             final location = locations[index];
             return ListTile(
-              leading: Icon(Icons.location_on),
+              contentPadding: EdgeInsets.all(16.0),
+              leading: Padding(
+                padding: const EdgeInsets.only(top: 8.0),
+                child: Icon(Icons.location_on),
+              ),
               title: Text('${location.locationName}'),
-              subtitle: Text(
-                  "${location.address?.locality},\n${location.address?.addressLines.join(', ')}"),
+              subtitle: Padding(
+                padding: const EdgeInsets.only(top: 8.0),
+                child: Text(
+                    "${location.address?.locality},\n${location.address?.addressLines.join(', ')}"),
+              ),
               trailing: IconButton(
                   icon: Icon(Icons.group, color: Colors.blue,),
                   onPressed: () {
