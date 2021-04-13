@@ -30,7 +30,6 @@ class Admin {
 
   Admin(this.name, this.admin, this.role, this.pendingInvitation);
 
-  factory Admin.fromJson(Map<String, dynamic> json) =>
-      _$AdminFromJson(json);
+  factory Admin.fromJson(Map<String, dynamic> json) => _$AdminFromJson(json);
   Map<String, dynamic> toJson() => _$AdminToJson(this);
 }

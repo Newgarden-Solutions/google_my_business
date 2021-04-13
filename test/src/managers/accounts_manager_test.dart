@@ -84,7 +84,8 @@ void main() {
       final admin = admins.accountAdmins[0];
 
       expect(admin.admin, 'Oleg Novosad');
-      expect(admin.name, 'accounts/106941250772149994434/admins/106941250772149994434');
+      expect(admin.name,
+          'accounts/106941250772149994434/admins/106941250772149994434');
       expect(admin.role, AdminRole.PRIMARY_OWNER);
       expect(admin.pendingInvitation, false);
     }, (error) {
@@ -97,8 +98,7 @@ void main() {
     test('[fetchAccounts] should return a list of accounts on success',
         () async {
       when(httpClientMock.get(
-              Uri.parse(
-                  '${AccountsManager.BASE_URL}?pageSize=$pageSize'),
+              Uri.parse('${AccountsManager.BASE_URL}?pageSize=$pageSize'),
               headers: anyNamed('headers')))
           .thenAnswer((_) async => http.Response(testAccountsJson, 200,
               headers:
@@ -161,8 +161,7 @@ void main() {
 
     test('[fetchAccounts] should call on error when request fails', () async {
       when(httpClientMock.get(
-              Uri.parse(
-                  '${AccountsManager.BASE_URL}?pageSize=$pageSize'),
+              Uri.parse('${AccountsManager.BASE_URL}?pageSize=$pageSize'),
               headers: anyNamed('headers')))
           .thenAnswer((_) async => http.Response('{}', 404));
 
@@ -175,8 +174,7 @@ void main() {
 
     test('[fetchAccounts] should call on error when body is empty', () async {
       when(httpClientMock.get(
-              Uri.parse(
-                  '${AccountsManager.BASE_URL}?pageSize=$pageSize'),
+              Uri.parse('${AccountsManager.BASE_URL}?pageSize=$pageSize'),
               headers: anyNamed('headers')))
           .thenAnswer((_) async => http.Response('{}', 200));
 
@@ -205,17 +203,18 @@ void main() {
 
   group('Admins', () {
     test('[fetchAdmins] should return admins', () async {
-      when(httpClientMock.get(Uri.parse(DEFAULT_ADMINS_URL), headers: anyNamed('headers'))).thenAnswer((_) async => http.Response(testAccountAdminsJson, 200,
-          headers:
-          await GoogleMyBusiness.instance.currentUser()!.authHeaders));
+      when(httpClientMock.get(Uri.parse(DEFAULT_ADMINS_URL),
+              headers: anyNamed('headers')))
+          .thenAnswer((_) async => http.Response(testAccountAdminsJson, 200,
+              headers:
+                  await GoogleMyBusiness.instance.currentUser()!.authHeaders));
 
       await _validateFetchAdmins();
     });
 
     test('[fetchAdmins] should call on error when request fails', () async {
-      when(httpClientMock.get(
-          Uri.parse(DEFAULT_ADMINS_URL),
-          headers: anyNamed('headers')))
+      when(httpClientMock.get(Uri.parse(DEFAULT_ADMINS_URL),
+              headers: anyNamed('headers')))
           .thenAnswer((_) async => http.Response('{}', 404));
 
       await accountsManager.fetchAdmins(ACCOUNT_ID, (accounts) {
@@ -226,9 +225,8 @@ void main() {
     });
 
     test('[fetchAdmins] should call on error when body is empty', () async {
-      when(httpClientMock.get(
-          Uri.parse(DEFAULT_ADMINS_URL),
-          headers: anyNamed('headers')))
+      when(httpClientMock.get(Uri.parse(DEFAULT_ADMINS_URL),
+              headers: anyNamed('headers')))
           .thenAnswer((_) async => http.Response('{}', 200));
 
       await accountsManager.fetchAdmins(ACCOUNT_ID, (accounts) {
@@ -242,16 +240,16 @@ void main() {
 
     test(
         '[fetchAdmins] default client should be used if http client is null and the status code should be 401 with error response',
-            () async {
-          await accountsManager.fetchAdmins(ACCOUNT_ID, (accounts) {
-            // No success should be triggered
-          }, (error) {
-            expect(error!.code, 401);
-            expect(error.message,
-                "Request had invalid authentication credentials. Expected OAuth 2 access token, login cookie or other valid authentication credential. See https://developers.google.com/identity/sign-in/web/devconsole-project.");
-            expect(error.status, "UNAUTHENTICATED");
-          });
-        });
+        () async {
+      await accountsManager.fetchAdmins(ACCOUNT_ID, (accounts) {
+        // No success should be triggered
+      }, (error) {
+        expect(error!.code, 401);
+        expect(error.message,
+            "Request had invalid authentication credentials. Expected OAuth 2 access token, login cookie or other valid authentication credential. See https://developers.google.com/identity/sign-in/web/devconsole-project.");
+        expect(error.status, "UNAUTHENTICATED");
+      });
+    });
   });
 }
 

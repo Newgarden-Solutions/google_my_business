@@ -76,13 +76,18 @@ class _AccountsState extends State<Accounts> {
                     "Type: ${account.type},\nID: ${account.name.split("/")[1]}"),
               ),
               trailing: IconButton(
-                  icon: Icon(Icons.group, color: Colors.blue,),
+                  icon: Icon(
+                    Icons.group,
+                    color: Colors.blue,
+                  ),
                   onPressed: () {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) =>
-                                Admins(account: account, type: Type.ACCOUNT, id: account.name.split("/")[1])));
+                            builder: (context) => Admins(
+                                account: account,
+                                type: Type.ACCOUNT,
+                                id: account.name.split("/")[1])));
                   }),
               onTap: () {
                 Navigator.push(
@@ -103,7 +108,8 @@ class _AccountsState extends State<Accounts> {
 
   Future<void> _fetchAccounts() async {
     await _accountsManager.fetchAccounts((accounts) async {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Total accounts: ${accounts.length}')));
+      ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Total accounts: ${accounts.length}')));
 
       setState(() {
         this.accounts = accounts;
@@ -111,7 +117,10 @@ class _AccountsState extends State<Accounts> {
       });
     }, (error) {
       setState(() {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('$error'), backgroundColor: Colors.red.shade900,));
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text('$error'),
+          backgroundColor: Colors.red.shade900,
+        ));
       });
     });
   }

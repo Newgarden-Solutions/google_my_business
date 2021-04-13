@@ -230,7 +230,8 @@ void main() {
       final admin = admins.admins[0];
 
       expect(admin.admin, 'Oleg Novosad');
-      expect(admin.name, 'locations/106941250772149994434/admins/106941250772149994434');
+      expect(admin.name,
+          'locations/106941250772149994434/admins/106941250772149994434');
       expect(admin.role, AdminRole.PRIMARY_OWNER);
       expect(admin.pendingInvitation, false);
     }, (error) {
@@ -351,17 +352,18 @@ void main() {
 
   group('Admins', () {
     test('[fetchAdmins] should return admins', () async {
-      when(httpClientMock.get(Uri.parse(DEFAULT_ADMINS_URL), headers: anyNamed('headers'))).thenAnswer((_) async => http.Response(testLocationAdminsJson, 200,
-          headers:
-          await GoogleMyBusiness.instance.currentUser()!.authHeaders));
+      when(httpClientMock.get(Uri.parse(DEFAULT_ADMINS_URL),
+              headers: anyNamed('headers')))
+          .thenAnswer((_) async => http.Response(testLocationAdminsJson, 200,
+              headers:
+                  await GoogleMyBusiness.instance.currentUser()!.authHeaders));
 
       await _validateFetchAdmins();
     });
 
     test('[fetchAdmins] should call on error when request fails', () async {
-      when(httpClientMock.get(
-          Uri.parse(DEFAULT_ADMINS_URL),
-          headers: anyNamed('headers')))
+      when(httpClientMock.get(Uri.parse(DEFAULT_ADMINS_URL),
+              headers: anyNamed('headers')))
           .thenAnswer((_) async => http.Response('{}', 404));
 
       await locationsManager.fetchAdmins(LOCATION_ID, (accounts) {
@@ -372,9 +374,8 @@ void main() {
     });
 
     test('[fetchAdmins] should call on error when body is empty', () async {
-      when(httpClientMock.get(
-          Uri.parse(DEFAULT_ADMINS_URL),
-          headers: anyNamed('headers')))
+      when(httpClientMock.get(Uri.parse(DEFAULT_ADMINS_URL),
+              headers: anyNamed('headers')))
           .thenAnswer((_) async => http.Response('{}', 200));
 
       await locationsManager.fetchAdmins(LOCATION_ID, (accounts) {
@@ -388,16 +389,16 @@ void main() {
 
     test(
         '[fetchAdmins] default client should be used if http client is null and the status code should be 401 with error response',
-            () async {
-          await locationsManager.fetchAdmins(LOCATION_ID, (accounts) {
-            // No success should be triggered
-          }, (error) {
-            expect(error!.code, 401);
-            expect(error.message,
-                "Request had invalid authentication credentials. Expected OAuth 2 access token, login cookie or other valid authentication credential. See https://developers.google.com/identity/sign-in/web/devconsole-project.");
-            expect(error.status, "UNAUTHENTICATED");
-          });
-        });
+        () async {
+      await locationsManager.fetchAdmins(LOCATION_ID, (accounts) {
+        // No success should be triggered
+      }, (error) {
+        expect(error!.code, 401);
+        expect(error.message,
+            "Request had invalid authentication credentials. Expected OAuth 2 access token, login cookie or other valid authentication credential. See https://developers.google.com/identity/sign-in/web/devconsole-project.");
+        expect(error.status, "UNAUTHENTICATED");
+      });
+    });
   });
 }
 

@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_my_business/google_my_business.dart';
 
-enum Type {
-  ACCOUNT,
-  LOCATION
-}
+enum Type { ACCOUNT, LOCATION }
 
 class Admins extends StatefulWidget {
   final String id;
@@ -28,7 +25,8 @@ class _AdminsState extends State<Admins> {
     super.initState();
 
     _accountsManager = AccountsManager();
-    _locationsManager = LocationsManager(accountId: widget.account.name.split("/")[1]);
+    _locationsManager =
+        LocationsManager(accountId: widget.account.name.split("/")[1]);
 
     if (GoogleMyBusiness.instance.currentUser() != null) {
       _fetchAdmins(widget.id);
@@ -75,9 +73,7 @@ class _AdminsState extends State<Admins> {
                 child: Text(
                     "Type: ${admin.role},\nID: ${admin.name.split("/")[1]}"),
               ),
-              onTap: () {
-
-              },
+              onTap: () {},
             );
           },
         ),
@@ -93,7 +89,8 @@ class _AdminsState extends State<Admins> {
     switch (widget.type) {
       case Type.ACCOUNT:
         await _accountsManager.fetchAdmins(accountId, (admins) async {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Total admins: ${admins.accountAdmins.length}')));
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              content: Text('Total admins: ${admins.accountAdmins.length}')));
 
           setState(() {
             this.admins = admins.accountAdmins;
@@ -101,13 +98,17 @@ class _AdminsState extends State<Admins> {
           });
         }, (error) {
           setState(() {
-            ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('$error'), backgroundColor: Colors.red.shade900,));
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              content: Text('$error'),
+              backgroundColor: Colors.red.shade900,
+            ));
           });
         });
         break;
       case Type.LOCATION:
         await _locationsManager.fetchAdmins(accountId, (admins) async {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Total admins: ${admins.admins.length}')));
+          ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text('Total admins: ${admins.admins.length}')));
 
           setState(() {
             this.admins = admins.admins;
@@ -115,7 +116,10 @@ class _AdminsState extends State<Admins> {
           });
         }, (error) {
           setState(() {
-            ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('$error'), backgroundColor: Colors.red.shade900,));
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              content: Text('$error'),
+              backgroundColor: Colors.red.shade900,
+            ));
           });
         });
         break;

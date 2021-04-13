@@ -97,12 +97,13 @@ class AccountsManager {
   /// @funParameter onSuccess([AccountAdmins] admins) - success callback - contains list of account admins for the given user
   /// @funParameter onError([Error] error) - error callback - called when error occurs during communication with GMB API
   /// @funParameter httpClient - [http.Client] custom client if needed, otherwise `http.Client()` will be used
-  Future<void> fetchAdmins(String accountId,
+  Future<void> fetchAdmins(
+      String accountId,
       Function(AccountAdmins accountAdmins) onSuccess,
       Function(Error? error) onError,
       [http.Client? httpClient]) async {
     if (httpClient == null) httpClient = http.Client();
-    
+
     final http.Response response = await httpClient.get(
       Uri.parse('$BASE_URL/$accountId/admins'),
       headers: await GoogleMyBusiness.instance.currentUser()!.authHeaders,
@@ -110,13 +111,15 @@ class AccountsManager {
 
     if (response.statusCode != 200) {
       final Map<String, dynamic> data = json.decode(response.body);
-      final Error? error = data['error'] == null ? null : Error.fromJson(data["error"]);
+      final Error? error =
+          data['error'] == null ? null : Error.fromJson(data["error"]);
       onError(error);
       return;
     }
 
     final Map<String, dynamic> data = json.decode(response.body);
-    final accountAdmins = data.isNullOrEmpty() ? null : AccountAdmins.fromJson(data);
+    final accountAdmins =
+        data.isNullOrEmpty() ? null : AccountAdmins.fromJson(data);
 
     if (accountAdmins == null) {
       onError(Error(401, 'Failed to fetch account admins.', 'UNAUTHORIZED'));

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:google_my_business/google_my_business.dart' show GoogleMyBusiness, Account, Location, LocationsManager;
+import 'package:google_my_business/google_my_business.dart'
+    show GoogleMyBusiness, Account, Location, LocationsManager;
 
 import 'admins.dart';
 
@@ -69,7 +70,10 @@ class _LocationsState extends State<Locations> {
                     "${location.address?.locality},\n${location.address?.addressLines.join(', ')}"),
               ),
               trailing: IconButton(
-                  icon: Icon(Icons.group, color: Colors.blue,),
+                  icon: Icon(
+                    Icons.group,
+                    color: Colors.blue,
+                  ),
                   onPressed: () {
                     if (location.name == null) {
                       return;
@@ -78,8 +82,10 @@ class _LocationsState extends State<Locations> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) =>
-                                Admins(account: widget.account, type: Type.LOCATION, id: location.name!.split("/")[3])));
+                            builder: (context) => Admins(
+                                account: widget.account,
+                                type: Type.LOCATION,
+                                id: location.name!.split("/")[3])));
                   }),
             );
           },
@@ -94,7 +100,8 @@ class _LocationsState extends State<Locations> {
 
   Future<void> _fetchLocations() async {
     await _locationsManager.fetchLocations((locations) async {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Total locations: ${locations.length}")));
+      ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("Total locations: ${locations.length}")));
 
       setState(() {
         this.locations = locations;
@@ -102,7 +109,10 @@ class _LocationsState extends State<Locations> {
       });
     }, (error) {
       setState(() {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('$error'), backgroundColor: Colors.red.shade900,));
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text('$error'),
+          backgroundColor: Colors.red.shade900,
+        ));
       });
     });
   }

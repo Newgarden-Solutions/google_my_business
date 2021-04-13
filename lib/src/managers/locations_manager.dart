@@ -53,7 +53,8 @@ class LocationsManager {
     }
 
     final http.Response response = await httpClient.get(
-      Uri.parse('${GoogleMyBusiness.BASE_URL}/accounts/$accountId/locations?pageSize=$pageSize$pageToken'),
+      Uri.parse(
+          '${GoogleMyBusiness.BASE_URL}/accounts/$accountId/locations?pageSize=$pageSize$pageToken'),
       headers: await GoogleMyBusiness.instance.currentUser()!.authHeaders,
     );
 
