@@ -1,3 +1,7 @@
+# 0.3.1
+
+* Updated dependencies
+
 # 0.3.0
 
 * Added support of [null-safety](https://dart.dev/null-safety)
