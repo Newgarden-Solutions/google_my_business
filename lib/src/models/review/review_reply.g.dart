@@ -6,12 +6,10 @@ part of 'review_reply.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-ReviewReply _$ReviewReplyFromJson(Map<String, dynamic> json) {
-  return ReviewReply(
-    json['comment'] as String?,
-    json['updateTime'] as String?,
-  );
-}
+ReviewReply _$ReviewReplyFromJson(Map<String, dynamic> json) => ReviewReply(
+      json['comment'] as String?,
+      json['updateTime'] as String?,
+    );
 
 Map<String, dynamic> _$ReviewReplyToJson(ReviewReply instance) =>
     <String, dynamic>{
