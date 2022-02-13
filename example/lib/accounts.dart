@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:google_my_business/google_my_business.dart';
+import 'package:google_my_business/google_my_business.dart'
+    show Account, AccountsManager, GoogleMyBusiness;
 
 import 'locations.dart';
 import 'login.dart';
+import 'admins.dart';
 
 class Accounts extends StatefulWidget {
   @override
@@ -62,10 +64,31 @@ class _AccountsState extends State<Accounts> {
           itemBuilder: (context, index) {
             final account = accounts[index];
             return ListTile(
-              leading: Icon(Icons.account_circle_outlined),
+              contentPadding: EdgeInsets.all(16.0),
+              leading: Padding(
+                padding: const EdgeInsets.only(top: 8.0),
+                child: Icon(Icons.account_circle_outlined),
+              ),
               title: Text('${account.accountName}'),
-              subtitle: Text(
-                  "Type: ${account.type},\nID: ${account.name.split("/")[1]}"),
+              subtitle: Padding(
+                padding: const EdgeInsets.only(top: 8.0),
+                child: Text(
+                    "Type: ${account.type},\nID: ${account.name.split("/")[1]}"),
+              ),
+              trailing: IconButton(
+                  icon: Icon(
+                    Icons.group,
+                    color: Colors.blue,
+                  ),
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => Admins(
+                                account: account,
+                                type: Type.ACCOUNT,
+                                id: account.name.split("/")[1])));
+                  }),
               onTap: () {
                 Navigator.push(
                     context,
@@ -85,7 +108,8 @@ class _AccountsState extends State<Accounts> {
 
   Future<void> _fetchAccounts() async {
     await _accountsManager.fetchAccounts((accounts) async {
-      print("Total accounts: ${accounts.length}");
+      ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Total accounts: ${accounts.length}')));
 
       setState(() {
         this.accounts = accounts;
@@ -93,7 +117,10 @@ class _AccountsState extends State<Accounts> {
       });
     }, (error) {
       setState(() {
-        print('Google My Business API: ${error?.code} - ${error?.message}');
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text('$error'),
+          backgroundColor: Colors.red.shade900,
+        ));
       });
     });
   }

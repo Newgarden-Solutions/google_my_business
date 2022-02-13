@@ -3,6 +3,9 @@ import 'package:google_sign_in/google_sign_in.dart';
 /// Main entry point.
 /// Use this class to get current user or sign in / out with Google Sign In.
 class GoogleMyBusiness {
+  static const _VERSION = "v4";
+  static const BASE_URL = "https://mybusiness.googleapis.com/$_VERSION";
+
   GoogleMyBusiness._privateConstructor();
 
   static final GoogleMyBusiness instance =

@@ -6,13 +6,11 @@ part of 'special_hours.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-SpecialHours _$SpecialHoursFromJson(Map<String, dynamic> json) {
-  return SpecialHours(
-    (json['specialHourPeriods'] as List<dynamic>?)
-        ?.map((e) => SpecialHourPeriod.fromJson(e as Map<String, dynamic>))
-        .toList(),
-  );
-}
+SpecialHours _$SpecialHoursFromJson(Map<String, dynamic> json) => SpecialHours(
+      (json['specialHourPeriods'] as List<dynamic>?)
+          ?.map((e) => SpecialHourPeriod.fromJson(e as Map<String, dynamic>))
+          .toList(),
+    );
 
 Map<String, dynamic> _$SpecialHoursToJson(SpecialHours instance) =>
     <String, dynamic>{

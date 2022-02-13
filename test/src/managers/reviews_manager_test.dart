@@ -1,6 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:google_my_business/google_my_business.dart';
-import 'package:google_my_business/src/managers/reviews_manager.dart';
 import 'package:http/http.dart' as http;
 import 'package:mockito/mockito.dart';
 
@@ -108,7 +107,7 @@ void main() {
     test('[fetchReviews] should return a list of reviews on success', () async {
       when(httpClientMock.get(
               Uri.parse(
-                  'https://mybusiness.googleapis.com/v4/$name/reviews?pageSize=$pageSize'),
+                  '${GoogleMyBusiness.BASE_URL}/$name/reviews?pageSize=$pageSize'),
               headers: anyNamed('headers')))
           .thenAnswer((_) async => http.Response(testReviewsJson, 200,
               headers:
@@ -145,7 +144,7 @@ void main() {
 
       when(httpClientMock.get(
               Uri.parse(
-                  'https://mybusiness.googleapis.com/v4/$name/reviews?pageSize=$pageSize&pageToken=$nextPageToken'),
+                  '${GoogleMyBusiness.BASE_URL}/$name/reviews?pageSize=$pageSize&pageToken=$nextPageToken'),
               headers: anyNamed('headers')))
           .thenAnswer((_) async => http.Response(testReviewsJson, 200,
               headers:
@@ -160,7 +159,7 @@ void main() {
 
       when(httpClientMock.get(
               Uri.parse(
-                  'https://mybusiness.googleapis.com/v4/$name/reviews?pageSize=${ReviewsManager.MAX_PAGE_SIZE}'),
+                  '${GoogleMyBusiness.BASE_URL}/$name/reviews?pageSize=${ReviewsManager.MAX_PAGE_SIZE}'),
               headers: anyNamed('headers')))
           .thenAnswer((_) async => http.Response(testReviewsJson, 200,
               headers:
@@ -172,7 +171,7 @@ void main() {
     test('[fetchReviews] should call on error when request fails', () async {
       when(httpClientMock.get(
               Uri.parse(
-                  'https://mybusiness.googleapis.com/v4/$name/reviews?pageSize=$pageSize'),
+                  '${GoogleMyBusiness.BASE_URL}/$name/reviews?pageSize=$pageSize'),
               headers: anyNamed('headers')))
           .thenAnswer((_) async => http.Response('{}', 404));
 
@@ -188,7 +187,7 @@ void main() {
     test('[fetchReviews] should call on error when body is empty', () async {
       when(httpClientMock.get(
               Uri.parse(
-                  'https://mybusiness.googleapis.com/v4/$name/reviews?pageSize=$pageSize'),
+                  '${GoogleMyBusiness.BASE_URL}/$name/reviews?pageSize=$pageSize'),
               headers: anyNamed('headers')))
           .thenAnswer((_) async => http.Response('{}', 200));
 

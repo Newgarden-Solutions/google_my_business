@@ -6,23 +6,21 @@ part of 'account.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-Account _$AccountFromJson(Map<String, dynamic> json) {
-  return Account(
-    json['name'] as String,
-    json['accountName'] as String,
-    json['primaryOwner'] as String?,
-    _$enumDecode(_$AccountTypeEnumMap, json['type']),
-    _$enumDecodeNullable(_$AccountRoleEnumMap, json['role']),
-    _$enumDecode(_$VerificationStateEnumMap, json['verificationState']),
-    _$enumDecode(_$VettedStateEnumMap, json['vettedState']),
-    json['accountNumber'] as String?,
-    _$enumDecodeNullable(_$PermissionLevelEnumMap, json['permissionLevel']),
-    json['organizationInfo'] == null
-        ? null
-        : OrganizationInfo.fromJson(
-            json['organizationInfo'] as Map<String, dynamic>),
-  );
-}
+Account _$AccountFromJson(Map<String, dynamic> json) => Account(
+      json['name'] as String,
+      json['accountName'] as String,
+      json['primaryOwner'] as String?,
+      $enumDecode(_$AccountTypeEnumMap, json['type']),
+      $enumDecodeNullable(_$AccountRoleEnumMap, json['role']),
+      $enumDecode(_$VerificationStateEnumMap, json['verificationState']),
+      $enumDecode(_$VettedStateEnumMap, json['vettedState']),
+      json['accountNumber'] as String?,
+      $enumDecodeNullable(_$PermissionLevelEnumMap, json['permissionLevel']),
+      json['organizationInfo'] == null
+          ? null
+          : OrganizationInfo.fromJson(
+              json['organizationInfo'] as Map<String, dynamic>),
+    );
 
 Map<String, dynamic> _$AccountToJson(Account instance) => <String, dynamic>{
       'name': instance.name,
@@ -38,32 +36,6 @@ Map<String, dynamic> _$AccountToJson(Account instance) => <String, dynamic>{
       'organizationInfo': instance.organizationInfo,
     };
 
-K _$enumDecode<K, V>(
-  Map<K, V> enumValues,
-  Object? source, {
-  K? unknownValue,
-}) {
-  if (source == null) {
-    throw ArgumentError(
-      'A value must be provided. Supported values: '
-      '${enumValues.values.join(', ')}',
-    );
-  }
-
-  return enumValues.entries.singleWhere(
-    (e) => e.value == source,
-    orElse: () {
-      if (unknownValue == null) {
-        throw ArgumentError(
-          '`$source` is not one of the supported values: '
-          '${enumValues.values.join(', ')}',
-        );
-      }
-      return MapEntry(unknownValue, enumValues.values.first);
-    },
-  ).key;
-}
-
 const _$AccountTypeEnumMap = {
   AccountType.ACCOUNT_TYPE_UNSPECIFIED: 'ACCOUNT_TYPE_UNSPECIFIED',
   AccountType.PERSONAL: 'PERSONAL',
@@ -71,17 +43,6 @@ const _$AccountTypeEnumMap = {
   AccountType.USER_GROUP: 'USER_GROUP',
   AccountType.ORGANIZATION: 'ORGANIZATION',
 };
-
-K? _$enumDecodeNullable<K, V>(
-  Map<K, V> enumValues,
-  dynamic source, {
-  K? unknownValue,
-}) {
-  if (source == null) {
-    return null;
-  }
-  return _$enumDecode<K, V>(enumValues, source, unknownValue: unknownValue);
-}
 
 const _$AccountRoleEnumMap = {
   AccountRole.ACCOUNT_ROLE_UNSPECIFIED: 'ACCOUNT_ROLE_UNSPECIFIED',

@@ -7,11 +7,10 @@ part of 'ad_words_location_extensions.dart';
 // **************************************************************************
 
 AdWordsLocationExtensions _$AdWordsLocationExtensionsFromJson(
-    Map<String, dynamic> json) {
-  return AdWordsLocationExtensions(
-    json['adPhone'] as String?,
-  );
-}
+        Map<String, dynamic> json) =>
+    AdWordsLocationExtensions(
+      json['adPhone'] as String?,
+    );
 
 Map<String, dynamic> _$AdWordsLocationExtensionsToJson(
         AdWordsLocationExtensions instance) =>

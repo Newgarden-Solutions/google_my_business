@@ -6,17 +6,16 @@ part of 'postal_address.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-PostalAddress _$PostalAddressFromJson(Map<String, dynamic> json) {
-  return PostalAddress(
-    json['languageCode'] as String?,
-    json['locality'] as String?,
-    json['regionCode'] as String?,
-    json['postalCode'] as String?,
-    json['administrativeArea'] as String?,
-    json['sublocality'] as String?,
-    (json['addressLines'] as List<dynamic>).map((e) => e as String).toList(),
-  );
-}
+PostalAddress _$PostalAddressFromJson(Map<String, dynamic> json) =>
+    PostalAddress(
+      json['languageCode'] as String?,
+      json['locality'] as String?,
+      json['regionCode'] as String?,
+      json['postalCode'] as String?,
+      json['administrativeArea'] as String?,
+      json['sublocality'] as String?,
+      (json['addressLines'] as List<dynamic>).map((e) => e as String).toList(),
+    );
 
 Map<String, dynamic> _$PostalAddressToJson(PostalAddress instance) =>
     <String, dynamic>{
