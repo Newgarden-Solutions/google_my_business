@@ -2,13 +2,13 @@ name: google_my_business
 description:
   Flutter package to work with Google My Business API.
   Simplifies communication & interaction with GMB API endpoints.
-version: 0.3.2
+version: 0.3.3
 homepage: https://github.com/Newgarden-Solutions/google_my_business
 repository: https://github.com/Newgarden-Solutions/google_my_business
 issue_tracker: https://github.com/Newgarden-Solutions/google_my_business/issues
 
 environment:
-  sdk: '>=2.16.0 <3.0.0'
+  sdk: '>=3.0.0 <4.0.0'
 
 dependencies:
   flutter:
@@ -16,20 +16,22 @@ dependencies:
   
   # Google
   google_sign_in: ^5.2.3
-  google_sign_in_platform_interface: ^2.1.1
+  google_sign_in_platform_interface: ^2.4.0
 
   # Util
-  http: ^0.13.4
-  json_annotation: ^4.4.0
-
-  # Tests
-  mockito: ^5.1.0
+  http: ^1.0.0
+  json_annotation: ^4.8.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  build_runner: ^2.1.7
-  json_serializable: ^6.1.4
+  build_runner: ^2.4.4
+
+  json_serializable: ^6.7.0
+
+
+  # Tests
+  mockito: ^5.1.0
 
 false_secrets:
   - example/ios/Runner/GoogleService-Info.plist

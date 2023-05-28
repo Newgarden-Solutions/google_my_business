@@ -16,7 +16,7 @@ Admin _$AdminFromJson(Map<String, dynamic> json) => Admin(
 Map<String, dynamic> _$AdminToJson(Admin instance) => <String, dynamic>{
       'name': instance.name,
       'admin': instance.admin,
-      'role': _$AdminRoleEnumMap[instance.role],
+      'role': _$AdminRoleEnumMap[instance.role]!,
       'pendingInvitation': instance.pendingInvitation,
     };
 

@@ -15,7 +15,7 @@ OpenInfo _$OpenInfoFromJson(Map<String, dynamic> json) => OpenInfo(
     );
 
 Map<String, dynamic> _$OpenInfoToJson(OpenInfo instance) => <String, dynamic>{
-      'status': _$OpenForBusinessEnumMap[instance.status],
+      'status': _$OpenForBusinessEnumMap[instance.status]!,
       'canReopen': instance.canReopen,
       'openingDate': instance.openingDate,
     };
