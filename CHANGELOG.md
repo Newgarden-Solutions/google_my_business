@@ -1,7 +1,7 @@
 # 0.3.4
 
 * Updated dependencies
-* Fixed lint issues
+* Fixed some lint issues
 
 # 0.3.3
 
