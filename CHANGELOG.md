@@ -1,3 +1,8 @@
+# 0.3.4
+
+* Updated dependencies
+* Fixed lint issues
+
 # 0.3.3
 
 * Minimum Dart 3 version
